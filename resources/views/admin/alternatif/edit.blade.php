@@ -4,162 +4,153 @@
 @section('breadcrumb', 'Admin / Data Siswa / Edit')
 
 @section('content')
-    <div class="page-header">
-        <h1 class="page-title">Edit Data Siswa</h1>
-        <p class="page-subtitle">Ubah data siswa {{ $alternatif->nama }}</p>
-    </div>
+    <div class="max-w-4xl mx-auto">
+        <!-- Header -->
+        <div class="mb-8">
+            <h2 class="text-2xl font-bold text-gray-900 mb-2">Edit Data Siswa</h2>
+            <p class="text-gray-600">Ubah data siswa {{ $alternatif->nama }}</p>
+        </div>
 
-    <div class="row">
-        <div class="col-lg-8">
-            <div class="card">
-                <div class="card-header">
-                    <h5 class="card-title mb-0">
-                        <i class="fas fa-edit me-2"></i>
-                        Form Edit Siswa
-                    </h5>
-                </div>
-                <div class="card-body">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <!-- Form -->
+            <div class="lg:col-span-2">
+                <div class="bg-white rounded-xl border border-gray-200 p-6">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-6">Form Edit Siswa</h3>
+
                     <form action="{{ route('admin.alternatif.update', $alternatif) }}" method="POST">
                         @csrf
                         @method('PUT')
 
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label for="kode" class="form-label">Kode Siswa <span
-                                            class="text-danger">*</span></label>
-                                    <input type="text" class="form-control @error('kode') is-invalid @enderror"
-                                        id="kode" name="kode" value="{{ old('kode', $alternatif->kode) }}" required>
-                                    @error('kode')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
-                                </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                            <div>
+                                <label for="kode" class="block text-sm font-medium text-gray-700 mb-2">Kode
+                                    Siswa</label>
+                                <input type="text" id="kode" name="kode"
+                                    value="{{ old('kode', $alternatif->kode) }}"
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 @error('kode') border-red-300 @enderror"
+                                    required>
+                                @error('kode')
+                                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                @enderror
                             </div>
 
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label for="nama" class="form-label">Nama Lengkap <span
-                                            class="text-danger">*</span></label>
-                                    <input type="text" class="form-control @error('nama') is-invalid @enderror"
-                                        id="nama" name="nama" value="{{ old('nama', $alternatif->nama) }}" required>
-                                    @error('nama')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label for="jenis_kelamin" class="form-label">Jenis Kelamin <span
-                                            class="text-danger">*</span></label>
-                                    <select class="form-control @error('jenis_kelamin') is-invalid @enderror"
-                                        id="jenis_kelamin" name="jenis_kelamin" required>
-                                        <option value="">Pilih Jenis Kelamin</option>
-                                        <option value="L"
-                                            {{ old('jenis_kelamin', $alternatif->jenis_kelamin) == 'L' ? 'selected' : '' }}>
-                                            Laki-laki</option>
-                                        <option value="P"
-                                            {{ old('jenis_kelamin', $alternatif->jenis_kelamin) == 'P' ? 'selected' : '' }}>
-                                            Perempuan</option>
-                                    </select>
-                                    @error('jenis_kelamin')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                            </div>
-
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label for="tanggal_lahir" class="form-label">Tanggal Lahir <span
-                                            class="text-danger">*</span></label>
-                                    <input type="date" class="form-control @error('tanggal_lahir') is-invalid @enderror"
-                                        id="tanggal_lahir" name="tanggal_lahir"
-                                        value="{{ old('tanggal_lahir', $alternatif->tanggal_lahir->format('Y-m-d')) }}"
-                                        required>
-                                    @error('tanggal_lahir')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
-                                </div>
+                            <div>
+                                <label for="nama" class="block text-sm font-medium text-gray-700 mb-2">Nama
+                                    Lengkap</label>
+                                <input type="text" id="nama" name="nama"
+                                    value="{{ old('nama', $alternatif->nama) }}"
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 @error('nama') border-red-300 @enderror"
+                                    required>
+                                @error('nama')
+                                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                @enderror
                             </div>
                         </div>
 
-                        <div class="mb-3">
-                            <label for="nama_orangtua" class="form-label">Nama Orang Tua</label>
-                            <input type="text" class="form-control @error('nama_orangtua') is-invalid @enderror"
-                                id="nama_orangtua" name="nama_orangtua"
-                                value="{{ old('nama_orangtua', $alternatif->nama_orangtua) }}">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                            <div>
+                                <label for="jenis_kelamin" class="block text-sm font-medium text-gray-700 mb-2">Jenis
+                                    Kelamin</label>
+                                <select id="jenis_kelamin" name="jenis_kelamin"
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 @error('jenis_kelamin') border-red-300 @enderror"
+                                    required>
+                                    <option value="">Pilih Jenis Kelamin</option>
+                                    <option value="L"
+                                        {{ old('jenis_kelamin', $alternatif->jenis_kelamin) == 'L' ? 'selected' : '' }}>
+                                        Laki-laki</option>
+                                    <option value="P"
+                                        {{ old('jenis_kelamin', $alternatif->jenis_kelamin) == 'P' ? 'selected' : '' }}>
+                                        Perempuan</option>
+                                </select>
+                                @error('jenis_kelamin')
+                                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                @enderror
+                            </div>
+
+                            <div>
+                                <label for="tanggal_lahir" class="block text-sm font-medium text-gray-700 mb-2">Tanggal
+                                    Lahir</label>
+                                <input type="date" id="tanggal_lahir" name="tanggal_lahir"
+                                    value="{{ old('tanggal_lahir', $alternatif->tanggal_lahir->format('Y-m-d')) }}"
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 @error('tanggal_lahir') border-red-300 @enderror"
+                                    required>
+                                @error('tanggal_lahir')
+                                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="mb-6">
+                            <label for="nama_orangtua" class="block text-sm font-medium text-gray-700 mb-2">Nama Orang
+                                Tua</label>
+                            <input type="text" id="nama_orangtua" name="nama_orangtua"
+                                value="{{ old('nama_orangtua', $alternatif->nama_orangtua) }}"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 @error('nama_orangtua') border-red-300 @enderror">
                             @error('nama_orangtua')
-                                <div class="invalid-feedback">{{ $message }}</div>
+                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                             @enderror
                         </div>
 
-                        <div class="mb-4">
-                            <label for="alamat" class="form-label">Alamat</label>
-                            <textarea class="form-control @error('alamat') is-invalid @enderror" id="alamat" name="alamat" rows="3">{{ old('alamat', $alternatif->alamat) }}</textarea>
+                        <div class="mb-6">
+                            <label for="alamat" class="block text-sm font-medium text-gray-700 mb-2">Alamat</label>
+                            <textarea id="alamat" name="alamat" rows="3"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 @error('alamat') border-red-300 @enderror">{{ old('alamat', $alternatif->alamat) }}</textarea>
                             @error('alamat')
-                                <div class="invalid-feedback">{{ $message }}</div>
+                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                             @enderror
                         </div>
 
-                        <div class="d-flex gap-2">
-                            <button type="submit" class="btn btn-primary">
-                                <i class="fas fa-save me-2"></i>
+                        <div class="flex space-x-3">
+                            <button type="submit"
+                                class="flex-1 inline-flex justify-center items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+                                <i class="fas fa-save mr-2"></i>
                                 Update Siswa
                             </button>
-                            <a href="{{ route('admin.alternatif.index') }}" class="btn btn-secondary">
-                                <i class="fas fa-arrow-left me-2"></i>
+                            <a href="{{ route('admin.alternatif.index') }}"
+                                class="inline-flex items-center px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors">
+                                <i class="fas fa-arrow-left mr-2"></i>
                                 Kembali
                             </a>
                         </div>
                     </form>
                 </div>
             </div>
-        </div>
 
-        <div class="col-lg-4">
-            <div class="card">
-                <div class="card-header">
-                    <h5 class="card-title mb-0">
-                        <i class="fas fa-user me-2"></i>
-                        Info Siswa
-                    </h5>
-                </div>
-                <div class="card-body">
-                    <div class="text-center mb-3">
-                        <div class="avatar bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3"
-                            style="width: 80px; height: 80px; font-size: 2rem;">
-                            {{ strtoupper(substr($alternatif->nama, 0, 1)) }}
+            <!-- Sidebar -->
+            <div>
+                <div class="bg-white rounded-xl border border-gray-200 p-6 mb-6">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4">Info Siswa</h3>
+                    <div class="text-center mb-4">
+                        <div class="w-16 h-16 bg-primary-500 rounded-full flex items-center justify-center mx-auto mb-3">
+                            <span class="text-white font-bold text-xl">
+                                {{ strtoupper(substr($alternatif->nama, 0, 1)) }}
+                            </span>
                         </div>
-                        <h6 class="mb-1">{{ $alternatif->nama }}</h6>
-                        <p class="text-muted mb-0">{{ $alternatif->kode }}</p>
+                        <h4 class="font-semibold text-gray-900">{{ $alternatif->nama }}</h4>
+                        <p class="text-sm text-gray-600 mt-1">{{ $alternatif->kode }}</p>
                     </div>
 
-                    <div class="list-group list-group-flush">
-                        <div class="list-group-item d-flex justify-content-between align-items-center px-0">
-                            <span>Jenis Kelamin</span>
-                            <span class="badge {{ $alternatif->jenis_kelamin == 'L' ? 'bg-info' : 'bg-pink' }}">
+                    <div class="space-y-2">
+                        <div class="flex justify-between items-center py-2">
+                            <span class="text-gray-600">Jenis Kelamin</span>
+                            <span
+                                class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium {{ $alternatif->jenis_kelamin == 'L' ? 'bg-blue-100 text-blue-800' : 'bg-pink-100 text-pink-800' }}">
                                 {{ $alternatif->jenis_kelamin == 'L' ? 'Laki-laki' : 'Perempuan' }}
                             </span>
                         </div>
-                        <div class="list-group-item d-flex justify-content-between align-items-center px-0">
-                            <span>Umur</span>
-                            <span class="badge bg-success">{{ $alternatif->umur }} tahun</span>
+                        <div class="flex justify-between items-center py-2">
+                            <span class="text-gray-600">Umur</span>
+                            <span
+                                class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">{{ $alternatif->umur }}
+                                tahun</span>
                         </div>
-                        <div class="list-group-item d-flex justify-content-between align-items-center px-0">
-                            <span>Terdaftar</span>
-                            <span class="text-muted">{{ $alternatif->created_at->format('d M Y') }}</span>
+                        <div class="flex justify-between items-center py-2">
+                            <span class="text-gray-600">Terdaftar</span>
+                            <span class="text-gray-900">{{ $alternatif->created_at->format('d M Y') }}</span>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-    <style>
-        .bg-pink {
-            background-color: #e91e63 !important;
-        }
-    </style>
 @endsection

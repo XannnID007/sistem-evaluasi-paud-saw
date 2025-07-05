@@ -4,212 +4,241 @@
 @section('breadcrumb', 'Admin / Perhitungan SAW')
 
 @section('content')
-    <div class="page-header">
-        <div class="d-flex justify-content-between align-items-center">
+    <div class="max-w-7xl mx-auto">
+        <!-- Header -->
+        <div class="flex justify-between items-center mb-8">
             <div>
-                <h1 class="page-title">Perhitungan SAW</h1>
-                <p class="page-subtitle">Simple Additive Weighting untuk evaluasi perkembangan anak</p>
+                <h2 class="text-2xl font-bold text-gray-900 mb-2">Perhitungan SAW</h2>
+                <p class="text-gray-600">Simple Additive Weighting untuk evaluasi perkembangan anak</p>
             </div>
-            <div class="d-flex gap-2">
-                <form action="{{ route('admin.saw.proses') }}" method="POST" style="display: inline;">
+            <div class="flex space-x-3">
+                <form action="{{ route('admin.saw.proses') }}" method="POST" class="inline">
                     @csrf
-                    <button type="submit" class="btn btn-primary" onclick="return confirm('Proses perhitungan SAW?')">
-                        <i class="fas fa-calculator me-2"></i>
+                    <button type="submit" onclick="return confirm('Proses perhitungan SAW?')"
+                        class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+                        <i class="fas fa-calculator mr-2"></i>
                         Proses SAW
                     </button>
                 </form>
-                <a href="{{ route('admin.saw.hasil') }}" class="btn btn-success">
-                    <i class="fas fa-chart-line me-2"></i>
+                <a href="{{ route('admin.saw.hasil') }}"
+                    class="inline-flex items-center px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors">
+                    <i class="fas fa-chart-line mr-2"></i>
                     Lihat Hasil
                 </a>
             </div>
         </div>
-    </div>
 
-    <!-- Langkah Perhitungan SAW -->
-    <div class="row g-4 mb-4">
-        <div class="col-md-3">
-            <div class="card text-center">
-                <div class="card-body">
-                    <div class="bg-primary bg-gradient rounded-circle d-inline-flex align-items-center justify-content-center mb-3"
-                        style="width: 60px; height: 60px;">
-                        <i class="fas fa-table text-white fs-4"></i>
-                    </div>
-                    <h6 class="card-title">1. Matriks Keputusan</h6>
-                    <p class="card-text text-muted small">Tabel nilai setiap alternatif untuk setiap kriteria</p>
+        <!-- SAW Process Steps -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+            <div class="bg-white rounded-xl border border-gray-200 p-6 text-center">
+                <div class="w-16 h-16 bg-blue-100 rounded-lg flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-table text-blue-600 text-2xl"></i>
                 </div>
+                <h3 class="font-semibold text-gray-900 mb-2">1. Matriks Keputusan</h3>
+                <p class="text-sm text-gray-600">Tabel nilai setiap alternatif untuk setiap kriteria</p>
             </div>
-        </div>
-        <div class="col-md-3">
-            <div class="card text-center">
-                <div class="card-body">
-                    <div class="bg-warning bg-gradient rounded-circle d-inline-flex align-items-center justify-content-center mb-3"
-                        style="width: 60px; height: 60px;">
-                        <i class="fas fa-arrows-alt text-white fs-4"></i>
-                    </div>
-                    <h6 class="card-title">2. Normalisasi</h6>
-                    <p class="card-text text-muted small">Mengubah nilai menjadi skala 0-1</p>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="card text-center">
-                <div class="card-body">
-                    <div class="bg-info bg-gradient rounded-circle d-inline-flex align-items-center justify-content-center mb-3"
-                        style="width: 60px; height: 60px;">
-                        <i class="fas fa-weight-hanging text-white fs-4"></i>
-                    </div>
-                    <h6 class="card-title">3. Perkalian Bobot</h6>
-                    <p class="card-text text-muted small">Nilai normalisasi × bobot kriteria</p>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="card text-center">
-                <div class="card-body">
-                    <div class="bg-success bg-gradient rounded-circle d-inline-flex align-items-center justify-content-center mb-3"
-                        style="width: 60px; height: 60px;">
-                        <i class="fas fa-trophy text-white fs-4"></i>
-                    </div>
-                    <h6 class="card-title">4. Ranking</h6>
-                    <p class="card-text text-muted small">Urutkan berdasarkan skor tertinggi</p>
-                </div>
-            </div>
-        </div>
-    </div>
 
-    <!-- Matriks Keputusan -->
-    <div class="card mb-4">
-        <div class="card-header">
-            <h5 class="card-title mb-0">
-                <i class="fas fa-table me-2"></i>
-                Matriks Keputusan
-            </h5>
+            <div class="bg-white rounded-xl border border-gray-200 p-6 text-center">
+                <div class="w-16 h-16 bg-yellow-100 rounded-lg flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-arrows-alt text-yellow-600 text-2xl"></i>
+                </div>
+                <h3 class="font-semibold text-gray-900 mb-2">2. Normalisasi</h3>
+                <p class="text-sm text-gray-600">Mengubah nilai menjadi skala 0-1</p>
+            </div>
+
+            <div class="bg-white rounded-xl border border-gray-200 p-6 text-center">
+                <div class="w-16 h-16 bg-purple-100 rounded-lg flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-weight-hanging text-purple-600 text-2xl"></i>
+                </div>
+                <h3 class="font-semibold text-gray-900 mb-2">3. Perkalian Bobot</h3>
+                <p class="text-sm text-gray-600">Nilai normalisasi × bobot kriteria</p>
+            </div>
+
+            <div class="bg-white rounded-xl border border-gray-200 p-6 text-center">
+                <div class="w-16 h-16 bg-green-100 rounded-lg flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-trophy text-green-600 text-2xl"></i>
+                </div>
+                <h3 class="font-semibold text-gray-900 mb-2">4. Ranking</h3>
+                <p class="text-sm text-gray-600">Urutkan berdasarkan skor tertinggi</p>
+            </div>
         </div>
-        <div class="card-body">
-            @if (count($matriksKeputusan) > 0)
-                <div class="table-responsive">
-                    <table class="table table-bordered table-hover">
-                        <thead class="table-primary">
-                            <tr>
-                                <th>Alternatif</th>
-                                @foreach ($kriteria as $k)
-                                    <th class="text-center">{{ $k->kode }}<br><small
-                                            class="fw-normal">({{ $k->bobot }})</small></th>
-                                @endforeach
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($matriksKeputusan as $row)
+
+        <!-- Decision Matrix -->
+        <div class="bg-white rounded-xl border border-gray-200 overflow-hidden mb-8">
+            <div class="px-6 py-4 border-b border-gray-200">
+                <h3 class="text-lg font-semibold text-gray-900">Matriks Keputusan</h3>
+            </div>
+            <div class="p-6">
+                @if (count($matriksKeputusan) > 0)
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-blue-50">
                                 <tr>
-                                    <td class="fw-bold">{{ $row['alternatif']->kode }} - {{ $row['alternatif']->nama }}</td>
+                                    <th
+                                        class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Alternatif</th>
                                     @foreach ($kriteria as $k)
-                                        <td class="text-center">
-                                            <span class="badge bg-primary">{{ $row[$k->kode] }}</span>
-                                        </td>
+                                        <th
+                                            class="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            {{ $k->kode }}
+                                            <div class="text-xs text-gray-400 font-normal">
+                                                ({{ number_format($k->bobot, 3) }})
+                                            </div>
+                                        </th>
                                     @endforeach
                                 </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
-            @else
-                <div class="text-center py-4">
-                    <i class="fas fa-exclamation-triangle text-warning mb-3" style="font-size: 3rem;"></i>
-                    <h5 class="text-muted">Data Belum Lengkap</h5>
-                    <p class="text-muted">Pastikan semua siswa sudah dinilai untuk semua kriteria</p>
-                    <a href="{{ route('admin.penilaian.index') }}" class="btn btn-primary">
-                        <i class="fas fa-clipboard-check me-2"></i>
-                        Input Penilaian
-                    </a>
-                </div>
-            @endif
-        </div>
-    </div>
-
-    <!-- Matriks Normalisasi -->
-    <div class="card mb-4">
-        <div class="card-header">
-            <h5 class="card-title mb-0">
-                <i class="fas fa-arrows-alt me-2"></i>
-                Matriks Normalisasi
-            </h5>
-        </div>
-        <div class="card-body">
-            @if (count($matriksNormalisasi) > 0)
-                <div class="alert alert-info">
-                    <i class="fas fa-info-circle me-2"></i>
-                    <strong>Rumus Normalisasi:</strong> R<sub>ij</sub> = X<sub>ij</sub> / Max(X<sub>ij</sub>) untuk kriteria
-                    benefit
-                </div>
-                <div class="table-responsive">
-                    <table class="table table-bordered table-hover">
-                        <thead class="table-warning">
-                            <tr>
-                                <th>Alternatif</th>
-                                @foreach ($kriteria as $k)
-                                    <th class="text-center">{{ $k->kode }}</th>
-                                @endforeach
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($matriksNormalisasi as $row)
-                                <tr>
-                                    <td class="fw-bold">{{ $row['alternatif']->kode }} - {{ $row['alternatif']->nama }}
-                                    </td>
-                                    @foreach ($kriteria as $k)
-                                        <td class="text-center">
-                                            <span class="badge bg-warning text-dark">{{ $row[$k->kode] }}</span>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                @foreach ($matriksKeputusan as $row)
+                                    <tr class="hover:bg-gray-50">
+                                        <td class="px-4 py-3 whitespace-nowrap">
+                                            <div class="flex items-center">
+                                                <div
+                                                    class="w-8 h-8 bg-primary-500 rounded-full flex items-center justify-center mr-3">
+                                                    <span class="text-white text-xs font-medium">
+                                                        {{ strtoupper(substr($row['alternatif']->nama, 0, 1)) }}
+                                                    </span>
+                                                </div>
+                                                <div>
+                                                    <div class="font-medium text-gray-900">{{ $row['alternatif']->kode }}
+                                                    </div>
+                                                    <div class="text-sm text-gray-500">{{ $row['alternatif']->nama }}</div>
+                                                </div>
+                                            </div>
                                         </td>
-                                    @endforeach
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
-            @else
-                <div class="text-center py-4 text-muted">
-                    <i class="fas fa-calculator mb-3" style="font-size: 2rem;"></i>
-                    <p>Matriks normalisasi akan muncul setelah data penilaian lengkap</p>
-                </div>
-            @endif
+                                        @foreach ($kriteria as $k)
+                                            <td class="px-4 py-3 whitespace-nowrap text-center">
+                                                <span
+                                                    class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                                                    {{ $row[$k->kode] }}
+                                                </span>
+                                            </td>
+                                        @endforeach
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                @else
+                    <div class="text-center py-12">
+                        <i class="fas fa-exclamation-triangle text-yellow-400 text-6xl mb-4"></i>
+                        <h4 class="text-lg font-semibold text-gray-900 mb-2">Data Belum Lengkap</h4>
+                        <p class="text-gray-600 mb-6">Pastikan semua siswa sudah dinilai untuk semua kriteria</p>
+                        <a href="{{ route('admin.penilaian.index') }}"
+                            class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+                            <i class="fas fa-clipboard-check mr-2"></i>
+                            Input Penilaian
+                        </a>
+                    </div>
+                @endif
+            </div>
         </div>
-    </div>
 
-    <!-- Informasi Kriteria dan Bobot -->
-    <div class="card">
-        <div class="card-header">
-            <h5 class="card-title mb-0">
-                <i class="fas fa-weight-hanging me-2"></i>
-                Informasi Kriteria dan Bobot
-            </h5>
-        </div>
-        <div class="card-body">
-            <div class="row">
-                @foreach ($kriteria as $k)
-                    <div class="col-md-4 mb-3">
-                        <div class="border rounded p-3">
-                            <div class="d-flex justify-content-between align-items-center mb-2">
-                                <h6 class="mb-0">{{ $k->kode }}</h6>
-                                <span class="badge bg-primary">{{ number_format($k->bobot, 3) }}</span>
-                            </div>
-                            <p class="mb-0 small text-muted">{{ $k->nama }}</p>
+        <!-- Normalization Matrix -->
+        <div class="bg-white rounded-xl border border-gray-200 overflow-hidden mb-8">
+            <div class="px-6 py-4 border-b border-gray-200">
+                <h3 class="text-lg font-semibold text-gray-900">Matriks Normalisasi</h3>
+            </div>
+            <div class="p-6">
+                @if (count($matriksNormalisasi) > 0)
+                    <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
+                        <div class="flex items-center">
+                            <i class="fas fa-info-circle text-blue-600 mr-2"></i>
+                            <span class="text-sm text-blue-800">
+                                <strong>Rumus Normalisasi:</strong> R<sub>ij</sub> = X<sub>ij</sub> / Max(X<sub>ij</sub>)
+                                untuk kriteria benefit
+                            </span>
                         </div>
+                    </div>
+
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-yellow-50">
+                                <tr>
+                                    <th
+                                        class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Alternatif</th>
+                                    @foreach ($kriteria as $k)
+                                        <th
+                                            class="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            {{ $k->kode }}</th>
+                                    @endforeach
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                @foreach ($matriksNormalisasi as $row)
+                                    <tr class="hover:bg-gray-50">
+                                        <td class="px-4 py-3 whitespace-nowrap">
+                                            <div class="flex items-center">
+                                                <div
+                                                    class="w-8 h-8 bg-primary-500 rounded-full flex items-center justify-center mr-3">
+                                                    <span class="text-white text-xs font-medium">
+                                                        {{ strtoupper(substr($row['alternatif']->nama, 0, 1)) }}
+                                                    </span>
+                                                </div>
+                                                <div>
+                                                    <div class="font-medium text-gray-900">{{ $row['alternatif']->kode }}
+                                                    </div>
+                                                    <div class="text-sm text-gray-500">{{ $row['alternatif']->nama }}</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        @foreach ($kriteria as $k)
+                                            <td class="px-4 py-3 whitespace-nowrap text-center">
+                                                <span
+                                                    class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                                                    {{ $row[$k->kode] }}
+                                                </span>
+                                            </td>
+                                        @endforeach
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                @else
+                    <div class="text-center py-8">
+                        <i class="fas fa-calculator text-gray-400 text-4xl mb-3"></i>
+                        <p class="text-gray-600">Matriks normalisasi akan muncul setelah data penilaian lengkap</p>
+                    </div>
+                @endif
+            </div>
+        </div>
+
+        <!-- Criteria Information -->
+        <div class="bg-white rounded-xl border border-gray-200 p-6">
+            <h3 class="text-lg font-semibold text-gray-900 mb-6">Informasi Kriteria dan Bobot</h3>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+                @foreach ($kriteria as $k)
+                    <div class="border border-gray-200 rounded-lg p-4">
+                        <div class="flex justify-between items-center mb-2">
+                            <h4 class="font-medium text-gray-900">{{ $k->kode }}</h4>
+                            <span
+                                class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                                {{ number_format($k->bobot, 3) }}
+                            </span>
+                        </div>
+                        <p class="text-sm text-gray-600">{{ $k->nama }}</p>
                     </div>
                 @endforeach
             </div>
 
             @php $totalBobot = $kriteria->sum('bobot'); @endphp
-            <div class="alert {{ abs($totalBobot - 1) < 0.001 ? 'alert-success' : 'alert-warning' }} mb-0">
-                <div class="d-flex justify-content-between align-items-center">
-                    <span>
+            <div class="border-t border-gray-200 pt-4">
+                <div
+                    class="flex items-center justify-between p-4 {{ abs($totalBobot - 1) < 0.001 ? 'bg-green-50 border border-green-200' : 'bg-yellow-50 border border-yellow-200' }} rounded-lg">
+                    <div class="flex items-center">
                         <i
-                            class="fas {{ abs($totalBobot - 1) < 0.001 ? 'fa-check-circle' : 'fa-exclamation-triangle' }} me-2"></i>
-                        Total Bobot: <strong>{{ number_format($totalBobot, 3) }}</strong>
-                    </span>
+                            class="fas {{ abs($totalBobot - 1) < 0.001 ? 'fa-check-circle text-green-600' : 'fa-exclamation-triangle text-yellow-600' }} mr-2"></i>
+                        <span class="font-medium text-gray-900">
+                            Total Bobot: {{ number_format($totalBobot, 3) }}
+                        </span>
+                    </div>
                     @if (abs($totalBobot - 1) >= 0.001)
-                        <a href="{{ route('admin.kriteria.index') }}" class="btn btn-sm btn-warning">
-                            <i class="fas fa-edit me-1"></i>
+                        <a href="{{ route('admin.kriteria.index') }}"
+                            class="inline-flex items-center px-3 py-1 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700 transition-colors text-sm">
+                            <i class="fas fa-edit mr-1"></i>
                             Sesuaikan Bobot
                         </a>
                     @endif

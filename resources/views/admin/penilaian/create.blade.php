@@ -4,29 +4,29 @@
 @section('breadcrumb', 'Admin / Nilai Alternatif / Input')
 
 @section('content')
-    <div class="page-header">
-        <h1 class="page-title">Input Penilaian Siswa</h1>
-        <p class="page-subtitle">Berikan nilai untuk setiap kriteria penilaian</p>
-    </div>
+    <div class="max-w-6xl mx-auto">
+        <!-- Header -->
+        <div class="mb-8">
+            <h2 class="text-2xl font-bold text-gray-900 mb-2">Input Penilaian Siswa</h2>
+            <p class="text-gray-600">Berikan nilai untuk setiap kriteria penilaian</p>
+        </div>
 
-    <form action="{{ route('admin.penilaian.store') }}" method="POST">
-        @csrf
+        <form action="{{ route('admin.penilaian.store') }}" method="POST">
+            @csrf
 
-        <div class="row">
-            <div class="col-lg-8">
-                <div class="card">
-                    <div class="card-header">
-                        <h5 class="card-title mb-0">
-                            <i class="fas fa-clipboard-check me-2"></i>
-                            Form Input Penilaian
-                        </h5>
-                    </div>
-                    <div class="card-body">
-                        <div class="mb-4">
-                            <label for="alternatif_id" class="form-label">Pilih Siswa <span
-                                    class="text-danger">*</span></label>
-                            <select class="form-control @error('alternatif_id') is-invalid @enderror" id="alternatif_id"
-                                name="alternatif_id" required>
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Form Section -->
+                <div class="lg:col-span-2">
+                    <div class="bg-white rounded-xl border border-gray-200 p-6">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-6">Form Input Penilaian</h3>
+
+                        <!-- Student Selection -->
+                        <div class="mb-6">
+                            <label for="alternatif_id" class="block text-sm font-medium text-gray-700 mb-2">Pilih
+                                Siswa</label>
+                            <select id="alternatif_id" name="alternatif_id"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 @error('alternatif_id') border-red-300 @enderror"
+                                required>
                                 <option value="">Pilih Siswa</option>
                                 @foreach ($alternatif as $siswa)
                                     <option value="{{ $siswa->id }}"
@@ -36,92 +36,114 @@
                                 @endforeach
                             </select>
                             @error('alternatif_id')
-                                <div class="invalid-feedback">{{ $message }}</div>
+                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                             @enderror
                         </div>
 
-                        <div class="row">
+                        <!-- Criteria Assessment -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             @foreach ($kriteria as $k)
-                                <div class="col-md-6 mb-4">
-                                    <div class="card border">
-                                        <div class="card-header py-2">
-                                            <h6 class="mb-0">
-                                                <span class="badge bg-primary me-2">{{ $k->kode }}</span>
-                                                {{ $k->nama }}
-                                            </h6>
-                                        </div>
-                                        <div class="card-body">
-                                            @foreach ($k->subkriteria->sortBy('skor') as $sub)
-                                                <div class="form-check mb-2">
-                                                    <input class="form-check-input" type="radio"
-                                                        name="nilai[{{ $k->id }}]"
-                                                        id="nilai_{{ $k->id }}_{{ $sub->skor }}"
-                                                        value="{{ $sub->skor }}"
-                                                        {{ old("nilai.{$k->id}") == $sub->skor ? 'checked' : '' }}>
-                                                    <label class="form-check-label"
-                                                        for="nilai_{{ $k->id }}_{{ $sub->skor }}">
-                                                        <span class="badge bg-secondary me-2">{{ $sub->skor }}</span>
-                                                        {{ $sub->nilai }}
-                                                    </label>
-                                                </div>
-                                            @endforeach
-                                            @error("nilai.{$k->id}")
-                                                <div class="text-danger small">{{ $message }}</div>
-                                            @enderror
-                                        </div>
+                                <div class="bg-gray-50 rounded-lg p-4 border border-gray-200">
+                                    <div class="mb-4">
+                                        <h4 class="font-medium text-gray-900 mb-1">
+                                            <span
+                                                class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 mr-2">
+                                                {{ $k->kode }}
+                                            </span>
+                                            {{ $k->nama }}
+                                        </h4>
+                                        <p class="text-sm text-gray-600">Bobot: {{ number_format($k->bobot, 3) }}</p>
                                     </div>
+
+                                    <div class="space-y-2">
+                                        @foreach ($k->subkriteria->sortBy('skor') as $sub)
+                                            <label
+                                                class="flex items-center p-2 border border-gray-200 rounded-lg hover:bg-white transition-colors cursor-pointer">
+                                                <input type="radio" name="nilai[{{ $k->id }}]"
+                                                    value="{{ $sub->skor }}"
+                                                    {{ old("nilai.{$k->id}") == $sub->skor ? 'checked' : '' }}
+                                                    class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500">
+                                                <div class="ml-3 flex-1">
+                                                    <div class="flex items-center justify-between">
+                                                        <span
+                                                            class="text-sm font-medium text-gray-900">{{ $sub->nilai }}</span>
+                                                        <span
+                                                            class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gray-200 text-gray-800">
+                                                            {{ $sub->skor }}
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </label>
+                                        @endforeach
+                                    </div>
+                                    @error("nilai.{$k->id}")
+                                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                    @enderror
                                 </div>
                             @endforeach
                         </div>
 
-                        <div class="d-flex gap-2">
-                            <button type="submit" class="btn btn-primary">
-                                <i class="fas fa-save me-2"></i>
+                        <div class="flex space-x-3 mt-8">
+                            <button type="submit"
+                                class="flex-1 inline-flex justify-center items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+                                <i class="fas fa-save mr-2"></i>
                                 Simpan Penilaian
                             </button>
-                            <a href="{{ route('admin.penilaian.index') }}" class="btn btn-secondary">
-                                <i class="fas fa-arrow-left me-2"></i>
+                            <a href="{{ route('admin.penilaian.index') }}"
+                                class="inline-flex items-center px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors">
+                                <i class="fas fa-arrow-left mr-2"></i>
                                 Kembali
                             </a>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="col-lg-4">
-                <div class="card">
-                    <div class="card-header">
-                        <h5 class="card-title mb-0">
-                            <i class="fas fa-info-circle me-2"></i>
-                            Panduan Penilaian
-                        </h5>
-                    </div>
-                    <div class="card-body">
-                        <div class="alert alert-info">
-                            <h6 class="alert-heading">Skala Penilaian PAUD</h6>
-                            <ul class="mb-0 ps-3">
-                                <li><strong>Skor 1:</strong> Belum Berkembang (BB)</li>
-                                <li><strong>Skor 2:</strong> Mulai Berkembang (MB)</li>
-                                <li><strong>Skor 3:</strong> Berkembang Sesuai Harapan (BSH)</li>
-                                <li><strong>Skor 4:</strong> Berkembang Sangat Baik (BSB)</li>
-                            </ul>
+                <!-- Sidebar -->
+                <div>
+                    <div class="bg-white rounded-xl border border-gray-200 p-6 mb-6">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-4">Panduan Penilaian</h3>
+                        <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4">
+                            <h4 class="font-medium text-blue-900 mb-2">Skala Penilaian PAUD</h4>
+                            <div class="space-y-2 text-sm text-blue-800">
+                                <div class="flex justify-between">
+                                    <span>Skor 1:</span>
+                                    <span class="font-medium">Belum Berkembang (BB)</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>Skor 2:</span>
+                                    <span class="font-medium">Mulai Berkembang (MB)</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>Skor 3:</span>
+                                    <span class="font-medium">Berkembang Sesuai Harapan (BSH)</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>Skor 4:</span>
+                                    <span class="font-medium">Berkembang Sangat Baik (BSB)</span>
+                                </div>
+                            </div>
                         </div>
+                    </div>
 
-                        <h6 class="mt-4 mb-3">Kriteria Penilaian:</h6>
-                        <div class="list-group list-group-flush">
+                    <div class="bg-white rounded-xl border border-gray-200 p-6">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-4">Kriteria Penilaian</h3>
+                        <div class="space-y-3">
                             @foreach ($kriteria as $k)
-                                <div class="list-group-item px-0 py-2">
-                                    <div class="d-flex justify-content-between">
-                                        <span class="fw-bold">{{ $k->kode }}</span>
-                                        <span class="badge bg-primary">{{ number_format($k->bobot, 3) }}</span>
+                                <div class="flex justify-between items-center p-2 bg-gray-50 rounded">
+                                    <div>
+                                        <span class="font-medium text-gray-900">{{ $k->kode }}</span>
+                                        <p class="text-xs text-gray-600">{{ $k->nama }}</p>
                                     </div>
-                                    <small class="text-muted">{{ $k->nama }}</small>
+                                    <span
+                                        class="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-blue-100 text-blue-800">
+                                        {{ number_format($k->bobot, 3) }}
+                                    </span>
                                 </div>
                             @endforeach
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </form>
+        </form>
+    </div>
 @endsection

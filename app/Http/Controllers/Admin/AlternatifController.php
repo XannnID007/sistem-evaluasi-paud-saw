@@ -8,9 +8,45 @@ use Illuminate\Http\Request;
 
 class AlternatifController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $alternatif = Alternatif::latest()->get();
+        $query = Alternatif::query();
+
+        // Search functionality
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('nama', 'like', "%{$search}%")
+                    ->orWhere('kode', 'like', "%{$search}%")
+                    ->orWhere('nama_orangtua', 'like', "%{$search}%");
+            });
+        }
+
+        // Filter by gender
+        if ($request->filled('jenis_kelamin')) {
+            $query->where('jenis_kelamin', $request->jenis_kelamin);
+        }
+
+        // Sorting
+        $sortBy = $request->get('sort', 'created_at');
+        $sortOrder = $request->get('order', 'desc');
+
+        // Validate sort columns
+        $allowedSorts = ['nama', 'kode', 'jenis_kelamin', 'tanggal_lahir', 'created_at'];
+        if (!in_array($sortBy, $allowedSorts)) {
+            $sortBy = 'created_at';
+        }
+
+        $query->orderBy($sortBy, $sortOrder);
+
+        // Per page
+        $perPage = $request->get('per_page', 10);
+        if (!in_array($perPage, [10, 25, 50, 100])) {
+            $perPage = 10;
+        }
+
+        $alternatif = $query->paginate($perPage)->withQueryString();
+
         return view('admin.alternatif.index', compact('alternatif'));
     }
 

@@ -4,154 +4,129 @@
 @section('breadcrumb', 'Admin / Data Siswa / Tambah')
 
 @section('content')
-    <div class="page-header">
-        <h1 class="page-title">Tambah Data Siswa</h1>
-        <p class="page-subtitle">Tambahkan data siswa baru untuk evaluasi perkembangan</p>
-    </div>
+    <div class="max-w-4xl mx-auto">
+        <!-- Header -->
+        <div class="mb-8">
+            <h2 class="text-2xl font-bold text-gray-900 mb-2">Tambah Data Siswa</h2>
+            <p class="text-gray-600">Tambahkan data siswa baru untuk evaluasi perkembangan</p>
+        </div>
 
-    <div class="row">
-        <div class="col-lg-8">
-            <div class="card">
-                <div class="card-header">
-                    <h5 class="card-title mb-0">
-                        <i class="fas fa-plus me-2"></i>
-                        Form Tambah Siswa
-                    </h5>
-                </div>
-                <div class="card-body">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <!-- Form -->
+            <div class="lg:col-span-2">
+                <div class="bg-white rounded-xl border border-gray-200 p-6">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-6">Form Tambah Siswa</h3>
+
                     <form action="{{ route('admin.alternatif.store') }}" method="POST">
                         @csrf
 
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label for="kode" class="form-label">Kode Siswa <span
-                                            class="text-danger">*</span></label>
-                                    <input type="text" class="form-control @error('kode') is-invalid @enderror"
-                                        id="kode" name="kode" value="{{ old('kode') }}"
-                                        placeholder="Contoh: A1, A2, A3" required>
-                                    @error('kode')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
-                                    <div class="form-text">Kode unik untuk mengidentifikasi siswa</div>
-                                </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                            <div>
+                                <label for="kode" class="block text-sm font-medium text-gray-700 mb-2">Kode
+                                    Siswa</label>
+                                <input type="text" id="kode" name="kode" value="{{ old('kode') }}"
+                                    placeholder="Contoh: A1, A2, A3"
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 @error('kode') border-red-300 @enderror"
+                                    required>
+                                @error('kode')
+                                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                @enderror
+                                <p class="mt-1 text-sm text-gray-500">Kode unik untuk mengidentifikasi siswa</p>
                             </div>
 
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label for="nama" class="form-label">Nama Lengkap <span
-                                            class="text-danger">*</span></label>
-                                    <input type="text" class="form-control @error('nama') is-invalid @enderror"
-                                        id="nama" name="nama" value="{{ old('nama') }}"
-                                        placeholder="Nama lengkap siswa" required>
-                                    @error('nama')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
-                                </div>
+                            <div>
+                                <label for="nama" class="block text-sm font-medium text-gray-700 mb-2">Nama
+                                    Lengkap</label>
+                                <input type="text" id="nama" name="nama" value="{{ old('nama') }}"
+                                    placeholder="Nama lengkap siswa"
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 @error('nama') border-red-300 @enderror"
+                                    required>
+                                @error('nama')
+                                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                @enderror
                             </div>
                         </div>
 
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label for="jenis_kelamin" class="form-label">Jenis Kelamin <span
-                                            class="text-danger">*</span></label>
-                                    <select class="form-control @error('jenis_kelamin') is-invalid @enderror"
-                                        id="jenis_kelamin" name="jenis_kelamin" required>
-                                        <option value="">Pilih Jenis Kelamin</option>
-                                        <option value="L" {{ old('jenis_kelamin') == 'L' ? 'selected' : '' }}>Laki-laki
-                                        </option>
-                                        <option value="P" {{ old('jenis_kelamin') == 'P' ? 'selected' : '' }}>Perempuan
-                                        </option>
-                                    </select>
-                                    @error('jenis_kelamin')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
-                                </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                            <div>
+                                <label for="jenis_kelamin" class="block text-sm font-medium text-gray-700 mb-2">Jenis
+                                    Kelamin</label>
+                                <select id="jenis_kelamin" name="jenis_kelamin"
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 @error('jenis_kelamin') border-red-300 @enderror"
+                                    required>
+                                    <option value="">Pilih Jenis Kelamin</option>
+                                    <option value="L" {{ old('jenis_kelamin') == 'L' ? 'selected' : '' }}>Laki-laki
+                                    </option>
+                                    <option value="P" {{ old('jenis_kelamin') == 'P' ? 'selected' : '' }}>Perempuan
+                                    </option>
+                                </select>
+                                @error('jenis_kelamin')
+                                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                @enderror
                             </div>
 
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label for="tanggal_lahir" class="form-label">Tanggal Lahir <span
-                                            class="text-danger">*</span></label>
-                                    <input type="date" class="form-control @error('tanggal_lahir') is-invalid @enderror"
-                                        id="tanggal_lahir" name="tanggal_lahir" value="{{ old('tanggal_lahir') }}" required>
-                                    @error('tanggal_lahir')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
-                                </div>
+                            <div>
+                                <label for="tanggal_lahir" class="block text-sm font-medium text-gray-700 mb-2">Tanggal
+                                    Lahir</label>
+                                <input type="date" id="tanggal_lahir" name="tanggal_lahir"
+                                    value="{{ old('tanggal_lahir') }}"
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 @error('tanggal_lahir') border-red-300 @enderror"
+                                    required>
+                                @error('tanggal_lahir')
+                                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                @enderror
                             </div>
                         </div>
 
-                        <div class="mb-3">
-                            <label for="nama_orangtua" class="form-label">Nama Orang Tua</label>
-                            <input type="text" class="form-control @error('nama_orangtua') is-invalid @enderror"
-                                id="nama_orangtua" name="nama_orangtua" value="{{ old('nama_orangtua') }}"
-                                placeholder="Nama ayah/ibu">
+                        <div class="mb-6">
+                            <label for="nama_orangtua" class="block text-sm font-medium text-gray-700 mb-2">Nama Orang
+                                Tua</label>
+                            <input type="text" id="nama_orangtua" name="nama_orangtua"
+                                value="{{ old('nama_orangtua') }}" placeholder="Nama ayah/ibu"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 @error('nama_orangtua') border-red-300 @enderror">
                             @error('nama_orangtua')
-                                <div class="invalid-feedback">{{ $message }}</div>
+                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                             @enderror
                         </div>
 
-                        <div class="mb-4">
-                            <label for="alamat" class="form-label">Alamat</label>
-                            <textarea class="form-control @error('alamat') is-invalid @enderror" id="alamat" name="alamat" rows="3"
-                                placeholder="Alamat lengkap siswa">{{ old('alamat') }}</textarea>
+                        <div class="mb-6">
+                            <label for="alamat" class="block text-sm font-medium text-gray-700 mb-2">Alamat</label>
+                            <textarea id="alamat" name="alamat" rows="3" placeholder="Alamat lengkap siswa"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 @error('alamat') border-red-300 @enderror">{{ old('alamat') }}</textarea>
                             @error('alamat')
-                                <div class="invalid-feedback">{{ $message }}</div>
+                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                             @enderror
                         </div>
 
-                        <div class="d-flex gap-2">
-                            <button type="submit" class="btn btn-primary">
-                                <i class="fas fa-save me-2"></i>
+                        <div class="flex space-x-3">
+                            <button type="submit"
+                                class="flex-1 inline-flex justify-center items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+                                <i class="fas fa-save mr-2"></i>
                                 Simpan Siswa
                             </button>
-                            <a href="{{ route('admin.alternatif.index') }}" class="btn btn-secondary">
-                                <i class="fas fa-arrow-left me-2"></i>
+                            <a href="{{ route('admin.alternatif.index') }}"
+                                class="inline-flex items-center px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors">
+                                <i class="fas fa-arrow-left mr-2"></i>
                                 Kembali
                             </a>
                         </div>
                     </form>
                 </div>
             </div>
-        </div>
 
-        <div class="col-lg-4">
-            <div class="card">
-                <div class="card-header">
-                    <h5 class="card-title mb-0">
-                        <i class="fas fa-info-circle me-2"></i>
-                        Panduan Input Data
-                    </h5>
-                </div>
-                <div class="card-body">
-                    <div class="alert alert-info">
-                        <h6 class="alert-heading">
-                            <i class="fas fa-lightbulb me-2"></i>
-                            Tips Penting
-                        </h6>
-                        <ul class="mb-0 ps-3">
-                            <li>Gunakan kode siswa yang unik dan mudah diingat</li>
-                            <li>Pastikan nama siswa ditulis dengan benar</li>
-                            <li>Tanggal lahir digunakan untuk menghitung umur</li>
-                            <li>Data orang tua dan alamat bersifat opsional</li>
-                        </ul>
-                    </div>
-
-                    <h6 class="mt-4 mb-3">Rentang Umur PAUD:</h6>
-                    <div class="list-group list-group-flush">
-                        <div class="list-group-item px-0 py-2">
-                            <div class="d-flex justify-content-between">
-                                <span class="fw-bold">Kelompok A</span>
-                                <span class="badge bg-primary">4-5 tahun</span>
-                            </div>
-                        </div>
-                        <div class="list-group-item px-0 py-2">
-                            <div class="d-flex justify-content-between">
-                                <span class="fw-bold">Kelompok B</span>
-                                <span class="badge bg-primary">5-6 tahun</span>
-                            </div>
+            <!-- Sidebar -->
+            <div>
+                <div class="bg-white rounded-xl border border-gray-200 p-6">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4">Panduan Input Data</h3>
+                    <div class="space-y-4">
+                        <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                            <h4 class="font-medium text-blue-900 mb-2">Tips Penting</h4>
+                            <ul class="text-sm text-blue-800 space-y-1">
+                                <li>• Gunakan kode siswa yang unik dan mudah diingat</li>
+                                <li>• Pastikan nama siswa ditulis dengan benar</li>
+                                <li>• Tanggal lahir digunakan untuk menghitung umur</li>
+                                <li>• Data orang tua dan alamat bersifat opsional</li>
+                            </ul>
                         </div>
                     </div>
                 </div>

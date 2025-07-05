@@ -117,19 +117,19 @@
                     <a href="{{ route('admin.alternatif.index') }}"
                         class="flex items-center px-3 py-2 text-sm font-medium rounded-lg transition-colors {{ request()->routeIs('admin.alternatif.*') ? 'nav-link-active' : 'text-gray-700 hover:bg-gray-100' }}">
                         <i class="fas fa-users w-5 h-5 mr-3"></i>
-                        Data Siswa
+                        Data Alternatif
                     </a>
 
                     <a href="{{ route('admin.penilaian.index') }}"
                         class="flex items-center px-3 py-2 text-sm font-medium rounded-lg transition-colors {{ request()->routeIs('admin.penilaian.*') ? 'nav-link-active' : 'text-gray-700 hover:bg-gray-100' }}">
                         <i class="fas fa-clipboard-check w-5 h-5 mr-3"></i>
-                        Nilai Alternatif
+                        Data Nilai Alternatif
                     </a>
 
                     <a href="{{ route('admin.saw.index') }}"
                         class="flex items-center px-3 py-2 text-sm font-medium rounded-lg transition-colors {{ request()->routeIs('admin.saw.*') ? 'nav-link-active' : 'text-gray-700 hover:bg-gray-100' }}">
                         <i class="fas fa-calculator w-5 h-5 mr-3"></i>
-                        Perhitungan SAW
+                        Data Perhitungan SAW
                     </a>
 
                     <a href="{{ route('admin.users.index') }}"

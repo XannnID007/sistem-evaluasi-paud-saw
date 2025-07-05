@@ -4,166 +4,168 @@
 @section('breadcrumb', 'Admin / Kelola User / Tambah')
 
 @section('content')
-    <div class="page-header">
-        <h1 class="page-title">Tambah User Baru</h1>
-        <p class="page-subtitle">Buat akun baru untuk admin atau guru</p>
-    </div>
+    <div class="max-w-4xl mx-auto">
+        <!-- Header -->
+        <div class="mb-8">
+            <h2 class="text-2xl font-bold text-gray-900 mb-2">Tambah User Baru</h2>
+            <p class="text-gray-600">Buat akun baru untuk admin atau guru</p>
+        </div>
 
-    <div class="row">
-        <div class="col-lg-8">
-            <div class="card">
-                <div class="card-header">
-                    <h5 class="card-title mb-0">
-                        <i class="fas fa-plus me-2"></i>
-                        Form Tambah User
-                    </h5>
-                </div>
-                <div class="card-body">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <!-- Form -->
+            <div class="lg:col-span-2">
+                <div class="bg-white rounded-xl border border-gray-200 p-6">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-6">Form Tambah User</h3>
+
                     <form action="{{ route('admin.users.store') }}" method="POST">
                         @csrf
 
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label for="name" class="form-label">Nama Lengkap <span
-                                            class="text-danger">*</span></label>
-                                    <input type="text" class="form-control @error('name') is-invalid @enderror"
-                                        id="name" name="name" value="{{ old('name') }}" required>
-                                    @error('name')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
-                                </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                            <div>
+                                <label for="name" class="block text-sm font-medium text-gray-700 mb-2">Nama
+                                    Lengkap</label>
+                                <input type="text" id="name" name="name" value="{{ old('name') }}"
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 @error('name') border-red-300 @enderror"
+                                    required>
+                                @error('name')
+                                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                @enderror
                             </div>
 
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label for="email" class="form-label">Email <span
-                                            class="text-danger">*</span></label>
-                                    <input type="email" class="form-control @error('email') is-invalid @enderror"
-                                        id="email" name="email" value="{{ old('email') }}" required>
-                                    @error('email')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
-                                </div>
+                            <div>
+                                <label for="email" class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                                <input type="email" id="email" name="email" value="{{ old('email') }}"
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 @error('email') border-red-300 @enderror"
+                                    required>
+                                @error('email')
+                                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                @enderror
                             </div>
                         </div>
 
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label for="password" class="form-label">Password Baru</label>
-                                    <input type="password" class="form-control @error('password') is-invalid @enderror"
-                                        id="password" name="password">
-                                    @error('password')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
-                                    <div class="form-text">Kosongkan jika tidak ingin mengubah password</div>
-                                </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                            <div>
+                                <label for="password" class="block text-sm font-medium text-gray-700 mb-2">Password</label>
+                                <input type="password" id="password" name="password"
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 @error('password') border-red-300 @enderror"
+                                    required>
+                                @error('password')
+                                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                @enderror
+                                <p class="mt-1 text-sm text-gray-500">Minimal 6 karakter</p>
                             </div>
 
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label for="role" class="form-label">Role <span class="text-danger">*</span></label>
-                                    <select class="form-control @error('role') is-invalid @enderror" id="role"
-                                        name="role" required>
-                                        <option value="">Pilih Role</option>
-                                        <option value="admin" {{ old('role', $user->role) == 'admin' ? 'selected' : '' }}>
-                                            Admin</option>
-                                        <option value="guru" {{ old('role', $user->role) == 'guru' ? 'selected' : '' }}>
-                                            Guru</option>
-                                    </select>
-                                    @error('role')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
-                                </div>
+                            <div>
+                                <label for="role" class="block text-sm font-medium text-gray-700 mb-2">Role</label>
+                                <select id="role" name="role"
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 @error('role') border-red-300 @enderror"
+                                    required>
+                                    <option value="">Pilih Role</option>
+                                    <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }}>Admin</option>
+                                    <option value="guru" {{ old('role') == 'guru' ? 'selected' : '' }}>Guru</option>
+                                </select>
+                                @error('role')
+                                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                @enderror
                             </div>
                         </div>
 
-                        @if ($user->id == auth()->id())
-                            <div class="alert alert-warning">
-                                <i class="fas fa-exclamation-triangle me-2"></i>
-                                <strong>Perhatian:</strong> Anda sedang mengedit akun Anda sendiri. Pastikan data sudah
-                                benar sebelum menyimpan.
-                            </div>
-                        @endif
-
-                        <div class="d-flex gap-2">
-                            <button type="submit" class="btn btn-primary">
-                                <i class="fas fa-save me-2"></i>
-                                Update User
+                        <div class="flex space-x-3">
+                            <button type="submit"
+                                class="flex-1 inline-flex justify-center items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+                                <i class="fas fa-save mr-2"></i>
+                                Simpan User
                             </button>
-                            <a href="{{ route('admin.users.index') }}" class="btn btn-secondary">
-                                <i class="fas fa-arrow-left me-2"></i>
+                            <a href="{{ route('admin.users.index') }}"
+                                class="inline-flex items-center px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors">
+                                <i class="fas fa-arrow-left mr-2"></i>
                                 Kembali
                             </a>
                         </div>
                     </form>
                 </div>
             </div>
-        </div>
 
-        <div class="col-lg-4">
-            <div class="card">
-                <div class="card-header">
-                    <h5 class="card-title mb-0">
-                        <i class="fas fa-user me-2"></i>
-                        Info User
-                    </h5>
-                </div>
-                <div class="card-body">
-                    <div class="text-center mb-3">
-                        <div class="avatar bg-{{ $user->role == 'admin' ? 'danger' : 'primary' }} text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3"
-                            style="width: 80px; height: 80px; font-size: 2rem;">
-                            {{ strtoupper(substr($user->name, 0, 1)) }}
+            <!-- Sidebar -->
+            <div>
+                <div class="bg-white rounded-xl border border-gray-200 p-6 mb-6">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4">Informasi Role</h3>
+                    <div class="space-y-6">
+                        <div>
+                            <h4 class="font-medium text-red-600 mb-3">
+                                <i class="fas fa-shield-alt mr-2"></i>
+                                Admin
+                            </h4>
+                            <ul class="space-y-2 text-sm text-gray-600">
+                                <li class="flex items-center">
+                                    <i class="fas fa-check text-green-500 mr-2"></i>
+                                    Kelola semua data
+                                </li>
+                                <li class="flex items-center">
+                                    <i class="fas fa-check text-green-500 mr-2"></i>
+                                    Input penilaian
+                                </li>
+                                <li class="flex items-center">
+                                    <i class="fas fa-check text-green-500 mr-2"></i>
+                                    Proses SAW
+                                </li>
+                                <li class="flex items-center">
+                                    <i class="fas fa-check text-green-500 mr-2"></i>
+                                    Kelola user
+                                </li>
+                            </ul>
                         </div>
-                        <h6 class="mb-1">{{ $user->name }}</h6>
-                        <p class="text-muted mb-0">{{ $user->email }}</p>
+
+                        <div>
+                            <h4 class="font-medium text-blue-600 mb-3">
+                                <i class="fas fa-user-tie mr-2"></i>
+                                Guru
+                            </h4>
+                            <ul class="space-y-2 text-sm text-gray-600">
+                                <li class="flex items-center">
+                                    <i class="fas fa-check text-green-500 mr-2"></i>
+                                    Lihat hasil evaluasi
+                                </li>
+                                <li class="flex items-center">
+                                    <i class="fas fa-check text-green-500 mr-2"></i>
+                                    Kelola profile
+                                </li>
+                                <li class="flex items-center">
+                                    <i class="fas fa-times text-red-500 mr-2"></i>
+                                    Tidak bisa edit data
+                                </li>
+                            </ul>
+                        </div>
                     </div>
 
-                    <div class="list-group list-group-flush">
-                        <div class="list-group-item d-flex justify-content-between align-items-center px-0">
-                            <span>Role</span>
-                            <span class="badge bg-{{ $user->role == 'admin' ? 'danger' : 'primary' }}">
-                                {{ ucfirst($user->role) }}
-                            </span>
+                    <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mt-6">
+                        <div class="flex">
+                            <i class="fas fa-exclamation-triangle text-yellow-600 mr-2 mt-0.5"></i>
+                            <p class="text-sm text-yellow-800">
+                                <strong>Perhatian:</strong> Role yang dipilih akan menentukan hak akses user dalam sistem.
+                            </p>
                         </div>
-                        <div class="list-group-item d-flex justify-content-between align-items-center px-0">
-                            <span>Status</span>
-                            <span class="badge bg-success">Aktif</span>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl border border-gray-200 p-6">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4">Tips Keamanan</h3>
+                    <div class="space-y-3 text-sm text-gray-600">
+                        <div class="flex items-start">
+                            <i class="fas fa-shield-alt text-blue-500 mr-2 mt-0.5"></i>
+                            <span>Gunakan password yang kuat minimal 6 karakter</span>
                         </div>
-                        <div class="list-group-item d-flex justify-content-between align-items-center px-0">
-                            <span>Terdaftar</span>
-                            <span class="text-muted">{{ $user->created_at->format('d M Y') }}</span>
+                        <div class="flex items-start">
+                            <i class="fas fa-key text-blue-500 mr-2 mt-0.5"></i>
+                            <span>Kombinasi huruf besar, kecil, angka dan simbol</span>
                         </div>
-                        <div class="list-group-item d-flex justify-content-between align-items-center px-0">
-                            <span>Update Terakhir</span>
-                            <span class="text-muted">{{ $user->updated_at->format('d M Y') }}</span>
+                        <div class="flex items-start">
+                            <i class="fas fa-user-check text-blue-500 mr-2 mt-0.5"></i>
+                            <span>Pastikan email yang digunakan aktif dan valid</span>
                         </div>
                     </div>
                 </div>
             </div>
-
-            @if ($user->role == 'guru')
-                <div class="card mt-4">
-                    <div class="card-header">
-                        <h5 class="card-title mb-0">
-                            <i class="fas fa-key me-2"></i>
-                            Akses Guru
-                        </h5>
-                    </div>
-                    <div class="card-body">
-                        <div class="alert alert-info">
-                            <h6 class="alert-heading">Hak Akses:</h6>
-                            <ul class="mb-0 ps-3">
-                                <li>Dashboard informasi</li>
-                                <li>Lihat hasil evaluasi siswa</li>
-                                <li>Kelola profile sendiri</li>
-                                <li>Tidak dapat mengubah data sistem</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            @endif
         </div>
     </div>
 @endsection

@@ -166,54 +166,6 @@
                         </button>
                     </form>
                 </div>
-
-                <!-- Security Tips -->
-                <div class="bg-white rounded-xl border border-gray-200 p-6">
-                    <h3 class="text-lg font-semibold text-gray-900 mb-4">Tips Keamanan</h3>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div>
-                            <h4 class="font-medium text-green-600 mb-3">
-                                <i class="fas fa-check-circle mr-2"></i>
-                                Yang Harus Dilakukan:
-                            </h4>
-                            <ul class="space-y-2 text-sm text-gray-600">
-                                <li class="flex items-start">
-                                    <i class="fas fa-check text-green-500 mr-2 mt-0.5"></i>
-                                    Gunakan password yang kuat (min. 8 karakter)
-                                </li>
-                                <li class="flex items-start">
-                                    <i class="fas fa-check text-green-500 mr-2 mt-0.5"></i>
-                                    Kombinasi huruf besar, kecil, angka, dan simbol
-                                </li>
-                                <li class="flex items-start">
-                                    <i class="fas fa-check text-green-500 mr-2 mt-0.5"></i>
-                                    Logout setelah selesai menggunakan sistem
-                                </li>
-                            </ul>
-                        </div>
-
-                        <div>
-                            <h4 class="font-medium text-red-600 mb-3">
-                                <i class="fas fa-times-circle mr-2"></i>
-                                Yang Harus Dihindari:
-                            </h4>
-                            <ul class="space-y-2 text-sm text-gray-600">
-                                <li class="flex items-start">
-                                    <i class="fas fa-times text-red-500 mr-2 mt-0.5"></i>
-                                    Menggunakan password yang mudah ditebak
-                                </li>
-                                <li class="flex items-start">
-                                    <i class="fas fa-times text-red-500 mr-2 mt-0.5"></i>
-                                    Membagikan akun dengan orang lain
-                                </li>
-                                <li class="flex items-start">
-                                    <i class="fas fa-times text-red-500 mr-2 mt-0.5"></i>
-                                    Mengakses dari komputer umum/tidak aman
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </div>

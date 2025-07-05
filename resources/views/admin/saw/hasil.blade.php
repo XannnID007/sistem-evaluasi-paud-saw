@@ -4,172 +4,244 @@
 @section('breadcrumb', 'Admin / Perhitungan SAW / Hasil')
 
 @section('content')
-    <div class="page-header">
-        <div class="d-flex justify-content-between align-items-center">
+    @include('components.pagination-styles')
+    <div class="max-w-7xl mx-auto">
+        <!-- Header -->
+        <div class="flex justify-between items-center mb-8">
             <div>
-                <h1 class="page-title">Hasil Perhitungan SAW</h1>
-                <p class="page-subtitle">Ranking evaluasi perkembangan anak berdasarkan metode SAW</p>
+                <h2 class="text-2xl font-bold text-gray-900 mb-2">Hasil Perhitungan SAW</h2>
+                <p class="text-gray-600">Ranking evaluasi perkembangan anak berdasarkan metode SAW</p>
             </div>
-            <div class="d-flex gap-2">
-                <a href="{{ route('admin.saw.index') }}" class="btn btn-secondary">
-                    <i class="fas fa-arrow-left me-2"></i>
+            <div class="flex space-x-3">
+                <a href="{{ route('admin.saw.index') }}"
+                    class="inline-flex items-center px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors">
+                    <i class="fas fa-arrow-left mr-2"></i>
                     Kembali
                 </a>
-                <button class="btn btn-primary" onclick="window.print()">
-                    <i class="fas fa-print me-2"></i>
+                <button onclick="window.print()"
+                    class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+                    <i class="fas fa-print mr-2"></i>
                     Cetak Laporan
                 </button>
             </div>
         </div>
-    </div>
 
-    @if ($hasil->count() > 0)
-        <!-- Ringkasan Hasil -->
-        <div class="row g-4 mb-4">
-            <div class="col-md-3">
-                <div class="card">
-                    <div class="card-body text-center">
-                        <div class="bg-success bg-gradient rounded-circle d-inline-flex align-items-center justify-content-center mb-3"
-                            style="width: 60px; height: 60px;">
-                            <i class="fas fa-trophy text-white fs-4"></i>
+        @if ($hasil->count() > 0)
+            <!-- Summary Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+                <div class="bg-white rounded-xl border border-gray-200 p-6">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <div class="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-trophy text-yellow-600 text-xl"></i>
+                            </div>
                         </div>
-                        <h6 class="card-title">Peringkat 1</h6>
-                        <p class="card-text">
-                            <strong>{{ $hasil->first()->alternatif->nama }}</strong><br>
-                            <span class="badge bg-success">{{ number_format($hasil->first()->skor_akhir, 4) }}</span>
-                        </p>
+                        <div class="ml-4">
+                            <p class="text-sm font-medium text-gray-600">Peringkat 1</p>
+                            <p class="text-lg font-semibold text-gray-900">{{ $hasil->first()->alternatif->nama }}</p>
+                            <p class="text-xs text-gray-500">
+                                Skor: {{ number_format($hasil->first()->skor_akhir, 4) }}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl border border-gray-200 p-6">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-star text-green-600 text-xl"></i>
+                            </div>
+                        </div>
+                        <div class="ml-4">
+                            <p class="text-sm font-medium text-gray-600">Sangat Baik</p>
+                            <p class="text-2xl font-semibold text-gray-900">
+                                {{ $hasil->where('kategori', 'Sangat Baik')->count() }}
+                            </p>
+                            <p class="text-xs text-gray-500">Skor ≥ 0.8</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl border border-gray-200 p-6">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-thumbs-up text-blue-600 text-xl"></i>
+                            </div>
+                        </div>
+                        <div class="ml-4">
+                            <p class="text-sm font-medium text-gray-600">Baik</p>
+                            <p class="text-2xl font-semibold text-gray-900">
+                                {{ $hasil->where('kategori', 'Baik')->count() }}
+                            </p>
+                            <p class="text-xs text-gray-500">Skor 0.6 - 0.79</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl border border-gray-200 p-6">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-users text-purple-600 text-xl"></i>
+                            </div>
+                        </div>
+                        <div class="ml-4">
+                            <p class="text-sm font-medium text-gray-600">Total Siswa</p>
+                            <p class="text-2xl font-semibold text-gray-900">{{ $hasil->count() }}</p>
+                            <p class="text-xs text-gray-500">telah dievaluasi</p>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <div class="col-md-3">
-                <div class="card">
-                    <div class="card-body text-center">
-                        <i class="fas fa-chart-pie text-success mb-3" style="font-size: 2.5rem;"></i>
-                        <h6 class="card-title">Sangat Baik</h6>
-                        <p class="card-text">
-                            <strong>{{ $hasil->where('kategori', 'Sangat Baik')->count() }}</strong> siswa<br>
-                            <small class="text-muted">Skor ≥ 0.8</small>
-                        </p>
+            <div class="bg-white rounded-xl border border-gray-200 p-6 mb-6">
+                <form method="GET" class="flex flex-col sm:flex-row gap-4">
+                    <div class="flex-1">
+                        <input type="text" name="search" value="{{ request('search') }}"
+                            placeholder="Cari nama atau kode siswa..."
+                            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                     </div>
-                </div>
+                    <div>
+                        <select name="kategori"
+                            class="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                            <option value="">Semua Kategori</option>
+                            <option value="Sangat Baik" {{ request('kategori') == 'Sangat Baik' ? 'selected' : '' }}>Sangat
+                                Baik</option>
+                            <option value="Baik" {{ request('kategori') == 'Baik' ? 'selected' : '' }}>Baik</option>
+                            <option value="Cukup" {{ request('kategori') == 'Cukup' ? 'selected' : '' }}>Cukup</option>
+                            <option value="Kurang" {{ request('kategori') == 'Kurang' ? 'selected' : '' }}>Kurang</option>
+                        </select>
+                    </div>
+                    <div class="flex gap-2">
+                        <button type="submit"
+                            class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+                            <i class="fas fa-search mr-2"></i>Cari
+                        </button>
+                        <a href="{{ route('admin.saw.hasil') }}"
+                            class="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors">
+                            <i class="fas fa-refresh mr-2"></i>Reset
+                        </a>
+                    </div>
+                </form>
             </div>
 
-            <div class="col-md-3">
-                <div class="card">
-                    <div class="card-body text-center">
-                        <i class="fas fa-chart-line text-primary mb-3" style="font-size: 2.5rem;"></i>
-                        <h6 class="card-title">Baik</h6>
-                        <p class="card-text">
-                            <strong>{{ $hasil->where('kategori', 'Baik')->count() }}</strong> siswa<br>
-                            <small class="text-muted">Skor 0.6 - 0.79</small>
-                        </p>
-                    </div>
+            <!-- Results Table -->
+            <div class="bg-white rounded-xl border border-gray-200 overflow-hidden mb-8">
+                <div class="px-6 py-4 border-b border-gray-200 flex justify-between items-center">
+                    <h3 class="text-lg font-semibold text-gray-900">Ranking Hasil Evaluasi</h3>
+                    <x-per-page-selector />
                 </div>
-            </div>
 
-            <div class="col-md-3">
-                <div class="card">
-                    <div class="card-body text-center">
-                        <i class="fas fa-users text-warning mb-3" style="font-size: 2.5rem;"></i>
-                        <h6 class="card-title">Total Siswa</h6>
-                        <p class="card-text">
-                            <strong>{{ $hasil->count() }}</strong> siswa<br>
-                            <small class="text-muted">telah dievaluasi</small>
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Tabel Hasil Ranking -->
-        <div class="card">
-            <div class="card-header">
-                <h5 class="card-title mb-0">
-                    <i class="fas fa-list-ol me-2"></i>
-                    Ranking Hasil Evaluasi
-                </h5>
-            </div>
-            <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table table-hover">
-                        <thead>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
                             <tr>
-                                <th>Ranking</th>
-                                <th>Kode</th>
-                                <th>Nama Siswa</th>
-                                <th>Skor Akhir</th>
-                                <th>Kategori</th>
-                                <th>Status</th>
+                                <x-sortable-header column="ranking" title="Ranking" />
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Siswa</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Jenis Kelamin</th>
+                                <x-sortable-header column="skor_akhir" title="Skor Akhir" />
+                                <x-sortable-header column="kategori" title="Kategori" />
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Status</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody class="bg-white divide-y divide-gray-200">
                             @foreach ($hasil as $item)
-                                <tr>
-                                    <td>
+                                <tr class="hover:bg-gray-50">
+                                    <td class="px-6 py-4 whitespace-nowrap">
                                         @if ($item->ranking == 1)
-                                            <span class="badge bg-warning fs-6">
-                                                <i class="fas fa-trophy me-1"></i>
+                                            <span
+                                                class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-yellow-100 text-yellow-800">
+                                                <i class="fas fa-trophy mr-1"></i>
                                                 {{ $item->ranking }}
                                             </span>
                                         @elseif($item->ranking == 2)
-                                            <span class="badge bg-secondary fs-6">
-                                                <i class="fas fa-medal me-1"></i>
+                                            <span
+                                                class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-gray-100 text-gray-800">
+                                                <i class="fas fa-medal mr-1"></i>
                                                 {{ $item->ranking }}
                                             </span>
                                         @elseif($item->ranking == 3)
-                                            <span class="badge bg-warning fs-6" style="background: #cd7f32 !important;">
-                                                <i class="fas fa-award me-1"></i>
+                                            <span
+                                                class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-orange-100 text-orange-800">
+                                                <i class="fas fa-award mr-1"></i>
                                                 {{ $item->ranking }}
                                             </span>
                                         @else
-                                            <span class="badge bg-light text-dark fs-6">{{ $item->ranking }}</span>
+                                            <span
+                                                class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-gray-100 text-gray-800">
+                                                {{ $item->ranking }}
+                                            </span>
                                         @endif
                                     </td>
-                                    <td>
-                                        <span class="badge bg-primary">{{ $item->alternatif->kode }}</span>
-                                    </td>
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            <div class="avatar bg-primary text-white rounded-circle d-flex align-items-center justify-content-center me-3"
-                                                style="width: 40px; height: 40px;">
-                                                {{ strtoupper(substr($item->alternatif->nama, 0, 1)) }}
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <div
+                                                class="w-10 h-10 bg-primary-500 rounded-full flex items-center justify-center mr-3">
+                                                <span class="text-white text-sm font-medium">
+                                                    {{ strtoupper(substr($item->alternatif->nama, 0, 1)) }}
+                                                </span>
                                             </div>
                                             <div>
-                                                <strong>{{ $item->alternatif->nama }}</strong>
-                                                <br><small
-                                                    class="text-muted">{{ $item->alternatif->jenis_kelamin == 'L' ? 'Laki-laki' : 'Perempuan' }}</small>
+                                                <div class="font-medium text-gray-900">{{ $item->alternatif->nama }}</div>
+                                                <div class="text-sm text-gray-500">{{ $item->alternatif->kode }}</div>
                                             </div>
                                         </div>
                                     </td>
-                                    <td>
-                                        <span class="badge bg-info fs-6">{{ number_format($item->skor_akhir, 4) }}</span>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span
+                                            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium {{ $item->alternatif->jenis_kelamin == 'L' ? 'bg-blue-100 text-blue-800' : 'bg-pink-100 text-pink-800' }}">
+                                            <i
+                                                class="fas {{ $item->alternatif->jenis_kelamin == 'L' ? 'fa-mars' : 'fa-venus' }} mr-1"></i>
+                                            {{ $item->alternatif->jenis_kelamin == 'L' ? 'Laki-laki' : 'Perempuan' }}
+                                        </span>
                                     </td>
-                                    <td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span
+                                            class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-indigo-100 text-indigo-800">
+                                            {{ number_format($item->skor_akhir, 4) }}
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
                                         @php
                                             $badgeClass = match ($item->kategori) {
-                                                'Sangat Baik' => 'bg-success',
-                                                'Baik' => 'bg-primary',
-                                                'Cukup' => 'bg-warning',
-                                                'Kurang' => 'bg-danger',
-                                                default => 'bg-secondary',
+                                                'Sangat Baik' => 'bg-green-100 text-green-800',
+                                                'Baik' => 'bg-blue-100 text-blue-800',
+                                                'Cukup' => 'bg-yellow-100 text-yellow-800',
+                                                'Kurang' => 'bg-red-100 text-red-800',
+                                                default => 'bg-gray-100 text-gray-800',
                                             };
                                         @endphp
-                                        <span class="badge {{ $badgeClass }}">{{ $item->kategori }}</span>
+                                        <span
+                                            class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium {{ $badgeClass }}">
+                                            {{ $item->kategori }}
+                                        </span>
                                     </td>
-                                    <td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
                                         @if ($item->kategori == 'Sangat Baik')
-                                            <i class="fas fa-star text-success me-1"></i>
-                                            <span class="text-success">Berkembang Optimal</span>
+                                            <span class="text-green-600">
+                                                <i class="fas fa-star mr-1"></i>
+                                                Berkembang Optimal
+                                            </span>
                                         @elseif($item->kategori == 'Baik')
-                                            <i class="fas fa-thumbs-up text-primary me-1"></i>
-                                            <span class="text-primary">Berkembang Sesuai Harapan</span>
+                                            <span class="text-blue-600">
+                                                <i class="fas fa-thumbs-up mr-1"></i>
+                                                Berkembang Sesuai Harapan
+                                            </span>
                                         @elseif($item->kategori == 'Cukup')
-                                            <i class="fas fa-clock text-warning me-1"></i>
-                                            <span class="text-warning">Mulai Berkembang</span>
+                                            <span class="text-yellow-600">
+                                                <i class="fas fa-clock mr-1"></i>
+                                                Mulai Berkembang
+                                            </span>
                                         @else
-                                            <i class="fas fa-exclamation-triangle text-danger me-1"></i>
-                                            <span class="text-danger">Perlu Perhatian</span>
+                                            <span class="text-red-600">
+                                                <i class="fas fa-exclamation-triangle mr-1"></i>
+                                                Perlu Perhatian
+                                            </span>
                                         @endif
                                     </td>
                                 </tr>
@@ -177,154 +249,53 @@
                         </tbody>
                     </table>
                 </div>
-            </div>
-        </div>
 
-        <!-- Grafik Distribusi -->
-        <div class="card mt-4">
-            <div class="card-header">
-                <h5 class="card-title mb-0">
-                    <i class="fas fa-chart-bar me-2"></i>
-                    Distribusi Kategori Perkembangan
-                </h5>
-            </div>
-            <div class="card-body">
-                <div class="row">
-                    @php
-                        $categories = [
-                            'Sangat Baik' => [
-                                'count' => $hasil->where('kategori', 'Sangat Baik')->count(),
-                                'color' => 'success',
-                            ],
-                            'Baik' => ['count' => $hasil->where('kategori', 'Baik')->count(), 'color' => 'primary'],
-                            'Cukup' => ['count' => $hasil->where('kategori', 'Cukup')->count(), 'color' => 'warning'],
-                            'Kurang' => ['count' => $hasil->where('kategori', 'Kurang')->count(), 'color' => 'danger'],
-                        ];
-                        $total = $hasil->count();
-                    @endphp
-
-                    @foreach ($categories as $category => $data)
-                        <div class="col-md-3 mb-3">
-                            <div class="text-center">
-                                <h3 class="text-{{ $data['color'] }}">{{ $data['count'] }}</h3>
-                                <p class="mb-2">{{ $category }}</p>
-                                @if ($total > 0)
-                                    <div class="progress" style="height: 8px;">
-                                        <div class="progress-bar bg-{{ $data['color'] }}"
-                                            style="width: {{ ($data['count'] / $total) * 100 }}%"></div>
-                                    </div>
-                                    <small
-                                        class="text-muted">{{ number_format(($data['count'] / $total) * 100, 1) }}%</small>
-                                @endif
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
-            </div>
-        </div>
-
-        <!-- Rekomendasi -->
-        <div class="card mt-4">
-            <div class="card-header">
-                <h5 class="card-title mb-0">
-                    <i class="fas fa-lightbulb me-2"></i>
-                    Rekomendasi Tindak Lanjut
-                </h5>
-            </div>
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-md-6">
-                        <h6 class="text-success">
-                            <i class="fas fa-star me-2"></i>
-                            Siswa Berprestasi ({{ $hasil->where('kategori', 'Sangat Baik')->count() }} siswa)
-                        </h6>
-                        @if ($hasil->where('kategori', 'Sangat Baik')->count() > 0)
-                            <ul class="list-unstyled">
-                                @foreach ($hasil->where('kategori', 'Sangat Baik')->take(3) as $item)
-                                    <li class="mb-1">
-                                        <i class="fas fa-check-circle text-success me-2"></i>
-                                        {{ $item->alternatif->nama }}
-                                    </li>
-                                @endforeach
-                            </ul>
-                            <p class="text-muted small">Berikan apresiasi dan pertahankan pencapaian yang baik.</p>
-                        @else
-                            <p class="text-muted">Belum ada siswa dalam kategori ini.</p>
-                        @endif
+                <!-- Pagination -->
+                @if ($hasil->hasPages())
+                    <div class="border-t border-gray-200">
+                        {{ $hasil->links('components.pagination') }}
                     </div>
-
-                    <div class="col-md-6">
-                        <h6 class="text-danger">
-                            <i class="fas fa-exclamation-triangle me-2"></i>
-                            Perlu Perhatian Khusus ({{ $hasil->whereIn('kategori', ['Kurang', 'Cukup'])->count() }} siswa)
-                        </h6>
-                        @if ($hasil->whereIn('kategori', ['Kurang', 'Cukup'])->count() > 0)
-                            <ul class="list-unstyled">
-                                @foreach ($hasil->whereIn('kategori', ['Kurang', 'Cukup'])->take(3) as $item)
-                                    <li class="mb-1">
-                                        <i class="fas fa-exclamation-circle text-warning me-2"></i>
-                                        {{ $item->alternatif->nama }}
-                                    </li>
-                                @endforeach
-                            </ul>
-                            <p class="text-muted small">Berikan pendampingan ekstra dan stimulasi yang sesuai.</p>
-                        @else
-                            <p class="text-success">Semua siswa dalam perkembangan yang baik!</p>
-                        @endif
-                    </div>
-                </div>
+                @endif
             </div>
-        </div>
-    @else
-        <!-- Belum Ada Hasil -->
-        <div class="card">
-            <div class="card-body text-center py-5">
-                <i class="fas fa-calculator text-muted mb-4" style="font-size: 4rem;"></i>
-                <h3 class="text-muted mb-3">Belum Ada Hasil Perhitungan</h3>
-                <p class="text-muted mb-4">Lakukan proses perhitungan SAW terlebih dahulu untuk melihat hasil evaluasi</p>
-                <a href="{{ route('admin.saw.index') }}" class="btn btn-primary">
-                    <i class="fas fa-calculator me-2"></i>
+        @else
+            <!-- Empty State -->
+            <div class="bg-white rounded-xl border border-gray-200 p-12 text-center">
+                <i class="fas fa-calculator text-gray-400 text-6xl mb-4"></i>
+                <h3 class="text-xl font-semibold text-gray-900 mb-2">Belum Ada Hasil Perhitungan</h3>
+                <p class="text-gray-600 mb-6">Lakukan proses perhitungan SAW terlebih dahulu untuk melihat hasil evaluasi
+                </p>
+                <a href="{{ route('admin.saw.index') }}"
+                    class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+                    <i class="fas fa-calculator mr-2"></i>
                     Mulai Perhitungan SAW
                 </a>
             </div>
-        </div>
-    @endif
+        @endif
+    </div>
 
     <style>
         @media print {
 
-            .page-header,
-            .btn,
-            .card-header {
-                background: white !important;
-                -webkit-print-color-adjust: exact;
-            }
-
-            .btn {
+            .flex.space-x-3,
+            button {
                 display: none !important;
             }
 
-            .card {
-                border: 1px solid #dee2e6 !important;
-                break-inside: avoid;
+            .bg-gray-50 {
+                background: white !important;
+            }
+
+            .border-gray-200 {
+                border-color: #dee2e6 !important;
             }
 
             body {
                 background: white !important;
             }
-        }
 
-        .avatar {
-            font-weight: 600;
-            font-size: 0.875rem;
-        }
-
-        .progress {
-            border-radius: 10px;
-        }
-
-        .progress-bar {
-            border-radius: 10px;
+            .rounded-xl {
+                border: 1px solid #dee2e6 !important;
+            }
         }
     </style>
 @endsection
