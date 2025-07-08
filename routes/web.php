@@ -32,10 +32,17 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [AdminDashboard::class, 'index'])->name('dashboard');
 
-    // Kriteria Management
-    Route::resource('kriteria', KriteriaController::class);
-    Route::get('kriteria/{id}/subkriteria', [KriteriaController::class, 'subkriteria'])->name('kriteria.subkriteria');
-    Route::post('kriteria/{id}/subkriteria', [KriteriaController::class, 'storeSubkriteria'])->name('kriteria.subkriteria.store');
+    // Kriteria Management - Explicit routes untuk debugging
+    Route::get('kriteria', [KriteriaController::class, 'index'])->name('kriteria.index');
+    Route::get('kriteria/create', [KriteriaController::class, 'create'])->name('kriteria.create');
+    Route::post('kriteria', [KriteriaController::class, 'store'])->name('kriteria.store');
+    Route::get('kriteria/{kriteria}/edit', [KriteriaController::class, 'edit'])->name('kriteria.edit');
+    Route::put('kriteria/{kriteria}', [KriteriaController::class, 'update'])->name('kriteria.update');
+    Route::delete('kriteria/{kriteria}', [KriteriaController::class, 'destroy'])->name('kriteria.destroy');
+
+    // Subkriteria Routes
+    Route::get('kriteria/{kriteria}/subkriteria', [KriteriaController::class, 'subkriteria'])->name('kriteria.subkriteria');
+    Route::post('kriteria/{kriteria}/subkriteria', [KriteriaController::class, 'storeSubkriteria'])->name('kriteria.subkriteria.store');
     Route::delete('subkriteria/{subkriteria}', [KriteriaController::class, 'destroySubkriteria'])->name('subkriteria.destroy');
 
     // Alternatif (Siswa) Management

@@ -17,7 +17,7 @@
                 <div class="bg-white rounded-xl border border-gray-200 p-6">
                     <h3 class="text-lg font-semibold text-gray-900 mb-6">Form Edit Kriteria</h3>
 
-                    <form action="{{ route('admin.kriteria.update', $kriteria) }}" method="POST">
+                    <form action="{{ route('admin.kriteria.update', $kriteria->id) }}" method="POST">
                         @csrf
                         @method('PUT')
 
@@ -57,12 +57,13 @@
                                 @error('bobot')
                                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                 @enderror
+                                <p class="mt-1 text-sm text-gray-500">Nilai antara 0-1. Total semua bobot harus = 1</p>
                             </div>
 
                             <div>
                                 <label for="keterangan"
                                     class="block text-sm font-medium text-gray-700 mb-2">Keterangan</label>
-                                <textarea id="keterangan" name="keterangan" rows="3"
+                                <textarea id="keterangan" name="keterangan" rows="3" placeholder="Deskripsi singkat tentang kriteria ini"
                                     class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 @error('keterangan') border-red-300 @enderror">{{ old('keterangan', $kriteria->keterangan) }}</textarea>
                                 @error('keterangan')
                                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
@@ -107,6 +108,10 @@
                             <span class="text-gray-600">Dibuat:</span>
                             <span class="font-medium">{{ $kriteria->created_at->format('d M Y') }}</span>
                         </div>
+                        <div class="flex justify-between text-sm">
+                            <span class="text-gray-600">Diupdate:</span>
+                            <span class="font-medium">{{ $kriteria->updated_at->format('d M Y') }}</span>
+                        </div>
                     </div>
                 </div>
 
@@ -126,6 +131,19 @@
                             <i class="fas fa-cog mr-2"></i>
                             Kelola Subkriteria
                         </a>
+                    </div>
+                @else
+                    <div class="bg-white rounded-xl border border-gray-200 p-6">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-4">Subkriteria</h3>
+                        <div class="text-center py-4">
+                            <i class="fas fa-list text-gray-400 text-3xl mb-2"></i>
+                            <p class="text-gray-500 text-sm mb-4">Belum ada subkriteria</p>
+                            <a href="{{ route('admin.kriteria.subkriteria', $kriteria->id) }}"
+                                class="inline-flex items-center px-3 py-2 bg-blue-100 text-blue-700 rounded-lg hover:bg-blue-200 transition-colors text-sm">
+                                <i class="fas fa-plus mr-2"></i>
+                                Tambah Subkriteria
+                            </a>
+                        </div>
                     </div>
                 @endif
             </div>

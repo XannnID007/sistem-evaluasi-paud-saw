@@ -34,17 +34,22 @@
                                 </div>
                             </div>
                             <div class="flex space-x-2">
-                                <a href="{{ route('admin.kriteria.edit', $item) }}"
-                                    class="p-2 text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors">
+                                <a href="{{ route('admin.kriteria.edit', $item->id) }}"
+                                    class="p-2 text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+                                    title="Edit Kriteria">
                                     <i class="fas fa-edit"></i>
                                 </a>
-                                <form action="{{ route('admin.kriteria.destroy', $item) }}" method="POST" class="inline">
+                                <button type="button" onclick="confirmDelete({{ $item->id }}, '{{ $item->nama }}')"
+                                    class="p-2 text-gray-600 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                                    title="Hapus Kriteria">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                                <!-- Hidden form for delete -->
+                                <form id="delete-form-{{ $item->id }}"
+                                    action="{{ route('admin.kriteria.destroy', $item->id) }}" method="POST"
+                                    style="display: none;">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" onclick="return confirm('Yakin ingin menghapus?')"
-                                        class="p-2 text-gray-600 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors">
-                                        <i class="fas fa-trash"></i>
-                                    </button>
                                 </form>
                             </div>
                         </div>
@@ -78,7 +83,7 @@
                                 <span class="text-blue-600 font-bold">{{ $item->kode }}</span>
                             </div>
                             <p class="text-sm font-medium text-gray-900">{{ number_format($item->bobot, 3) }}</p>
-                            <p class="text-xs text-gray-600">{{ $item->nama }}</p>
+                            <p class="text-xs text-gray-600">{{ Str::limit($item->nama, 15) }}</p>
                         </div>
                     @endforeach
                 </div>
@@ -121,4 +126,68 @@
             </div>
         @endif
     </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div id="deleteModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full hidden z-50">
+        <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
+            <div class="mt-3 text-center">
+                <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-red-100">
+                    <i class="fas fa-exclamation-triangle text-red-600"></i>
+                </div>
+                <h3 class="text-lg font-medium text-gray-900 mt-4">Konfirmasi Hapus</h3>
+                <div class="mt-2 px-7 py-3">
+                    <p class="text-sm text-gray-500" id="deleteMessage">
+                        Apakah Anda yakin ingin menghapus kriteria ini?
+                    </p>
+                </div>
+                <div class="items-center px-4 py-3 flex justify-center space-x-4">
+                    <button id="confirmDelete"
+                        class="px-4 py-2 bg-red-500 text-white text-base font-medium rounded-md shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-300">
+                        Hapus
+                    </button>
+                    <button onclick="closeDeleteModal()"
+                        class="px-4 py-2 bg-gray-300 text-gray-900 text-base font-medium rounded-md shadow-sm hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-300">
+                        Batal
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let deleteFormId = null;
+
+        function confirmDelete(id, nama) {
+            deleteFormId = id;
+            document.getElementById('deleteMessage').innerHTML =
+                `Apakah Anda yakin ingin menghapus kriteria <strong>"${nama}"</strong>?<br><br>
+                <small class="text-red-500">Data yang sudah dihapus tidak dapat dikembalikan.</small>`;
+            document.getElementById('deleteModal').classList.remove('hidden');
+        }
+
+        function closeDeleteModal() {
+            document.getElementById('deleteModal').classList.add('hidden');
+            deleteFormId = null;
+        }
+
+        document.getElementById('confirmDelete').addEventListener('click', function() {
+            if (deleteFormId) {
+                document.getElementById('delete-form-' + deleteFormId).submit();
+            }
+        });
+
+        // Close modal when clicking outside
+        document.getElementById('deleteModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeDeleteModal();
+            }
+        });
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeDeleteModal();
+            }
+        });
+    </script>
 @endsection
