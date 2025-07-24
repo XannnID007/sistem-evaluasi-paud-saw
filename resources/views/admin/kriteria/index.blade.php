@@ -34,19 +34,20 @@
                                 </div>
                             </div>
                             <div class="flex space-x-2">
-                                <a href="{{ route('admin.kriteria.edit', $item->id) }}"
+                                <a href="{{ route('admin.kriteria.edit', $item->kriteria_id) }}"
                                     class="p-2 text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
                                     title="Edit Kriteria">
                                     <i class="fas fa-edit"></i>
                                 </a>
-                                <button type="button" onclick="confirmDelete({{ $item->id }}, '{{ $item->nama }}')"
+                                <button type="button"
+                                    onclick="confirmDelete({{ $item->kriteria_id }}, '{{ $item->nama }}')"
                                     class="p-2 text-gray-600 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
                                     title="Hapus Kriteria">
                                     <i class="fas fa-trash"></i>
                                 </button>
                                 <!-- Hidden form for delete -->
-                                <form id="delete-form-{{ $item->id }}"
-                                    action="{{ route('admin.kriteria.destroy', $item->id) }}" method="POST"
+                                <form id="delete-form-{{ $item->kriteria_id }}"
+                                    action="{{ route('admin.kriteria.destroy', $item->kriteria_id) }}" method="POST"
                                     style="display: none;">
                                     @csrf
                                     @method('DELETE')
@@ -63,7 +64,7 @@
                                 <i class="fas fa-list mr-2"></i>
                                 {{ $item->subkriteria->count() }} subkriteria
                             </div>
-                            <a href="{{ route('admin.kriteria.subkriteria', $item->id) }}"
+                            <a href="{{ route('admin.kriteria.subkriteria', $item->kriteria_id) }}"
                                 class="inline-flex items-center px-3 py-1 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors text-sm">
                                 <i class="fas fa-cog mr-1"></i>
                                 Kelola

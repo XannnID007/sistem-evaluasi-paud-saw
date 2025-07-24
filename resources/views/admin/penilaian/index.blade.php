@@ -175,7 +175,7 @@
                                     </td>
                                     @foreach ($kriteria as $k)
                                         @php
-                                            $nilai = $siswa->penilaian->where('kriteria_id', $k->id)->first();
+                                            $nilai = $siswa->penilaian->where('kriteria_id', $k->kriteria_id)->first();
                                         @endphp
                                         <td class="px-6 py-4 whitespace-nowrap text-center">
                                             @if ($nilai)
@@ -218,13 +218,13 @@
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                         @if ($totalPenilaian > 0)
-                                            <a href="{{ route('admin.penilaian.edit', $siswa->id) }}"
+                                            <a href="{{ route('admin.penilaian.edit', $siswa->alternatif_id) }}"
                                                 class="inline-flex items-center px-3 py-1 border border-transparent text-xs leading-4 font-medium rounded-md text-yellow-700 bg-yellow-100 hover:bg-yellow-200 transition-colors">
                                                 <i class="fas fa-edit mr-1"></i>
                                                 Edit
                                             </a>
                                         @else
-                                            <a href="{{ route('admin.penilaian.create') }}?siswa={{ $siswa->id }}"
+                                            <a href="{{ route('admin.penilaian.create') }}?siswa={{ $siswa->alternatif_id }}"
                                                 class="inline-flex items-center px-3 py-1 border border-transparent text-xs leading-4 font-medium rounded-md text-blue-700 bg-blue-100 hover:bg-blue-200 transition-colors">
                                                 <i class="fas fa-plus mr-1"></i>
                                                 Input

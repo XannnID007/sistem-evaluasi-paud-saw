@@ -17,7 +17,7 @@
                 <div class="bg-white rounded-xl border border-gray-200 p-6">
                     <h3 class="text-lg font-semibold text-gray-900 mb-6">Form Edit Kriteria</h3>
 
-                    <form action="{{ route('admin.kriteria.update', $kriteria->id) }}" method="POST">
+                    <form action="{{ route('admin.kriteria.update', $kriteria->kriteria_id) }}" method="POST">
                         @csrf
                         @method('PUT')
 

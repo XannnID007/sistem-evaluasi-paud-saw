@@ -1,6 +1,6 @@
 <?php
 
-// database/seeders/DatabaseSeeder.php
+// database/seeders/DatabaseSeeder.php - Updated untuk struktur revisi lengkap
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
@@ -19,7 +19,7 @@ class DatabaseSeeder extends Seeder
         // Disable foreign key checks
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
 
-        // Truncate tables
+        // Truncate tables dengan primary key baru
         User::truncate();
         Kriteria::truncate();
         Subkriteria::truncate();
@@ -48,19 +48,20 @@ class DatabaseSeeder extends Seeder
         $this->command->info('👤 Admin: admin@paud.com / admin123');
         $this->command->info('👨‍🏫 Guru: guru@paud.com / guru123');
         $this->command->info('📊 Data lengkap: 6 kriteria, 17 siswa, semua penilaian');
+        $this->command->info('🔄 Database telah direvisi sesuai feedback dosen');
     }
 
     private function createUsers()
     {
         $users = [
             [
-                'name' => 'Administrator',
+                'nama' => 'Administrator', // Perubahan dari 'name' ke 'nama'
                 'email' => 'admin@paud.com',
                 'password' => Hash::make('admin123'),
                 'role' => 'admin'
             ],
             [
-                'name' => 'Guru PAUD Flamboyan',
+                'nama' => 'Guru PAUD Flamboyan', // Perubahan dari 'name' ke 'nama'
                 'email' => 'guru@paud.com',
                 'password' => Hash::make('guru123'),
                 'role' => 'guru'
@@ -138,7 +139,7 @@ class DatabaseSeeder extends Seeder
             $kriteria = Kriteria::where('kode', $kodeKriteria)->first();
             foreach ($subs as $sub) {
                 Subkriteria::create([
-                    'kriteria_id' => $kriteria->id,
+                    'kriteria_id' => $kriteria->kriteria_id, // Menggunakan kriteria_id baru
                     'nilai' => $sub['nilai'],
                     'skor' => $sub['skor']
                 ]);
@@ -150,54 +151,57 @@ class DatabaseSeeder extends Seeder
 
     private function createAlternatif()
     {
+        // Ambil user_id untuk admin (sebagai contoh, bisa disesuaikan)
+        $adminUser = User::where('email', 'admin@paud.com')->first();
+
         $siswaData = [
-            ['kode' => 'A1', 'nama' => 'Adinda Sari', 'jenis_kelamin' => 'P', 'tanggal_lahir' => '2019-03-15', 'nama_orangtua' => 'Budi Santoso', 'alamat' => 'Jl. Melati No. 12, Jakarta'],
-            ['kode' => 'A2', 'nama' => 'Affan Rizky', 'jenis_kelamin' => 'L', 'tanggal_lahir' => '2019-05-20', 'nama_orangtua' => 'Ahmad Rizki', 'alamat' => 'Jl. Mawar No. 8, Jakarta'],
-            ['kode' => 'A3', 'nama' => 'Aisy Nabila', 'jenis_kelamin' => 'P', 'tanggal_lahir' => '2019-02-10', 'nama_orangtua' => 'Sandi Permana', 'alamat' => 'Jl. Anggrek No. 15, Jakarta'],
-            ['kode' => 'A4', 'nama' => 'Akbar Maulana', 'jenis_kelamin' => 'L', 'tanggal_lahir' => '2019-07-08', 'nama_orangtua' => 'Dedi Kurnia', 'alamat' => 'Jl. Dahlia No. 3, Jakarta'],
-            ['kode' => 'A5', 'nama' => 'Amira Zahra', 'jenis_kelamin' => 'P', 'tanggal_lahir' => '2019-01-25', 'nama_orangtua' => 'Hendra Wijaya', 'alamat' => 'Jl. Tulip No. 22, Jakarta'],
-            ['kode' => 'A6', 'nama' => 'Andika Pratama', 'jenis_kelamin' => 'L', 'tanggal_lahir' => '2019-04-12', 'nama_orangtua' => 'Eko Prasetyo', 'alamat' => 'Jl. Kenanga No. 7, Jakarta'],
-            ['kode' => 'A7', 'nama' => 'Anisa Putri', 'jenis_kelamin' => 'P', 'tanggal_lahir' => '2019-06-30', 'nama_orangtua' => 'Agus Setiawan', 'alamat' => 'Jl. Cempaka No. 18, Jakarta'],
-            ['kode' => 'A8', 'nama' => 'Arif Rahman', 'jenis_kelamin' => 'L', 'tanggal_lahir' => '2019-09-14', 'nama_orangtua' => 'Rahman Hakim', 'alamat' => 'Jl. Flamboyan No. 9, Jakarta'],
-            ['kode' => 'A9', 'nama' => 'Aulia Rahmah', 'jenis_kelamin' => 'P', 'tanggal_lahir' => '2019-11-05', 'nama_orangtua' => 'Surya Pratama', 'alamat' => 'Jl. Kamboja No. 14, Jakarta'],
-            ['kode' => 'A10', 'nama' => 'Bayu Setiawan', 'jenis_kelamin' => 'L', 'tanggal_lahir' => '2019-08-22', 'nama_orangtua' => 'Bayu Adi', 'alamat' => 'Jl. Seroja No. 5, Jakarta'],
-            ['kode' => 'A11', 'nama' => 'Citra Dewi', 'jenis_kelamin' => 'P', 'tanggal_lahir' => '2019-12-18', 'nama_orangtua' => 'Dewi Sartika', 'alamat' => 'Jl. Teratai No. 11, Jakarta'],
-            ['kode' => 'A12', 'nama' => 'Dani Kurniawan', 'jenis_kelamin' => 'L', 'tanggal_lahir' => '2019-10-03', 'nama_orangtua' => 'Kurnia Putra', 'alamat' => 'Jl. Bougenvil No. 20, Jakarta'],
-            ['kode' => 'A13', 'nama' => 'Eka Sari', 'jenis_kelamin' => 'P', 'tanggal_lahir' => '2019-05-16', 'nama_orangtua' => 'Sari Indah', 'alamat' => 'Jl. Lavender No. 6, Jakarta'],
-            ['kode' => 'A14', 'nama' => 'Farid Hidayat', 'jenis_kelamin' => 'L', 'tanggal_lahir' => '2019-03-28', 'nama_orangtua' => 'Hidayat Nur', 'alamat' => 'Jl. Sakura No. 13, Jakarta'],
-            ['kode' => 'A15', 'nama' => 'Gita Permata', 'jenis_kelamin' => 'P', 'tanggal_lahir' => '2019-07-11', 'nama_orangtua' => 'Permata Sari', 'alamat' => 'Jl. Gardenia No. 17, Jakarta'],
-            ['kode' => 'A16', 'nama' => 'Hana Safitri', 'jenis_kelamin' => 'P', 'tanggal_lahir' => '2019-04-07', 'nama_orangtua' => 'Safitri Indah', 'alamat' => 'Jl. Azalea No. 4, Jakarta'],
-            ['kode' => 'A17', 'nama' => 'Ilham Maulana', 'jenis_kelamin' => 'L', 'tanggal_lahir' => '2019-01-13', 'nama_orangtua' => 'Maulana Ishak', 'alamat' => 'Jl. Edelweis No. 10, Jakarta']
+            ['kode' => 'A1', 'nama' => 'Adinda Sari', 'jenis_kelamin' => 'P', 'tanggal_lahir' => '2019-03-15', 'nama_orangtua' => 'Budi Santoso', 'alamat' => 'Jl. Melati No. 12, Jakarta', 'user_id' => $adminUser->user_id],
+            ['kode' => 'A2', 'nama' => 'Affan Rizky', 'jenis_kelamin' => 'L', 'tanggal_lahir' => '2019-05-20', 'nama_orangtua' => 'Ahmad Rizki', 'alamat' => 'Jl. Mawar No. 8, Jakarta', 'user_id' => $adminUser->user_id],
+            ['kode' => 'A3', 'nama' => 'Aisy Nabila', 'jenis_kelamin' => 'P', 'tanggal_lahir' => '2019-02-10', 'nama_orangtua' => 'Sandi Permana', 'alamat' => 'Jl. Anggrek No. 15, Jakarta', 'user_id' => $adminUser->user_id],
+            ['kode' => 'A4', 'nama' => 'Akbar Maulana', 'jenis_kelamin' => 'L', 'tanggal_lahir' => '2019-07-08', 'nama_orangtua' => 'Dedi Kurnia', 'alamat' => 'Jl. Dahlia No. 3, Jakarta', 'user_id' => $adminUser->user_id],
+            ['kode' => 'A5', 'nama' => 'Amira Zahra', 'jenis_kelamin' => 'P', 'tanggal_lahir' => '2019-01-25', 'nama_orangtua' => 'Hendra Wijaya', 'alamat' => 'Jl. Tulip No. 22, Jakarta', 'user_id' => $adminUser->user_id],
+            ['kode' => 'A6', 'nama' => 'Andika Pratama', 'jenis_kelamin' => 'L', 'tanggal_lahir' => '2019-04-12', 'nama_orangtua' => 'Eko Prasetyo', 'alamat' => 'Jl. Kenanga No. 7, Jakarta', 'user_id' => $adminUser->user_id],
+            ['kode' => 'A7', 'nama' => 'Anisa Putri', 'jenis_kelamin' => 'P', 'tanggal_lahir' => '2019-06-30', 'nama_orangtua' => 'Agus Setiawan', 'alamat' => 'Jl. Cempaka No. 18, Jakarta', 'user_id' => $adminUser->user_id],
+            ['kode' => 'A8', 'nama' => 'Arif Rahman', 'jenis_kelamin' => 'L', 'tanggal_lahir' => '2019-09-14', 'nama_orangtua' => 'Rahman Hakim', 'alamat' => 'Jl. Flamboyan No. 9, Jakarta', 'user_id' => $adminUser->user_id],
+            ['kode' => 'A9', 'nama' => 'Aulia Rahmah', 'jenis_kelamin' => 'P', 'tanggal_lahir' => '2019-11-05', 'nama_orangtua' => 'Surya Pratama', 'alamat' => 'Jl. Kamboja No. 14, Jakarta', 'user_id' => $adminUser->user_id],
+            ['kode' => 'A10', 'nama' => 'Bayu Setiawan', 'jenis_kelamin' => 'L', 'tanggal_lahir' => '2019-08-22', 'nama_orangtua' => 'Bayu Adi', 'alamat' => 'Jl. Seroja No. 5, Jakarta', 'user_id' => $adminUser->user_id],
+            ['kode' => 'A11', 'nama' => 'Citra Dewi', 'jenis_kelamin' => 'P', 'tanggal_lahir' => '2019-12-18', 'nama_orangtua' => 'Dewi Sartika', 'alamat' => 'Jl. Teratai No. 11, Jakarta', 'user_id' => $adminUser->user_id],
+            ['kode' => 'A12', 'nama' => 'Dani Kurniawan', 'jenis_kelamin' => 'L', 'tanggal_lahir' => '2019-10-03', 'nama_orangtua' => 'Kurnia Putra', 'alamat' => 'Jl. Bougenvil No. 20, Jakarta', 'user_id' => $adminUser->user_id],
+            ['kode' => 'A13', 'nama' => 'Eka Sari', 'jenis_kelamin' => 'P', 'tanggal_lahir' => '2019-05-16', 'nama_orangtua' => 'Sari Indah', 'alamat' => 'Jl. Lavender No. 6, Jakarta', 'user_id' => $adminUser->user_id],
+            ['kode' => 'A14', 'nama' => 'Farid Hidayat', 'jenis_kelamin' => 'L', 'tanggal_lahir' => '2019-03-28', 'nama_orangtua' => 'Hidayat Nur', 'alamat' => 'Jl. Sakura No. 13, Jakarta', 'user_id' => $adminUser->user_id],
+            ['kode' => 'A15', 'nama' => 'Gita Permata', 'jenis_kelamin' => 'P', 'tanggal_lahir' => '2019-07-11', 'nama_orangtua' => 'Permata Sari', 'alamat' => 'Jl. Gardenia No. 17, Jakarta', 'user_id' => $adminUser->user_id],
+            ['kode' => 'A16', 'nama' => 'Hana Safitri', 'jenis_kelamin' => 'P', 'tanggal_lahir' => '2019-04-07', 'nama_orangtua' => 'Safitri Indah', 'alamat' => 'Jl. Azalea No. 4, Jakarta', 'user_id' => $adminUser->user_id],
+            ['kode' => 'A17', 'nama' => 'Ilham Maulana', 'jenis_kelamin' => 'L', 'tanggal_lahir' => '2019-01-13', 'nama_orangtua' => 'Maulana Ishak', 'alamat' => 'Jl. Edelweis No. 10, Jakarta', 'user_id' => $adminUser->user_id]
         ];
 
         foreach ($siswaData as $siswa) {
             Alternatif::create($siswa);
         }
 
-        $this->command->info('👶 Alternatif created: 17 siswa (9 perempuan, 8 laki-laki)');
+        $this->command->info('👶 Alternatif created: 17 siswa (9 perempuan, 8 laki-laki) dengan relasi ke user');
     }
 
     private function createPenilaian()
     {
         // DATA PENILAIAN YANG BENAR 100% SESUAI EXCEL - HASIL REVERSE ENGINEERING
         $penilaianData = [
-            'A1' => ['C1' => 1, 'C2' => 2, 'C3' => 3, 'C4' => 3, 'C5' => 4, 'C6' => 2], // Ranking 9 - SAW: 0.6235
-            'A2' => ['C1' => 4, 'C2' => 1, 'C3' => 3, 'C4' => 3, 'C5' => 1, 'C6' => 2], // Ranking 12 - SAW: 0.5985
-            'A3' => ['C1' => 1, 'C2' => 2, 'C3' => 4, 'C4' => 2, 'C5' => 4, 'C6' => 2], // Ranking 7 - SAW: 0.631
-            'A4' => ['C1' => 2, 'C2' => 2, 'C3' => 2, 'C4' => 2, 'C5' => 1, 'C6' => 2], // Ranking 17 - SAW: 0.50
-            'A5' => ['C1' => 2, 'C2' => 3, 'C3' => 2, 'C4' => 2, 'C5' => 2, 'C6' => 3], // Ranking 14 - SAW: 0.5675
-            'A6' => ['C1' => 3, 'C2' => 3, 'C3' => 3, 'C4' => 3, 'C5' => 2, 'C6' => 4], // Ranking 4 - SAW: 0.7275
-            'A7' => ['C1' => 2, 'C2' => 2, 'C3' => 3, 'C4' => 2, 'C5' => 1, 'C6' => 2], // Ranking 16 - SAW: 0.5085
-            'A8' => ['C1' => 2, 'C2' => 2, 'C3' => 2, 'C4' => 3, 'C5' => 1, 'C6' => 3], // Ranking 15 - SAW: 0.5285
-            'A9' => ['C1' => 1, 'C2' => 2, 'C3' => 2, 'C4' => 4, 'C5' => 4, 'C6' => 2], // Ranking 10 - SAW: 0.616
-            'A10' => ['C1' => 2, 'C2' => 3, 'C3' => 3, 'C4' => 3, 'C5' => 1, 'C6' => 2], // Ranking 13 - SAW: 0.5835
-            'A11' => ['C1' => 1, 'C2' => 1, 'C3' => 4, 'C4' => 3, 'C5' => 4, 'C6' => 2], // Ranking 8 - SAW: 0.625
-            'A12' => ['C1' => 1, 'C2' => 1, 'C3' => 3, 'C4' => 3, 'C5' => 4, 'C6' => 4], // Ranking 6 - SAW: 0.6385
-            'A13' => ['C1' => 1, 'C2' => 4, 'C3' => 1, 'C4' => 4, 'C5' => 3, 'C6' => 2], // Ranking 11 - SAW: 0.6035
-            'A14' => ['C1' => 4, 'C2' => 4, 'C3' => 4, 'C4' => 4, 'C5' => 4, 'C6' => 4], // RANKING 1 - SAW: 1.0000 (SEMPURNA!)
-            'A15' => ['C1' => 3, 'C2' => 3, 'C3' => 3, 'C4' => 4, 'C5' => 1, 'C6' => 3], // Ranking 5 - SAW: 0.701
-            'A16' => ['C1' => 4, 'C2' => 4, 'C3' => 3, 'C4' => 3, 'C5' => 4, 'C6' => 2], // Ranking 3 - SAW: 0.8675
-            'A17' => ['C1' => 4, 'C2' => 3, 'C3' => 4, 'C4' => 4, 'C5' => 4, 'C6' => 3]  // Ranking 2 - SAW: 0.9325
+            'A1' => ['C1' => 1, 'C2' => 2, 'C3' => 3, 'C4' => 3, 'C5' => 4, 'C6' => 2],
+            'A2' => ['C1' => 4, 'C2' => 1, 'C3' => 3, 'C4' => 3, 'C5' => 1, 'C6' => 2],
+            'A3' => ['C1' => 1, 'C2' => 2, 'C3' => 4, 'C4' => 2, 'C5' => 4, 'C6' => 2],
+            'A4' => ['C1' => 2, 'C2' => 2, 'C3' => 2, 'C4' => 2, 'C5' => 1, 'C6' => 2],
+            'A5' => ['C1' => 2, 'C2' => 3, 'C3' => 2, 'C4' => 2, 'C5' => 2, 'C6' => 3],
+            'A6' => ['C1' => 3, 'C2' => 3, 'C3' => 3, 'C4' => 3, 'C5' => 2, 'C6' => 4],
+            'A7' => ['C1' => 2, 'C2' => 2, 'C3' => 3, 'C4' => 2, 'C5' => 1, 'C6' => 2],
+            'A8' => ['C1' => 2, 'C2' => 2, 'C3' => 2, 'C4' => 3, 'C5' => 1, 'C6' => 3],
+            'A9' => ['C1' => 1, 'C2' => 2, 'C3' => 2, 'C4' => 4, 'C5' => 4, 'C6' => 2],
+            'A10' => ['C1' => 2, 'C2' => 3, 'C3' => 3, 'C4' => 3, 'C5' => 1, 'C6' => 2],
+            'A11' => ['C1' => 1, 'C2' => 1, 'C3' => 4, 'C4' => 3, 'C5' => 4, 'C6' => 2],
+            'A12' => ['C1' => 1, 'C2' => 1, 'C3' => 3, 'C4' => 3, 'C5' => 4, 'C6' => 4],
+            'A13' => ['C1' => 1, 'C2' => 4, 'C3' => 1, 'C4' => 4, 'C5' => 3, 'C6' => 2],
+            'A14' => ['C1' => 4, 'C2' => 4, 'C3' => 4, 'C4' => 4, 'C5' => 4, 'C6' => 4],
+            'A15' => ['C1' => 3, 'C2' => 3, 'C3' => 3, 'C4' => 4, 'C5' => 1, 'C6' => 3],
+            'A16' => ['C1' => 4, 'C2' => 4, 'C3' => 3, 'C4' => 3, 'C5' => 4, 'C6' => 2],
+            'A17' => ['C1' => 4, 'C2' => 3, 'C3' => 4, 'C4' => 4, 'C5' => 4, 'C6' => 3]
         ];
 
         $totalPenilaian = 0;
@@ -211,8 +215,8 @@ class DatabaseSeeder extends Seeder
 
                     if ($kriteria) {
                         Penilaian::create([
-                            'alternatif_id' => $alternatif->id,
-                            'kriteria_id' => $kriteria->id,
+                            'alternatif_id' => $alternatif->alternatif_id, // Menggunakan alternatif_id baru
+                            'kriteria_id' => $kriteria->kriteria_id, // Menggunakan kriteria_id baru
                             'nilai' => $nilai
                         ]);
                         $totalPenilaian++;
@@ -227,41 +231,13 @@ class DatabaseSeeder extends Seeder
         $this->command->info('📈 Statistik Penilaian (100% SESUAI EXCEL):');
         $kriteria = Kriteria::all();
         foreach ($kriteria as $k) {
-            $avg = Penilaian::where('kriteria_id', $k->id)->avg('nilai');
+            $avg = Penilaian::where('kriteria_id', $k->kriteria_id)->avg('nilai');
             $this->command->info("   {$k->kode} (bobot: {$k->bobot}): rata-rata " . number_format($avg, 2));
         }
 
-        // Ranking lengkap yang benar (sesuai Excel)
-        $expectedRankingLengkap = [
-            1 => 'A14 (Farid Hidayat) - SAW: 1.0000',
-            2 => 'A17 (Ilham Maulana) - SAW: 0.9325',
-            3 => 'A16 (Hana Safitri) - SAW: 0.8675',
-            4 => 'A6 (Andika Pratama) - SAW: 0.7275',
-            5 => 'A15 (Gita Permata) - SAW: 0.701',
-            6 => 'A12 (Dani Kurniawan) - SAW: 0.6385',
-            7 => 'A3 (Aisy Nabila) - SAW: 0.631',
-            8 => 'A11 (Citra Dewi) - SAW: 0.625',
-            9 => 'A1 (Adinda Sari) - SAW: 0.6235',
-            10 => 'A9 (Aulia Rahmah) - SAW: 0.616',
-            11 => 'A13 (Eka Sari) - SAW: 0.6035',
-            12 => 'A2 (Affan Rizky) - SAW: 0.5985',
-            13 => 'A10 (Bayu Setiawan) - SAW: 0.5835',
-            14 => 'A5 (Amira Zahra) - SAW: 0.5675',
-            15 => 'A8 (Arif Rahman) - SAW: 0.5285',
-            16 => 'A7 (Anisa Putri) - SAW: 0.5085',
-            17 => 'A4 (Akbar Maulana) - SAW: 0.50'
-        ];
-
-        $this->command->info('🏆 Expected Complete Ranking (100% SESUAI EXCEL):');
-        foreach (array_slice($expectedRankingLengkap, 0, 10, true) as $rank => $info) {
-            $this->command->info("   #{$rank}. {$info}");
-        }
-
-        $this->command->info('   ... dan seterusnya');
-
         $this->command->info('');
-        $this->command->info('✅ SEEDER TELAH DIPERBAIKI 100% SESUAI DATA EXCEL!');
-        $this->command->info('🎯 SEMUA RANKING AKAN SESUAI DENGAN EXCEL');
-        $this->command->info('🔥 Data hasil dari REVERSE ENGINEERING Excel');
+        $this->command->info('✅ SEEDER TELAH DIREVISI SESUAI FEEDBACK DOSEN!');
+        $this->command->info('🎯 SEMUA PERUBAHAN PRIMARY KEY DAN FOREIGN KEY TELAH DITERAPKAN');
+        $this->command->info('🔄 Database structure sesuai dengan revisi dokumen');
     }
 }

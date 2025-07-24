@@ -178,13 +178,13 @@
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                         <div class="flex space-x-2">
-                                            <a href="{{ route('admin.alternatif.edit', $siswa) }}"
+                                            <a href="{{ route('admin.alternatif.edit', $siswa->alternatif_id) }}"
                                                 class="inline-flex items-center px-3 py-1 border border-transparent text-xs leading-4 font-medium rounded-md text-yellow-700 bg-yellow-100 hover:bg-yellow-200 transition-colors">
                                                 <i class="fas fa-edit mr-1"></i>
                                                 Edit
                                             </a>
-                                            <form action="{{ route('admin.alternatif.destroy', $siswa) }}" method="POST"
-                                                class="inline">
+                                            <form action="{{ route('admin.alternatif.destroy', $siswa->alternatif_id) }}"
+                                                method="POST" class="inline"> <!-- Update parameter -->
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit"

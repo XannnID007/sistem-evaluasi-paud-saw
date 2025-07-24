@@ -64,7 +64,11 @@ class AlternatifController extends Controller
             'tanggal_lahir' => 'required|date',
         ]);
 
-        Alternatif::create($request->all());
+        // Tambahkan user_id dari user yang sedang login
+        $data = $request->all();
+        $data['user_id'] = auth()->user()->user_id; // Menggunakan user_id baru
+
+        Alternatif::create($data);
         return redirect()->route('admin.alternatif.index')->with('success', 'Data siswa berhasil ditambahkan');
     }
 
@@ -73,10 +77,12 @@ class AlternatifController extends Controller
         return view('admin.alternatif.edit', compact('alternatif'));
     }
 
-    public function update(Request $request, Alternatif $alternatif)
+    public function update(Request $request, $alternatif_id) // Parameter disesuaikan
     {
+        $alternatif = Alternatif::where('alternatif_id', $alternatif_id)->firstOrFail();
+
         $request->validate([
-            'kode' => 'required|unique:alternatif,kode,' . $alternatif->id,
+            'kode' => 'required|unique:alternatif,kode,' . $alternatif_id . ',alternatif_id', // Sesuaikan dengan primary key baru
             'nama' => 'required',
             'jenis_kelamin' => 'required|in:L,P',
             'tanggal_lahir' => 'required|date',
@@ -86,8 +92,9 @@ class AlternatifController extends Controller
         return redirect()->route('admin.alternatif.index')->with('success', 'Data siswa berhasil diupdate');
     }
 
-    public function destroy(Alternatif $alternatif)
+    public function destroy($alternatif_id) // Parameter disesuaikan
     {
+        $alternatif = Alternatif::where('alternatif_id', $alternatif_id)->firstOrFail();
         $alternatif->delete();
         return redirect()->route('admin.alternatif.index')->with('success', 'Data siswa berhasil dihapus');
     }

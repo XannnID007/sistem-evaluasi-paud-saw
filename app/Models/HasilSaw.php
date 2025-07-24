@@ -10,6 +10,8 @@ class HasilSaw extends Model
     use HasFactory;
 
     protected $table = 'hasil_saw';
+    protected $primaryKey = 'hasil_saw_id'; // Perubahan dari 'id' ke 'hasil_saw_id'
+
     protected $fillable = [
         'alternatif_id',
         'skor_akhir',
@@ -19,6 +21,6 @@ class HasilSaw extends Model
 
     public function alternatif()
     {
-        return $this->belongsTo(Alternatif::class);
+        return $this->belongsTo(Alternatif::class, 'alternatif_id', 'alternatif_id');
     }
 }

@@ -10,13 +10,16 @@ class Alternatif extends Model
     use HasFactory;
 
     protected $table = 'alternatif';
+    protected $primaryKey = 'alternatif_id'; // Perubahan dari 'id' ke 'alternatif_id'
+
     protected $fillable = [
         'kode',
         'nama',
         'jenis_kelamin',
         'tanggal_lahir',
         'alamat',
-        'nama_orangtua'
+        'nama_orangtua',
+        'user_id' // Tambahan kolom user_id
     ];
 
     protected $casts = [
@@ -25,12 +28,18 @@ class Alternatif extends Model
 
     public function penilaian()
     {
-        return $this->hasMany(Penilaian::class);
+        return $this->hasMany(Penilaian::class, 'alternatif_id', 'alternatif_id');
     }
 
     public function hasilSaw()
     {
-        return $this->hasOne(HasilSaw::class);
+        return $this->hasOne(HasilSaw::class, 'alternatif_id', 'alternatif_id');
+    }
+
+    // Relasi dengan User
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'user_id');
     }
 
     public function getUmurAttribute()

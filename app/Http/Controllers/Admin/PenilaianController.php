@@ -83,7 +83,7 @@ class PenilaianController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'alternatif_id' => 'required|exists:alternatif,id',
+            'alternatif_id' => 'required|exists:alternatif,alternatif_id', // Sesuaikan dengan primary key baru
             'nilai' => 'required|array',
             'nilai.*' => 'required|integer|min:1|max:4',
         ]);
@@ -103,16 +103,16 @@ class PenilaianController extends Controller
         return redirect()->route('admin.penilaian.index')->with('success', 'Penilaian berhasil disimpan');
     }
 
-    public function edit($alternatif_id)
+    public function edit($alternatif_id) // Parameter disesuaikan
     {
-        $alternatif = Alternatif::findOrFail($alternatif_id);
+        $alternatif = Alternatif::where('alternatif_id', $alternatif_id)->firstOrFail();
         $kriteria = Kriteria::with('subkriteria')->get();
         $penilaian = Penilaian::where('alternatif_id', $alternatif_id)->pluck('nilai', 'kriteria_id');
 
         return view('admin.penilaian.edit', compact('alternatif', 'kriteria', 'penilaian'));
     }
 
-    public function update(Request $request, $alternatif_id)
+    public function update(Request $request, $alternatif_id) // Parameter disesuaikan
     {
         $request->validate([
             'nilai' => 'required|array',

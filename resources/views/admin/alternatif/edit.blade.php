@@ -17,7 +17,7 @@
                 <div class="bg-white rounded-xl border border-gray-200 p-6">
                     <h3 class="text-lg font-semibold text-gray-900 mb-6">Form Edit Siswa</h3>
 
-                    <form action="{{ route('admin.alternatif.update', $alternatif) }}" method="POST">
+                    <form action="{{ route('admin.alternatif.update', $alternatif->alternatif_id) }}" method="POST">
                         @csrf
                         @method('PUT')
 

@@ -42,15 +42,16 @@ class KriteriaController extends Controller
         return view('admin.kriteria.edit', compact('kriteria'));
     }
 
-    public function update(Request $request, Kriteria $kriteria)
+    public function update(Request $request, $kriteria_id) // Parameter disesuaikan
     {
         $request->validate([
-            'kode' => 'required|unique:kriteria,kode,' . $kriteria->id,
+            'kode' => 'required|unique:kriteria,kode,' . $kriteria_id . ',kriteria_id', // Sesuaikan dengan primary key baru
             'nama' => 'required',
             'bobot' => 'required|numeric|min:0|max:1',
         ]);
 
         try {
+            $kriteria = Kriteria::where('kriteria_id', $kriteria_id)->firstOrFail();
             $kriteria->update($request->all());
             return redirect()->route('admin.kriteria.index')->with('success', 'Kriteria berhasil diupdate');
         } catch (\Exception $e) {
@@ -58,11 +59,13 @@ class KriteriaController extends Controller
         }
     }
 
-    public function destroy(Kriteria $kriteria)
+    public function destroy($kriteria_id) // Parameter disesuaikan
     {
         try {
+            $kriteria = Kriteria::where('kriteria_id', $kriteria_id)->firstOrFail();
+
             // Cek apakah kriteria memiliki penilaian
-            $hasPenilaian = DB::table('penilaian')->where('kriteria_id', $kriteria->id)->exists();
+            $hasPenilaian = DB::table('penilaian')->where('kriteria_id', $kriteria_id)->exists();
 
             if ($hasPenilaian) {
                 return redirect()->route('admin.kriteria.index')
@@ -83,13 +86,13 @@ class KriteriaController extends Controller
         }
     }
 
-    public function subkriteria($id)
+    public function subkriteria($kriteria_id) // Parameter disesuaikan
     {
-        $kriteria = Kriteria::with('subkriteria')->findOrFail($id);
+        $kriteria = Kriteria::with('subkriteria')->where('kriteria_id', $kriteria_id)->firstOrFail();
         return view('admin.kriteria.subkriteria', compact('kriteria'));
     }
 
-    public function storeSubkriteria(Request $request, $id)
+    public function storeSubkriteria(Request $request, $kriteria_id) // Parameter disesuaikan
     {
         $request->validate([
             'nilai' => 'required',
@@ -98,7 +101,7 @@ class KriteriaController extends Controller
 
         try {
             // Cek apakah skor sudah ada untuk kriteria ini
-            $exists = Subkriteria::where('kriteria_id', $id)
+            $exists = Subkriteria::where('kriteria_id', $kriteria_id)
                 ->where('skor', $request->skor)
                 ->exists();
 
@@ -107,21 +110,22 @@ class KriteriaController extends Controller
             }
 
             Subkriteria::create([
-                'kriteria_id' => $id,
+                'kriteria_id' => $kriteria_id,
                 'nilai' => $request->nilai,
                 'skor' => $request->skor
             ]);
 
-            return redirect()->route('admin.kriteria.subkriteria', $id)
+            return redirect()->route('admin.kriteria.subkriteria', $kriteria_id)
                 ->with('success', 'Subkriteria berhasil ditambahkan');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Gagal menambahkan subkriteria: ' . $e->getMessage());
         }
     }
 
-    public function destroySubkriteria(Subkriteria $subkriteria)
+    public function destroySubkriteria($subdatakriteria_id) // Parameter disesuaikan
     {
         try {
+            $subkriteria = Subkriteria::where('subdatakriteria_id', $subdatakriteria_id)->firstOrFail();
             $kriteria_id = $subkriteria->kriteria_id;
 
             // Cek apakah subkriteria digunakan dalam penilaian

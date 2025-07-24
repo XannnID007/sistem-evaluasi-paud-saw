@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -12,13 +11,10 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
+    protected $primaryKey = 'user_id'; // Perubahan dari 'id' ke 'user_id'
+
     protected $fillable = [
-        'name',
+        'nama',        // Perubahan dari 'name' ke 'nama'
         'email',
         'password',
         'role'
@@ -41,5 +37,11 @@ class User extends Authenticatable
     public function isGuru()
     {
         return $this->role === 'guru';
+    }
+
+    // Relasi dengan Alternatif
+    public function alternatif()
+    {
+        return $this->hasMany(Alternatif::class, 'user_id', 'user_id');
     }
 }

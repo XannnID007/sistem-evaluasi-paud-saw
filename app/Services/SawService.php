@@ -1,5 +1,6 @@
 <?php
 
+// app/Services/SawService.php
 namespace App\Services;
 
 use App\Models\Kriteria;
@@ -18,10 +19,10 @@ class SawService
           $nilaiMatriks = [];
           foreach ($alternatif as $alt) {
                foreach ($kriteria as $krit) {
-                    $penilaian = Penilaian::where('alternatif_id', $alt->id)
-                         ->where('kriteria_id', $krit->id)
+                    $penilaian = Penilaian::where('alternatif_id', $alt->alternatif_id) // Sesuaikan dengan primary key baru
+                         ->where('kriteria_id', $krit->kriteria_id) // Sesuaikan dengan primary key baru
                          ->first();
-                    $nilaiMatriks[$alt->id][$krit->id] = $penilaian ? $penilaian->nilai : 0;
+                    $nilaiMatriks[$alt->alternatif_id][$krit->kriteria_id] = $penilaian ? $penilaian->nilai : 0;
                }
           }
 
@@ -44,14 +45,14 @@ class SawService
           foreach ($kriteria as $krit) {
                $nilai = [];
                foreach ($nilaiMatriks as $altId => $nilaiAlt) {
-                    $nilai[] = $nilaiAlt[$krit->id];
+                    $nilai[] = $nilaiAlt[$krit->kriteria_id]; // Sesuaikan dengan primary key baru
                }
 
                // Untuk kriteria benefit (semua kriteria adalah benefit)
                $maxNilai = max($nilai);
 
                foreach ($nilaiMatriks as $altId => $nilaiAlt) {
-                    $matriksNormalisasi[$altId][$krit->id] = $maxNilai > 0 ? $nilaiAlt[$krit->id] / $maxNilai : 0;
+                    $matriksNormalisasi[$altId][$krit->kriteria_id] = $maxNilai > 0 ? $nilaiAlt[$krit->kriteria_id] / $maxNilai : 0;
                }
           }
 
@@ -65,11 +66,11 @@ class SawService
           foreach ($alternatif as $alt) {
                $nilaiPreferensi = 0;
                foreach ($kriteria as $krit) {
-                    $nilaiPreferensi += $matriksNormalisasi[$alt->id][$krit->id] * $krit->bobot;
+                    $nilaiPreferensi += $matriksNormalisasi[$alt->alternatif_id][$krit->kriteria_id] * $krit->bobot;
                }
 
                $hasilAkhir[] = [
-                    'alternatif_id' => $alt->id,
+                    'alternatif_id' => $alt->alternatif_id, // Sesuaikan dengan primary key baru
                     'alternatif' => $alt,
                     'skor_akhir' => $nilaiPreferensi,
                     'kategori' => $this->tentukanKategori($nilaiPreferensi)
@@ -120,8 +121,8 @@ class SawService
           foreach ($alternatif as $alt) {
                $row = ['alternatif' => $alt];
                foreach ($kriteria as $krit) {
-                    $penilaian = Penilaian::where('alternatif_id', $alt->id)
-                         ->where('kriteria_id', $krit->id)
+                    $penilaian = Penilaian::where('alternatif_id', $alt->alternatif_id) // Sesuaikan dengan primary key baru
+                         ->where('kriteria_id', $krit->kriteria_id) // Sesuaikan dengan primary key baru
                          ->first();
                     $row[$krit->kode] = $penilaian ? $penilaian->nilai : 0;
                }
@@ -140,10 +141,10 @@ class SawService
           $nilaiMatriks = [];
           foreach ($alternatif as $alt) {
                foreach ($kriteria as $krit) {
-                    $penilaian = Penilaian::where('alternatif_id', $alt->id)
-                         ->where('kriteria_id', $krit->id)
+                    $penilaian = Penilaian::where('alternatif_id', $alt->alternatif_id) // Sesuaikan dengan primary key baru
+                         ->where('kriteria_id', $krit->kriteria_id) // Sesuaikan dengan primary key baru
                          ->first();
-                    $nilaiMatriks[$alt->id][$krit->id] = $penilaian ? $penilaian->nilai : 0;
+                    $nilaiMatriks[$alt->alternatif_id][$krit->kriteria_id] = $penilaian ? $penilaian->nilai : 0;
                }
           }
 
@@ -155,7 +156,7 @@ class SawService
           foreach ($alternatif as $alt) {
                $row = ['alternatif' => $alt];
                foreach ($kriteria as $krit) {
-                    $row[$krit->kode] = number_format($matriksNormalisasi[$alt->id][$krit->id], 4);
+                    $row[$krit->kode] = number_format($matriksNormalisasi[$alt->alternatif_id][$krit->kriteria_id], 4);
                }
                $hasil[] = $row;
           }

@@ -39,14 +39,14 @@
                                         </div>
                                     </div>
                                     <button type="button"
-                                        onclick="confirmDeleteSubkriteria({{ $sub->id }}, '{{ $sub->nilai }}')"
+                                        onclick="confirmDeleteSubkriteria({{ $sub->subdatakriteria_id }}, '{{ $sub->nilai }}')"
                                         class="p-2 text-gray-600 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors">
                                         <i class="fas fa-trash"></i>
                                     </button>
                                     <!-- Hidden form for delete -->
-                                    <form id="delete-subkriteria-form-{{ $sub->id }}"
-                                        action="{{ route('admin.subkriteria.destroy', $sub->id) }}" method="POST"
-                                        style="display: none;">
+                                    <form id="delete-subkriteria-form-{{ $sub->subdatakriteria_id }}"
+                                        action="{{ route('admin.subkriteria.destroy', $sub->subdatakriteria_id) }}"
+                                        method="POST" style="display: none;">
                                         @csrf
                                         @method('DELETE')
                                     </form>
@@ -69,7 +69,7 @@
                 <div class="bg-white rounded-xl border border-gray-200 p-6">
                     <h3 class="text-lg font-semibold text-gray-900 mb-4">Tambah Subkriteria</h3>
 
-                    <form action="{{ route('admin.kriteria.subkriteria.store', $kriteria->id) }}" method="POST">
+                    <form action="{{ route('admin.kriteria.subkriteria.store', $kriteria->kriteria_id) }}" method="POST">
                         @csrf
 
                         <div class="space-y-4">

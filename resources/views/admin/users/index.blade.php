@@ -124,13 +124,13 @@
                                             <div
                                                 class="w-10 h-10 {{ $user->role == 'admin' ? 'bg-red-500' : 'bg-blue-500' }} rounded-full flex items-center justify-center mr-3">
                                                 <span class="text-white text-sm font-medium">
-                                                    {{ strtoupper(substr($user->name, 0, 1)) }}
+                                                    {{ strtoupper(substr($user->nama, 0, 1)) }}
                                                 </span>
                                             </div>
                                             <div>
                                                 <div class="font-medium text-gray-900">
-                                                    {{ $user->name }}
-                                                    @if ($user->id == auth()->id())
+                                                    {{ $user->nama }}
+                                                    @if ($user->user_id == auth()->user()->user_id)
                                                         <span
                                                             class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-blue-100 text-blue-800 ml-2">
                                                             Anda
@@ -163,18 +163,18 @@
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                         <div class="flex space-x-2">
-                                            <a href="{{ route('admin.users.edit', $user) }}"
+                                            <a href="{{ route('admin.users.edit', $user->user_id) }}"
                                                 class="inline-flex items-center px-3 py-1 border border-transparent text-xs leading-4 font-medium rounded-md text-yellow-700 bg-yellow-100 hover:bg-yellow-200 transition-colors">
                                                 <i class="fas fa-edit mr-1"></i>
                                                 Edit
                                             </a>
-                                            @if ($user->id != auth()->id())
-                                                <form action="{{ route('admin.users.destroy', $user) }}" method="POST"
-                                                    class="inline">
+                                            @if ($user->user_id != auth()->user()->user_id)
+                                                <form action="{{ route('admin.users.destroy', $user->user_id) }}"
+                                                    method="POST" class="inline">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit"
-                                                        onclick="return confirm('Yakin ingin menghapus user {{ $user->name }}?')"
+                                                        onclick="return confirm('Yakin ingin menghapus user {{ $user->nama }}?')"
                                                         class="inline-flex items-center px-3 py-1 border border-transparent text-xs leading-4 font-medium rounded-md text-red-700 bg-red-100 hover:bg-red-200 transition-colors">
                                                         <i class="fas fa-trash mr-1"></i>
                                                         Hapus
@@ -201,61 +201,6 @@
                         {{ $users->links('components.pagination') }}
                     </div>
                 @endif
-            </div>
-
-            <!-- Access Information -->
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-8">
-                <div class="bg-white rounded-xl border border-gray-200 p-6">
-                    <h3 class="text-lg font-semibold text-gray-900 mb-4">Hak Akses Admin</h3>
-                    <div class="space-y-3">
-                        <div class="flex items-center text-sm text-gray-600">
-                            <i class="fas fa-check-circle text-green-500 mr-3"></i>
-                            Kelola semua data sistem
-                        </div>
-                        <div class="flex items-center text-sm text-gray-600">
-                            <i class="fas fa-check-circle text-green-500 mr-3"></i>
-                            Input dan edit penilaian siswa
-                        </div>
-                        <div class="flex items-center text-sm text-gray-600">
-                            <i class="fas fa-check-circle text-green-500 mr-3"></i>
-                            Proses perhitungan SAW
-                        </div>
-                        <div class="flex items-center text-sm text-gray-600">
-                            <i class="fas fa-check-circle text-green-500 mr-3"></i>
-                            Manajemen user dan hak akses
-                        </div>
-                        <div class="flex items-center text-sm text-gray-600">
-                            <i class="fas fa-check-circle text-green-500 mr-3"></i>
-                            Akses semua laporan dan analisis
-                        </div>
-                    </div>
-                </div>
-
-                <div class="bg-white rounded-xl border border-gray-200 p-6">
-                    <h3 class="text-lg font-semibold text-gray-900 mb-4">Hak Akses Guru</h3>
-                    <div class="space-y-3">
-                        <div class="flex items-center text-sm text-gray-600">
-                            <i class="fas fa-check-circle text-green-500 mr-3"></i>
-                            Lihat hasil evaluasi siswa
-                        </div>
-                        <div class="flex items-center text-sm text-gray-600">
-                            <i class="fas fa-check-circle text-green-500 mr-3"></i>
-                            Akses dashboard informasi
-                        </div>
-                        <div class="flex items-center text-sm text-gray-600">
-                            <i class="fas fa-check-circle text-green-500 mr-3"></i>
-                            Kelola profile pribadi
-                        </div>
-                        <div class="flex items-center text-sm text-gray-600">
-                            <i class="fas fa-times-circle text-red-500 mr-3"></i>
-                            Tidak dapat mengubah data sistem
-                        </div>
-                        <div class="flex items-center text-sm text-gray-600">
-                            <i class="fas fa-times-circle text-red-500 mr-3"></i>
-                            Tidak dapat mengelola user lain
-                        </div>
-                    </div>
-                </div>
             </div>
         @else
             <!-- Empty State -->
