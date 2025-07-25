@@ -8,7 +8,7 @@
         <!-- Header -->
         <div class="mb-8">
             <h2 class="text-2xl font-bold text-gray-900 mb-2">Edit User</h2>
-            <p class="text-gray-600">Ubah informasi user {{ $user->name }}</p>
+            <p class="text-gray-600">Ubah informasi user {{ $user->nama }}</p>
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -17,7 +17,7 @@
                 <div class="bg-white rounded-xl border border-gray-200 p-6">
                     <h3 class="text-lg font-semibold text-gray-900 mb-6">Form Edit User</h3>
 
-                    <form action="{{ route('admin.users.update', $user) }}" method="POST">
+                    <form action="{{ route('admin.users.update', $user->user_id) }}" method="POST">
                         @csrf
                         @method('PUT')
 
@@ -73,7 +73,7 @@
                             </div>
                         </div>
 
-                        @if ($user->id == auth()->id())
+                        @if ($user->user_id == auth()->user()->user_id)
                             <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-6">
                                 <div class="flex">
                                     <i class="fas fa-exclamation-triangle text-yellow-600 mr-2 mt-0.5"></i>

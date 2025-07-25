@@ -19,8 +19,8 @@ class SawService
           $nilaiMatriks = [];
           foreach ($alternatif as $alt) {
                foreach ($kriteria as $krit) {
-                    $penilaian = Penilaian::where('alternatif_id', $alt->alternatif_id) // Sesuaikan dengan primary key baru
-                         ->where('kriteria_id', $krit->kriteria_id) // Sesuaikan dengan primary key baru
+                    $penilaian = Penilaian::where('alternatif_id', $alt->alternatif_id)
+                         ->where('kriteria_id', $krit->kriteria_id)
                          ->first();
                     $nilaiMatriks[$alt->alternatif_id][$krit->kriteria_id] = $penilaian ? $penilaian->nilai : 0;
                }
@@ -45,7 +45,7 @@ class SawService
           foreach ($kriteria as $krit) {
                $nilai = [];
                foreach ($nilaiMatriks as $altId => $nilaiAlt) {
-                    $nilai[] = $nilaiAlt[$krit->kriteria_id]; // Sesuaikan dengan primary key baru
+                    $nilai[] = $nilaiAlt[$krit->kriteria_id];
                }
 
                // Untuk kriteria benefit (semua kriteria adalah benefit)
@@ -70,7 +70,7 @@ class SawService
                }
 
                $hasilAkhir[] = [
-                    'alternatif_id' => $alt->alternatif_id, // Sesuaikan dengan primary key baru
+                    'alternatif_id' => $alt->alternatif_id,
                     'alternatif' => $alt,
                     'skor_akhir' => $nilaiPreferensi,
                     'kategori' => $this->tentukanKategori($nilaiPreferensi)
@@ -121,8 +121,8 @@ class SawService
           foreach ($alternatif as $alt) {
                $row = ['alternatif' => $alt];
                foreach ($kriteria as $krit) {
-                    $penilaian = Penilaian::where('alternatif_id', $alt->alternatif_id) // Sesuaikan dengan primary key baru
-                         ->where('kriteria_id', $krit->kriteria_id) // Sesuaikan dengan primary key baru
+                    $penilaian = Penilaian::where('alternatif_id', $alt->alternatif_id)
+                         ->where('kriteria_id', $krit->kriteria_id)
                          ->first();
                     $row[$krit->kode] = $penilaian ? $penilaian->nilai : 0;
                }
@@ -141,8 +141,8 @@ class SawService
           $nilaiMatriks = [];
           foreach ($alternatif as $alt) {
                foreach ($kriteria as $krit) {
-                    $penilaian = Penilaian::where('alternatif_id', $alt->alternatif_id) // Sesuaikan dengan primary key baru
-                         ->where('kriteria_id', $krit->kriteria_id) // Sesuaikan dengan primary key baru
+                    $penilaian = Penilaian::where('alternatif_id', $alt->alternatif_id)
+                         ->where('kriteria_id', $krit->kriteria_id)
                          ->first();
                     $nilaiMatriks[$alt->alternatif_id][$krit->kriteria_id] = $penilaian ? $penilaian->nilai : 0;
                }

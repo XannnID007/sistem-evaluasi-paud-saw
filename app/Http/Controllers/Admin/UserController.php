@@ -17,7 +17,7 @@ class UserController extends Controller
         if ($request->filled('search')) {
             $search = $request->search;
             $query->where(function ($q) use ($search) {
-                $q->where('name', 'like', "%{$search}%")
+                $q->where('nama', 'like', "%{$search}%")
                     ->orWhere('email', 'like', "%{$search}%");
             });
         }
@@ -32,7 +32,7 @@ class UserController extends Controller
         $sortOrder = $request->get('order', 'desc');
 
         // Validate sort columns
-        $allowedSorts = ['name', 'email', 'role', 'created_at'];
+        $allowedSorts = ['nama', 'email', 'role', 'created_at'];
         if (!in_array($sortBy, $allowedSorts)) {
             $sortBy = 'created_at';
         }
@@ -58,14 +58,14 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nama' => 'required', // Sesuaikan dengan field baru
+            'nama' => 'required',
             'email' => 'required|email|unique:users',
             'password' => 'required|min:6',
             'role' => 'required|in:admin,guru',
         ]);
 
         User::create([
-            'nama' => $request->nama, // Sesuaikan dengan field baru
+            'nama' => $request->nama,
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'role' => $request->role,
@@ -74,22 +74,23 @@ class UserController extends Controller
         return redirect()->route('admin.users.index')->with('success', 'User berhasil ditambahkan');
     }
 
-    public function edit(User $user)
+    public function edit($user_id)
     {
+        $user = User::where('user_id', $user_id)->firstOrFail();
         return view('admin.users.edit', compact('user'));
     }
 
-    public function update(Request $request, $user_id) // Parameter disesuaikan
+    public function update(Request $request, $user_id)
     {
         $user = User::where('user_id', $user_id)->firstOrFail();
 
         $request->validate([
-            'nama' => 'required', // Sesuaikan dengan field baru
-            'email' => 'required|email|unique:users,email,' . $user_id . ',user_id', // Sesuaikan dengan primary key baru
+            'nama' => 'required',
+            'email' => 'required|email|unique:users,email,' . $user_id . ',user_id',
             'role' => 'required|in:admin,guru',
         ]);
 
-        $data = $request->only(['nama', 'email', 'role']); // Sesuaikan dengan field baru
+        $data = $request->only(['nama', 'email', 'role']);
 
         if ($request->filled('password')) {
             $data['password'] = Hash::make($request->password);
@@ -99,7 +100,7 @@ class UserController extends Controller
         return redirect()->route('admin.users.index')->with('success', 'User berhasil diupdate');
     }
 
-    public function destroy($user_id) // Parameter disesuaikan
+    public function destroy($user_id)
     {
         $user = User::where('user_id', $user_id)->firstOrFail();
         $user->delete();

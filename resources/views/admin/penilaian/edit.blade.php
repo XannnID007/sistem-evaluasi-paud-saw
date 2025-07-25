@@ -11,7 +11,7 @@
             <p class="text-gray-600">Ubah nilai penilaian untuk {{ $alternatif->nama }}</p>
         </div>
 
-        <form action="{{ route('admin.penilaian.update', $alternatif_id->alternatif) }}" method="POST">
+        <form action="{{ route('admin.penilaian.update', $alternatif->alternatif_id) }}" method="POST">
             @csrf
             @method('PUT')
 
@@ -54,9 +54,9 @@
                                         <p class="text-sm text-gray-600">
                                             Bobot: {{ number_format($k->bobot, 3) }} |
                                             Nilai Saat Ini:
-                                            @if ($penilaian->has($k->id))
+                                            @if ($penilaian->has($k->kriteria_id))
                                                 <span
-                                                    class="font-medium text-green-600">{{ $penilaian->get($k->id) }}</span>
+                                                    class="font-medium text-green-600">{{ $penilaian->get($k->kriteria_id) }}</span>
                                             @else
                                                 <span class="text-gray-400">Belum dinilai</span>
                                             @endif
@@ -66,17 +66,17 @@
                                     <div class="space-y-2">
                                         @foreach ($k->subkriteria->sortBy('skor') as $sub)
                                             <label
-                                                class="flex items-center p-2 border border-gray-200 rounded-lg hover:bg-white transition-colors cursor-pointer {{ old("nilai.{$k->id}", $penilaian->get($k->id)) == $sub->skor ? 'bg-blue-50 border-blue-300' : '' }}">
-                                                <input type="radio" name="nilai[{{ $k->id }}]"
+                                                class="flex items-center p-2 border border-gray-200 rounded-lg hover:bg-white transition-colors cursor-pointer {{ old("nilai.{$k->kriteria_id}", $penilaian->get($k->kriteria_id)) == $sub->skor ? 'bg-blue-50 border-blue-300' : '' }}">
+                                                <input type="radio" name="nilai[{{ $k->kriteria_id }}]"
                                                     value="{{ $sub->skor }}"
-                                                    {{ old("nilai.{$k->id}", $penilaian->get($k->id)) == $sub->skor ? 'checked' : '' }}
+                                                    {{ old("nilai.{$k->kriteria_id}", $penilaian->get($k->kriteria_id)) == $sub->skor ? 'checked' : '' }}
                                                     class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500">
                                                 <div class="ml-3 flex-1">
                                                     <div class="flex items-center justify-between">
                                                         <span
                                                             class="text-sm font-medium text-gray-900">{{ $sub->nilai }}</span>
                                                         <span
-                                                            class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium {{ old("nilai.{$k->id}", $penilaian->get($k->id)) == $sub->skor ? 'bg-blue-100 text-blue-800' : 'bg-gray-200 text-gray-800' }}">
+                                                            class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium {{ old("nilai.{$k->kriteria_id}", $penilaian->get($k->kriteria_id)) == $sub->skor ? 'bg-blue-100 text-blue-800' : 'bg-gray-200 text-gray-800' }}">
                                                             {{ $sub->skor }}
                                                         </span>
                                                     </div>
@@ -84,7 +84,7 @@
                                             </label>
                                         @endforeach
                                     </div>
-                                    @error("nilai.{$k->id}")
+                                    @error("nilai.{$k->kriteria_id}")
                                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                     @enderror
                                 </div>
@@ -105,6 +105,7 @@
                         </div>
                     </div>
                 </div>
+
                 <!-- Sidebar -->
                 <div>
                     <div class="bg-white rounded-xl border border-gray-200 p-6 mb-6">
@@ -116,10 +117,10 @@
                                         <span class="font-medium text-gray-900">{{ $k->kode }}</span>
                                         <p class="text-xs text-gray-600">{{ $k->nama }}</p>
                                     </div>
-                                    @if ($penilaian->has($k->id))
+                                    @if ($penilaian->has($k->kriteria_id))
                                         <span
                                             class="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-green-100 text-green-800">
-                                            {{ $penilaian->get($k->id) }}
+                                            {{ $penilaian->get($k->kriteria_id) }}
                                         </span>
                                     @else
                                         <span

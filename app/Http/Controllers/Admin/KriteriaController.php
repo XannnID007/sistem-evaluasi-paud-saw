@@ -37,15 +37,16 @@ class KriteriaController extends Controller
         }
     }
 
-    public function edit(Kriteria $kriteria)
+    public function edit($kriteria_id)
     {
+        $kriteria = Kriteria::where('kriteria_id', $kriteria_id)->firstOrFail();
         return view('admin.kriteria.edit', compact('kriteria'));
     }
 
-    public function update(Request $request, $kriteria_id) // Parameter disesuaikan
+    public function update(Request $request, $kriteria_id)
     {
         $request->validate([
-            'kode' => 'required|unique:kriteria,kode,' . $kriteria_id . ',kriteria_id', // Sesuaikan dengan primary key baru
+            'kode' => 'required|unique:kriteria,kode,' . $kriteria_id . ',kriteria_id',
             'nama' => 'required',
             'bobot' => 'required|numeric|min:0|max:1',
         ]);
@@ -59,7 +60,7 @@ class KriteriaController extends Controller
         }
     }
 
-    public function destroy($kriteria_id) // Parameter disesuaikan
+    public function destroy($kriteria_id)
     {
         try {
             $kriteria = Kriteria::where('kriteria_id', $kriteria_id)->firstOrFail();
@@ -86,13 +87,13 @@ class KriteriaController extends Controller
         }
     }
 
-    public function subkriteria($kriteria_id) // Parameter disesuaikan
+    public function subkriteria($kriteria_id)
     {
         $kriteria = Kriteria::with('subkriteria')->where('kriteria_id', $kriteria_id)->firstOrFail();
         return view('admin.kriteria.subkriteria', compact('kriteria'));
     }
 
-    public function storeSubkriteria(Request $request, $kriteria_id) // Parameter disesuaikan
+    public function storeSubkriteria(Request $request, $kriteria_id)
     {
         $request->validate([
             'nilai' => 'required',
@@ -122,7 +123,7 @@ class KriteriaController extends Controller
         }
     }
 
-    public function destroySubkriteria($subdatakriteria_id) // Parameter disesuaikan
+    public function destroySubkriteria($subdatakriteria_id)
     {
         try {
             $subkriteria = Subkriteria::where('subdatakriteria_id', $subdatakriteria_id)->firstOrFail();

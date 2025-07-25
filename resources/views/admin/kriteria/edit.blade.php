@@ -126,7 +126,7 @@
                                 </div>
                             @endforeach
                         </div>
-                        <a href="{{ route('admin.kriteria.subkriteria', $kriteria->id) }}"
+                        <a href="{{ route('admin.kriteria.subkriteria', $kriteria->kriteria_id) }}"
                             class="inline-flex items-center px-3 py-2 mt-4 w-full justify-center bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors text-sm">
                             <i class="fas fa-cog mr-2"></i>
                             Kelola Subkriteria
@@ -138,7 +138,7 @@
                         <div class="text-center py-4">
                             <i class="fas fa-list text-gray-400 text-3xl mb-2"></i>
                             <p class="text-gray-500 text-sm mb-4">Belum ada subkriteria</p>
-                            <a href="{{ route('admin.kriteria.subkriteria', $kriteria->id) }}"
+                            <a href="{{ route('admin.kriteria.subkriteria', $kriteria->kriteria_id) }}"
                                 class="inline-flex items-center px-3 py-2 bg-blue-100 text-blue-700 rounded-lg hover:bg-blue-200 transition-colors text-sm">
                                 <i class="fas fa-plus mr-2"></i>
                                 Tambah Subkriteria
