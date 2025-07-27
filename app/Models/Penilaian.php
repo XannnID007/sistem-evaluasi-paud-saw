@@ -10,7 +10,7 @@ class Penilaian extends Model
     use HasFactory;
 
     protected $table = 'penilaian';
-    protected $primaryKey = 'id_penilaian'; // Perubahan dari 'id' ke 'id_penilaian'
+    protected $primaryKey = 'id_penilaian';
 
     protected $fillable = ['alternatif_id', 'kriteria_id', 'nilai'];
 

@@ -10,7 +10,7 @@ class Alternatif extends Model
     use HasFactory;
 
     protected $table = 'alternatif';
-    protected $primaryKey = 'alternatif_id'; // Perubahan dari 'id' ke 'alternatif_id'
+    protected $primaryKey = 'alternatif_id';
 
     protected $fillable = [
         'kode',
@@ -19,7 +19,7 @@ class Alternatif extends Model
         'tanggal_lahir',
         'alamat',
         'nama_orangtua',
-        'user_id' // Tambahan kolom user_id
+        'user_id'
     ];
 
     protected $casts = [
@@ -36,7 +36,6 @@ class Alternatif extends Model
         return $this->hasOne(HasilSaw::class, 'alternatif_id', 'alternatif_id');
     }
 
-    // Relasi dengan User
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id', 'user_id');

@@ -9,8 +9,8 @@ class Subkriteria extends Model
 {
     use HasFactory;
 
-    protected $table = 'subdatakriteria'; // Nama tabel diubah ke subdatakriteria
-    protected $primaryKey = 'subdatakriteria_id'; // Perubahan dari 'id' ke 'subdatakriteria_id'
+    protected $table = 'subdatakriteria';
+    protected $primaryKey = 'subdatakriteria_id';
 
     protected $fillable = ['kriteria_id', 'nilai', 'skor'];
 

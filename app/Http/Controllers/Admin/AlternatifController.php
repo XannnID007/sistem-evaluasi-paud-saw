@@ -67,16 +67,15 @@ class AlternatifController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'kode' => 'required|unique:alternatif',
-            'nama' => 'required|string|max:255',
+            'kode' => 'required|max:10|unique:alternatif', // ✅ UPDATE: tambah max:10
+            'nama' => 'required|string|max:100', // ✅ UPDATE: max:255 → max:100
             'jenis_kelamin' => 'required|in:L,P',
             'tanggal_lahir' => 'required|date',
-            'nama_orangtua' => 'nullable|string|max:255',
+            'nama_orangtua' => 'nullable|string|max:100', // ✅ UPDATE: max:255 → max:100
             'alamat' => 'nullable|string'
         ]);
 
         try {
-            // Tambahkan user_id dari user yang sedang login
             $data = $request->all();
             $data['user_id'] = auth()->user()->user_id;
 
@@ -117,11 +116,11 @@ class AlternatifController extends Controller
         $alternatif = Alternatif::where('alternatif_id', $alternatif_id)->firstOrFail();
 
         $request->validate([
-            'kode' => 'required|unique:alternatif,kode,' . $alternatif_id . ',alternatif_id',
-            'nama' => 'required|string|max:255',
+            'kode' => 'required|max:10|unique:alternatif,kode,' . $alternatif_id . ',alternatif_id', // ✅ UPDATE: tambah max:10
+            'nama' => 'required|string|max:100', // ✅ UPDATE: max:255 → max:100
             'jenis_kelamin' => 'required|in:L,P',
             'tanggal_lahir' => 'required|date',
-            'nama_orangtua' => 'nullable|string|max:255',
+            'nama_orangtua' => 'nullable|string|max:100', // ✅ UPDATE: max:255 → max:100
             'alamat' => 'nullable|string'
         ]);
 

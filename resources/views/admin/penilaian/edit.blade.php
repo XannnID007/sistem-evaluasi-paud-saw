@@ -54,6 +54,7 @@
                                         <p class="text-sm text-gray-600">
                                             Bobot: {{ number_format($k->bobot, 3) }} |
                                             Nilai Saat Ini:
+                                            {{-- ✅ UPDATE: gunakan kriteria_id --}}
                                             @if ($penilaian->has($k->kriteria_id))
                                                 <span
                                                     class="font-medium text-green-600">{{ $penilaian->get($k->kriteria_id) }}</span>
@@ -67,6 +68,7 @@
                                         @foreach ($k->subkriteria->sortBy('skor') as $sub)
                                             <label
                                                 class="flex items-center p-2 border border-gray-200 rounded-lg hover:bg-white transition-colors cursor-pointer {{ old("nilai.{$k->kriteria_id}", $penilaian->get($k->kriteria_id)) == $sub->skor ? 'bg-blue-50 border-blue-300' : '' }}">
+                                                {{-- ✅ UPDATE: gunakan kriteria_id --}}
                                                 <input type="radio" name="nilai[{{ $k->kriteria_id }}]"
                                                     value="{{ $sub->skor }}"
                                                     {{ old("nilai.{$k->kriteria_id}", $penilaian->get($k->kriteria_id)) == $sub->skor ? 'checked' : '' }}
@@ -84,6 +86,7 @@
                                             </label>
                                         @endforeach
                                     </div>
+                                    {{-- ✅ UPDATE: gunakan kriteria_id --}}
                                     @error("nilai.{$k->kriteria_id}")
                                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                     @enderror
@@ -117,6 +120,7 @@
                                         <span class="font-medium text-gray-900">{{ $k->kode }}</span>
                                         <p class="text-xs text-gray-600">{{ $k->nama }}</p>
                                     </div>
+                                    {{-- ✅ UPDATE: gunakan kriteria_id --}}
                                     @if ($penilaian->has($k->kriteria_id))
                                         <span
                                             class="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-green-100 text-green-800">

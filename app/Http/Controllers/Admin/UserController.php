@@ -58,8 +58,8 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nama' => 'required',
-            'email' => 'required|email|unique:users',
+            'nama' => 'required|max:100',
+            'email' => 'required|email|max:100|unique:users',
             'password' => 'required|min:6',
             'role' => 'required|in:admin,guru',
         ]);
@@ -85,8 +85,8 @@ class UserController extends Controller
         $user = User::where('user_id', $user_id)->firstOrFail();
 
         $request->validate([
-            'nama' => 'required',
-            'email' => 'required|email|unique:users,email,' . $user_id . ',user_id',
+            'nama' => 'required|max:100',
+            'email' => 'required|email|max:100|unique:users,email,' . $user_id . ',user_id',
             'role' => 'required|in:admin,guru',
         ]);
 

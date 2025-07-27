@@ -83,7 +83,7 @@ class PenilaianController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'alternatif_id' => 'required|exists:alternatif,alternatif_id',
+            'alternatif_id' => 'required|exists:alternatif,alternatif_id', // ✅ SUDAH BENAR
             'nilai' => 'required|array',
             'nilai.*' => 'required|integer|min:1|max:4',
         ]);
@@ -105,7 +105,7 @@ class PenilaianController extends Controller
 
     public function edit($alternatif_id)
     {
-        $alternatif = Alternatif::where('alternatif_id', $alternatif_id)->firstOrFail();
+        $alternatif = Alternatif::where('alternatif_id', $alternatif_id)->firstOrFail(); // ✅ SUDAH BENAR
         $kriteria = Kriteria::with('subkriteria')->get();
         $penilaian = Penilaian::where('alternatif_id', $alternatif_id)->pluck('nilai', 'kriteria_id');
 

@@ -10,7 +10,7 @@ class Kriteria extends Model
     use HasFactory;
 
     protected $table = 'kriteria';
-    protected $primaryKey = 'kriteria_id'; // Perubahan dari 'id' ke 'kriteria_id'
+    protected $primaryKey = 'kriteria_id';
 
     protected $fillable = ['kode', 'nama', 'bobot', 'keterangan'];
 

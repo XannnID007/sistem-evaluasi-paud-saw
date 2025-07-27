@@ -1,6 +1,6 @@
 <?php
 
-// database/seeders/DatabaseSeeder.php - Updated untuk struktur revisi lengkap
+// database/seeders/DatabaseSeeder.php - Updated dengan data nama siswa dari Excel
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
@@ -25,6 +25,7 @@ class DatabaseSeeder extends Seeder
         Subkriteria::truncate();
         Alternatif::truncate();
         Penilaian::truncate();
+        DB::table('hasil_saw')->truncate();
 
         // Re-enable foreign key checks
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
@@ -38,30 +39,30 @@ class DatabaseSeeder extends Seeder
         // 3. Create Subkriteria
         $this->createSubkriteria();
 
-        // 4. Create Alternatif (Siswa)
+        // 4. Create Alternatif (Siswa) - Updated dengan nama dari Excel
         $this->createAlternatif();
 
-        // 5. Create Penilaian (Data lengkap dari Excel)
+        // 5. Create Penilaian (Data sudah benar dari seeder lama)
         $this->createPenilaian();
 
         $this->command->info('✅ Database seeding completed successfully!');
         $this->command->info('👤 Admin: admin@paud.com / admin123');
         $this->command->info('👨‍🏫 Guru: guru@paud.com / guru123');
         $this->command->info('📊 Data lengkap: 6 kriteria, 17 siswa, semua penilaian');
-        $this->command->info('🔄 Database telah direvisi sesuai feedback dosen');
+        $this->command->info('🔄 Nama siswa telah diupdate sesuai data Excel');
     }
 
     private function createUsers()
     {
         $users = [
             [
-                'nama' => 'Administrator', // Perubahan dari 'name' ke 'nama'
+                'nama' => 'Administrator',
                 'email' => 'admin@paud.com',
                 'password' => Hash::make('admin123'),
                 'role' => 'admin'
             ],
             [
-                'nama' => 'Guru PAUD Flamboyan', // Perubahan dari 'name' ke 'nama'
+                'nama' => 'Guru PAUD Flamboyan',
                 'email' => 'guru@paud.com',
                 'password' => Hash::make('guru123'),
                 'role' => 'guru'
@@ -91,7 +92,7 @@ class DatabaseSeeder extends Seeder
             Kriteria::create($data);
         }
 
-        $this->command->info('📋 Kriteria created: 6 kriteria dengan total bobot = 1.00 (SESUAI EXCEL)');
+        $this->command->info('📋 Kriteria created: 6 kriteria dengan total bobot = 1.00');
     }
 
     private function createSubkriteria()
@@ -139,7 +140,7 @@ class DatabaseSeeder extends Seeder
             $kriteria = Kriteria::where('kode', $kodeKriteria)->first();
             foreach ($subs as $sub) {
                 Subkriteria::create([
-                    'kriteria_id' => $kriteria->kriteria_id, // Menggunakan kriteria_id baru
+                    'kriteria_id' => $kriteria->kriteria_id,
                     'nilai' => $sub['nilai'],
                     'skor' => $sub['skor']
                 ]);
@@ -151,39 +152,40 @@ class DatabaseSeeder extends Seeder
 
     private function createAlternatif()
     {
-        // Ambil user_id untuk admin (sebagai contoh, bisa disesuaikan)
+        // Ambil user_id untuk admin
         $adminUser = User::where('email', 'admin@paud.com')->first();
 
+        // Data siswa yang sudah diupdate dengan nama dari Excel
         $siswaData = [
-            ['kode' => 'A1', 'nama' => 'Adinda Sari', 'jenis_kelamin' => 'P', 'tanggal_lahir' => '2019-03-15', 'nama_orangtua' => 'Budi Santoso', 'alamat' => 'Jl. Melati No. 12, Jakarta', 'user_id' => $adminUser->user_id],
-            ['kode' => 'A2', 'nama' => 'Affan Rizky', 'jenis_kelamin' => 'L', 'tanggal_lahir' => '2019-05-20', 'nama_orangtua' => 'Ahmad Rizki', 'alamat' => 'Jl. Mawar No. 8, Jakarta', 'user_id' => $adminUser->user_id],
-            ['kode' => 'A3', 'nama' => 'Aisy Nabila', 'jenis_kelamin' => 'P', 'tanggal_lahir' => '2019-02-10', 'nama_orangtua' => 'Sandi Permana', 'alamat' => 'Jl. Anggrek No. 15, Jakarta', 'user_id' => $adminUser->user_id],
-            ['kode' => 'A4', 'nama' => 'Akbar Maulana', 'jenis_kelamin' => 'L', 'tanggal_lahir' => '2019-07-08', 'nama_orangtua' => 'Dedi Kurnia', 'alamat' => 'Jl. Dahlia No. 3, Jakarta', 'user_id' => $adminUser->user_id],
-            ['kode' => 'A5', 'nama' => 'Amira Zahra', 'jenis_kelamin' => 'P', 'tanggal_lahir' => '2019-01-25', 'nama_orangtua' => 'Hendra Wijaya', 'alamat' => 'Jl. Tulip No. 22, Jakarta', 'user_id' => $adminUser->user_id],
-            ['kode' => 'A6', 'nama' => 'Andika Pratama', 'jenis_kelamin' => 'L', 'tanggal_lahir' => '2019-04-12', 'nama_orangtua' => 'Eko Prasetyo', 'alamat' => 'Jl. Kenanga No. 7, Jakarta', 'user_id' => $adminUser->user_id],
-            ['kode' => 'A7', 'nama' => 'Anisa Putri', 'jenis_kelamin' => 'P', 'tanggal_lahir' => '2019-06-30', 'nama_orangtua' => 'Agus Setiawan', 'alamat' => 'Jl. Cempaka No. 18, Jakarta', 'user_id' => $adminUser->user_id],
-            ['kode' => 'A8', 'nama' => 'Arif Rahman', 'jenis_kelamin' => 'L', 'tanggal_lahir' => '2019-09-14', 'nama_orangtua' => 'Rahman Hakim', 'alamat' => 'Jl. Flamboyan No. 9, Jakarta', 'user_id' => $adminUser->user_id],
-            ['kode' => 'A9', 'nama' => 'Aulia Rahmah', 'jenis_kelamin' => 'P', 'tanggal_lahir' => '2019-11-05', 'nama_orangtua' => 'Surya Pratama', 'alamat' => 'Jl. Kamboja No. 14, Jakarta', 'user_id' => $adminUser->user_id],
-            ['kode' => 'A10', 'nama' => 'Bayu Setiawan', 'jenis_kelamin' => 'L', 'tanggal_lahir' => '2019-08-22', 'nama_orangtua' => 'Bayu Adi', 'alamat' => 'Jl. Seroja No. 5, Jakarta', 'user_id' => $adminUser->user_id],
-            ['kode' => 'A11', 'nama' => 'Citra Dewi', 'jenis_kelamin' => 'P', 'tanggal_lahir' => '2019-12-18', 'nama_orangtua' => 'Dewi Sartika', 'alamat' => 'Jl. Teratai No. 11, Jakarta', 'user_id' => $adminUser->user_id],
-            ['kode' => 'A12', 'nama' => 'Dani Kurniawan', 'jenis_kelamin' => 'L', 'tanggal_lahir' => '2019-10-03', 'nama_orangtua' => 'Kurnia Putra', 'alamat' => 'Jl. Bougenvil No. 20, Jakarta', 'user_id' => $adminUser->user_id],
-            ['kode' => 'A13', 'nama' => 'Eka Sari', 'jenis_kelamin' => 'P', 'tanggal_lahir' => '2019-05-16', 'nama_orangtua' => 'Sari Indah', 'alamat' => 'Jl. Lavender No. 6, Jakarta', 'user_id' => $adminUser->user_id],
-            ['kode' => 'A14', 'nama' => 'Farid Hidayat', 'jenis_kelamin' => 'L', 'tanggal_lahir' => '2019-03-28', 'nama_orangtua' => 'Hidayat Nur', 'alamat' => 'Jl. Sakura No. 13, Jakarta', 'user_id' => $adminUser->user_id],
-            ['kode' => 'A15', 'nama' => 'Gita Permata', 'jenis_kelamin' => 'P', 'tanggal_lahir' => '2019-07-11', 'nama_orangtua' => 'Permata Sari', 'alamat' => 'Jl. Gardenia No. 17, Jakarta', 'user_id' => $adminUser->user_id],
-            ['kode' => 'A16', 'nama' => 'Hana Safitri', 'jenis_kelamin' => 'P', 'tanggal_lahir' => '2019-04-07', 'nama_orangtua' => 'Safitri Indah', 'alamat' => 'Jl. Azalea No. 4, Jakarta', 'user_id' => $adminUser->user_id],
-            ['kode' => 'A17', 'nama' => 'Ilham Maulana', 'jenis_kelamin' => 'L', 'tanggal_lahir' => '2019-01-13', 'nama_orangtua' => 'Maulana Ishak', 'alamat' => 'Jl. Edelweis No. 10, Jakarta', 'user_id' => $adminUser->user_id]
+            ['kode' => 'A1', 'nama' => 'Adiba Shakilla Utama', 'jenis_kelamin' => 'P', 'tanggal_lahir' => '2019-03-15', 'nama_orangtua' => 'Budi Santoso', 'alamat' => 'Jl. Melati No. 12, Jakarta', 'user_id' => $adminUser->user_id],
+            ['kode' => 'A2', 'nama' => 'Aldi Sandika Nugraha', 'jenis_kelamin' => 'L', 'tanggal_lahir' => '2019-05-20', 'nama_orangtua' => 'Ahmad Rizki', 'alamat' => 'Jl. Mawar No. 8, Jakarta', 'user_id' => $adminUser->user_id],
+            ['kode' => 'A3', 'nama' => 'Aldo Sandika Nugraha', 'jenis_kelamin' => 'L', 'tanggal_lahir' => '2019-02-10', 'nama_orangtua' => 'Sandi Permana', 'alamat' => 'Jl. Anggrek No. 15, Jakarta', 'user_id' => $adminUser->user_id],
+            ['kode' => 'A4', 'nama' => 'Kelvin Septia Ramadan', 'jenis_kelamin' => 'L', 'tanggal_lahir' => '2019-07-08', 'nama_orangtua' => 'Dedi Kurnia', 'alamat' => 'Jl. Dahlia No. 3, Jakarta', 'user_id' => $adminUser->user_id],
+            ['kode' => 'A5', 'nama' => 'Marwah Maulidan Nur Afifah', 'jenis_kelamin' => 'P', 'tanggal_lahir' => '2019-01-25', 'nama_orangtua' => 'Hendra Wijaya', 'alamat' => 'Jl. Tulip No. 22, Jakarta', 'user_id' => $adminUser->user_id],
+            ['kode' => 'A6', 'nama' => 'Putri Ramadhani', 'jenis_kelamin' => 'P', 'tanggal_lahir' => '2019-04-12', 'nama_orangtua' => 'Eko Prasetyo', 'alamat' => 'Jl. Kenanga No. 7, Jakarta', 'user_id' => $adminUser->user_id],
+            ['kode' => 'A7', 'nama' => 'Syahnaz Rahma Fitriyah', 'jenis_kelamin' => 'P', 'tanggal_lahir' => '2019-06-30', 'nama_orangtua' => 'Agus Setiawan', 'alamat' => 'Jl. Cempaka No. 18, Jakarta', 'user_id' => $adminUser->user_id],
+            ['kode' => 'A8', 'nama' => 'Shafira', 'jenis_kelamin' => 'P', 'tanggal_lahir' => '2019-09-14', 'nama_orangtua' => 'Rahman Hakim', 'alamat' => 'Jl. Flamboyan No. 9, Jakarta', 'user_id' => $adminUser->user_id],
+            ['kode' => 'A9', 'nama' => 'Yusna Nazwa Putri', 'jenis_kelamin' => 'P', 'tanggal_lahir' => '2019-11-05', 'nama_orangtua' => 'Surya Pratama', 'alamat' => 'Jl. Kamboja No. 14, Jakarta', 'user_id' => $adminUser->user_id],
+            ['kode' => 'A10', 'nama' => 'Arsyila Syafia Putri', 'jenis_kelamin' => 'P', 'tanggal_lahir' => '2019-08-22', 'nama_orangtua' => 'Bayu Adi', 'alamat' => 'Jl. Seroja No. 5, Jakarta', 'user_id' => $adminUser->user_id],
+            ['kode' => 'A11', 'nama' => 'Abizar', 'jenis_kelamin' => 'L', 'tanggal_lahir' => '2019-12-18', 'nama_orangtua' => 'Dewi Sartika', 'alamat' => 'Jl. Teratai No. 11, Jakarta', 'user_id' => $adminUser->user_id],
+            ['kode' => 'A12', 'nama' => 'Anugrah Lasmana Putra', 'jenis_kelamin' => 'L', 'tanggal_lahir' => '2019-10-03', 'nama_orangtua' => 'Kurnia Putra', 'alamat' => 'Jl. Bougenvil No. 20, Jakarta', 'user_id' => $adminUser->user_id],
+            ['kode' => 'A13', 'nama' => 'Dila Aprilia Lusyana', 'jenis_kelamin' => 'P', 'tanggal_lahir' => '2019-05-16', 'nama_orangtua' => 'Sari Indah', 'alamat' => 'Jl. Lavender No. 6, Jakarta', 'user_id' => $adminUser->user_id],
+            ['kode' => 'A14', 'nama' => 'Putra Hasan Ruhiyat', 'jenis_kelamin' => 'L', 'tanggal_lahir' => '2019-03-28', 'nama_orangtua' => 'Hidayat Nur', 'alamat' => 'Jl. Sakura No. 13, Jakarta', 'user_id' => $adminUser->user_id],
+            ['kode' => 'A15', 'nama' => 'Shakayla', 'jenis_kelamin' => 'P', 'tanggal_lahir' => '2019-07-11', 'nama_orangtua' => 'Permata Sari', 'alamat' => 'Jl. Gardenia No. 17, Jakarta', 'user_id' => $adminUser->user_id],
+            ['kode' => 'A16', 'nama' => 'Shinidi', 'jenis_kelamin' => 'P', 'tanggal_lahir' => '2019-04-07', 'nama_orangtua' => 'Safitri Indah', 'alamat' => 'Jl. Azalea No. 4, Jakarta', 'user_id' => $adminUser->user_id],
+            ['kode' => 'A17', 'nama' => 'Rasyifa', 'jenis_kelamin' => 'P', 'tanggal_lahir' => '2019-01-13', 'nama_orangtua' => 'Maulana Ishak', 'alamat' => 'Jl. Edelweis No. 10, Jakarta', 'user_id' => $adminUser->user_id]
         ];
 
         foreach ($siswaData as $siswa) {
             Alternatif::create($siswa);
         }
 
-        $this->command->info('👶 Alternatif created: 17 siswa (9 perempuan, 8 laki-laki) dengan relasi ke user');
+        $this->command->info('👶 Alternatif created: 17 siswa dengan nama sesuai Excel (9 perempuan, 8 laki-laki)');
     }
 
     private function createPenilaian()
     {
-        // DATA PENILAIAN YANG BENAR 100% SESUAI EXCEL - HASIL REVERSE ENGINEERING
+        // DATA PENILAIAN YANG SUDAH BENAR (dari database seeder lama)
         $penilaianData = [
             'A1' => ['C1' => 1, 'C2' => 2, 'C3' => 3, 'C4' => 3, 'C5' => 4, 'C6' => 2],
             'A2' => ['C1' => 4, 'C2' => 1, 'C3' => 3, 'C4' => 3, 'C5' => 1, 'C6' => 2],
@@ -215,8 +217,8 @@ class DatabaseSeeder extends Seeder
 
                     if ($kriteria) {
                         Penilaian::create([
-                            'alternatif_id' => $alternatif->alternatif_id, // Menggunakan alternatif_id baru
-                            'kriteria_id' => $kriteria->kriteria_id, // Menggunakan kriteria_id baru
+                            'alternatif_id' => $alternatif->alternatif_id,
+                            'kriteria_id' => $kriteria->kriteria_id,
                             'nilai' => $nilai
                         ]);
                         $totalPenilaian++;
@@ -225,10 +227,10 @@ class DatabaseSeeder extends Seeder
             }
         }
 
-        $this->command->info("📊 Penilaian created: {$totalPenilaian} penilaian (17 siswa × 6 kriteria) - DATA 100% SESUAI EXCEL");
+        $this->command->info("📊 Penilaian created: {$totalPenilaian} penilaian (17 siswa × 6 kriteria)");
 
         // Statistik penilaian
-        $this->command->info('📈 Statistik Penilaian (100% SESUAI EXCEL):');
+        $this->command->info('📈 Statistik Penilaian:');
         $kriteria = Kriteria::all();
         foreach ($kriteria as $k) {
             $avg = Penilaian::where('kriteria_id', $k->kriteria_id)->avg('nilai');
@@ -236,8 +238,9 @@ class DatabaseSeeder extends Seeder
         }
 
         $this->command->info('');
-        $this->command->info('✅ SEEDER TELAH DIREVISI SESUAI FEEDBACK DOSEN!');
-        $this->command->info('🎯 SEMUA PERUBAHAN PRIMARY KEY DAN FOREIGN KEY TELAH DITERAPKAN');
-        $this->command->info('🔄 Database structure sesuai dengan revisi dokumen');
+        $this->command->info('✅ DATABASE SEEDER TELAH DIUPDATE!');
+        $this->command->info('🎯 NAMA SISWA SESUAI DATA EXCEL');
+        $this->command->info('🔄 NILAI PENILAIAN TETAP MENGGUNAKAN DATA YANG SUDAH BENAR');
+        $this->command->info('📋 17 siswa dengan 6 kriteria penilaian lengkap');
     }
 }

@@ -11,10 +11,10 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
-    protected $primaryKey = 'user_id'; // Perubahan dari 'id' ke 'user_id'
+    protected $primaryKey = 'user_id'; // ✅ SUDAH BENAR
 
     protected $fillable = [
-        'nama',        // Perubahan dari 'name' ke 'nama'
+        'nama',
         'email',
         'password',
         'role'
@@ -39,7 +39,6 @@ class User extends Authenticatable
         return $this->role === 'guru';
     }
 
-    // Relasi dengan Alternatif
     public function alternatif()
     {
         return $this->hasMany(Alternatif::class, 'user_id', 'user_id');

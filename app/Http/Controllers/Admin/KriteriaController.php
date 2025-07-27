@@ -24,8 +24,8 @@ class KriteriaController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'kode' => 'required|unique:kriteria',
-            'nama' => 'required',
+            'kode' => 'required|max:10|unique:kriteria', // ✅ UPDATE: tambah max:10
+            'nama' => 'required|max:150', // ✅ UPDATE: tambah max:150
             'bobot' => 'required|numeric|min:0|max:1',
         ]);
 
@@ -46,8 +46,8 @@ class KriteriaController extends Controller
     public function update(Request $request, $kriteria_id)
     {
         $request->validate([
-            'kode' => 'required|unique:kriteria,kode,' . $kriteria_id . ',kriteria_id',
-            'nama' => 'required',
+            'kode' => 'required|max:10|unique:kriteria,kode,' . $kriteria_id . ',kriteria_id', // ✅ UPDATE: tambah max:10
+            'nama' => 'required|max:150', // ✅ UPDATE: tambah max:150
             'bobot' => 'required|numeric|min:0|max:1',
         ]);
 
@@ -96,7 +96,7 @@ class KriteriaController extends Controller
     public function storeSubkriteria(Request $request, $kriteria_id)
     {
         $request->validate([
-            'nilai' => 'required',
+            'nilai' => 'required|max:100', // ✅ UPDATE: tambah max:100
             'skor' => 'required|integer|min:1|max:4',
         ]);
 

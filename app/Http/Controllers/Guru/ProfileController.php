@@ -17,12 +17,12 @@ class ProfileController extends Controller
     public function update(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email,' . Auth::id(),
+            'nama' => 'required|string|max:100',
+            'email' => 'required|email|max:100|unique:users,email,' . Auth::user()->user_id . ',user_id',
         ]);
 
         $user = Auth::user();
-        $user->update($request->only(['name', 'email']));
+        $user->update($request->only(['nama', 'email']));
 
         return redirect()->route('guru.profile.index')->with('success', 'Profile berhasil diupdate');
     }
