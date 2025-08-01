@@ -7,7 +7,7 @@ use App\Models\HasilSaw;
 use App\Models\Kriteria;
 use App\Models\Alternatif;
 use Illuminate\Http\Request;
-use Barryvdh\DomPDF\PDF;
+use Barryvdh\DomPDF\Facade\Pdf; // ✅ UPDATE: Import facade yang benar
 
 class ReportController extends Controller
 {
@@ -47,7 +47,8 @@ class ReportController extends Controller
             'skor_terendah' => $hasil->min('skor_akhir'),
         ];
 
-        $pdf = PDF::loadView('reports.hasil-saw', compact('hasil', 'kriteria', 'statistik'))
+        // ✅ UPDATE: Gunakan facade PDF yang benar
+        $pdf = Pdf::loadView('admin.reports.hasil-saw', compact('hasil', 'kriteria', 'statistik'))
             ->setPaper('a4', 'portrait')
             ->setOptions([
                 'dpi' => 150,
@@ -92,7 +93,8 @@ class ReportController extends Controller
             })->count(),
         ];
 
-        $pdf = PDF::loadView('reports.data-siswa', compact('alternatif', 'kriteria', 'statistik'))
+        // ✅ UPDATE: Gunakan facade PDF yang benar
+        $pdf = Pdf::loadView('admin.reports.data-siswa', compact('alternatif', 'kriteria', 'statistik'))
             ->setPaper('a4', 'portrait')
             ->setOptions([
                 'dpi' => 150,
@@ -130,7 +132,8 @@ class ReportController extends Controller
             'persentase_lengkap' => $alternatif->count() > 0 ? ($lengkap / $alternatif->count()) * 100 : 0,
         ];
 
-        $pdf = PDF::loadView('reports.nilai-alternatif', compact('alternatif', 'kriteria', 'statistik'))
+        // ✅ UPDATE: Gunakan facade PDF yang benar
+        $pdf = Pdf::loadView('admin.reports.nilai-alternatif', compact('alternatif', 'kriteria', 'statistik'))
             ->setPaper('a4', 'landscape') // Landscape untuk tabel yang lebar
             ->setOptions([
                 'dpi' => 150,
@@ -162,7 +165,8 @@ class ReportController extends Controller
             'total_bobot' => $kriteria->sum('bobot'),
         ];
 
-        $pdf = PDF::loadView('reports.matriks-saw', $data)
+        // ✅ UPDATE: Gunakan facade PDF yang benar
+        $pdf = Pdf::loadView('admin.reports.matriks-saw', $data)
             ->setPaper('a4', 'landscape')
             ->setOptions([
                 'dpi' => 150,

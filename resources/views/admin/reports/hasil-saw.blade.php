@@ -267,7 +267,7 @@
 <body>
     <!-- Header -->
     <div class="header">
-        <div class="logo">🎓</div>
+        <div class="logo"></div>
         <h1>PAUD FLAMBOYAN</h1>
         <h2>LAPORAN HASIL EVALUASI PERKEMBANGAN ANAK</h2>
         <p>Menggunakan Metode Simple Additive Weighting (SAW)</p>
@@ -305,32 +305,9 @@
         </div>
     </div>
 
-    <!-- Statistik -->
-    <div class="statistik">
-        <h3>📊 Statistik Hasil Evaluasi</h3>
-        <div class="stats-grid">
-            <div class="stat-card">
-                <span class="stat-number">{{ $statistik['sangat_baik'] }}</span>
-                <div class="stat-label">Sangat Baik</div>
-            </div>
-            <div class="stat-card">
-                <span class="stat-number">{{ $statistik['baik'] }}</span>
-                <div class="stat-label">Baik</div>
-            </div>
-            <div class="stat-card">
-                <span class="stat-number">{{ $statistik['cukup'] }}</span>
-                <div class="stat-label">Cukup</div>
-            </div>
-            <div class="stat-card">
-                <span class="stat-number">{{ $statistik['kurang'] }}</span>
-                <div class="stat-label">Kurang</div>
-            </div>
-        </div>
-    </div>
-
     <!-- Tabel Hasil -->
     <div class="tabel-section">
-        <h3>🏆 Ranking Hasil Evaluasi Siswa</h3>
+        <h3>Ranking Hasil Evaluasi Siswa</h3>
         <table>
             <thead>
                 <tr>
@@ -348,11 +325,11 @@
                     <tr class="{{ $item->ranking <= 3 ? 'ranking-' . $item->ranking : '' }}">
                         <td>
                             @if ($item->ranking == 1)
-                                🥇 {{ $item->ranking }}
+                                {{ $item->ranking }}
                             @elseif($item->ranking == 2)
-                                🥈 {{ $item->ranking }}
+                                {{ $item->ranking }}
                             @elseif($item->ranking == 3)
-                                🥉 {{ $item->ranking }}
+                                {{ $item->ranking }}
                             @else
                                 {{ $item->ranking }}
                             @endif
@@ -360,7 +337,7 @@
                         <td><strong>{{ $item->alternatif->kode }}</strong></td>
                         <td style="text-align: left;">{{ $item->alternatif->nama }}</td>
                         <td>
-                            {{ $item->alternatif->jenis_kelamin == 'L' ? '👦 Laki-laki' : '👧 Perempuan' }}
+                            {{ $item->alternatif->jenis_kelamin == 'L' ? 'Laki-laki' : 'Perempuan' }}
                         </td>
                         <td><strong>{{ number_format($item->skor_akhir, 4) }}</strong></td>
                         <td class="kategori-{{ strtolower(str_replace(' ', '-', $item->kategori)) }}">
@@ -375,7 +352,7 @@
 
     <!-- Catatan -->
     <div class="catatan">
-        <h4>📝 Catatan Evaluasi:</h4>
+        <h4>Catatan Evaluasi:</h4>
         <ul>
             <li><strong>Sangat Baik (Skor ≥ 0.8):</strong> Perkembangan anak sangat baik, pertahankan stimulasi yang
                 sudah diberikan</li>
@@ -391,7 +368,7 @@
     <!-- Kriteria yang Dinilai -->
     <div class="page-break"></div>
     <div class="tabel-section">
-        <h3>📋 Kriteria Penilaian yang Digunakan</h3>
+        <h3>Kriteria Penilaian yang Digunakan</h3>
         <table>
             <thead>
                 <tr>
@@ -422,12 +399,6 @@
                 <p><strong>Kepala PAUD Flamboyan</strong></p>
                 <div class="signature-line"></div>
                 <p>(_______________________)</p>
-            </div>
-            <div class="signature">
-                <p>{{ date('d F Y') }}</p>
-                <p><strong>Yang Membuat Laporan</strong></p>
-                <div class="signature-line"></div>
-                <p><strong>{{ auth()->user()->nama }}</strong></p>
             </div>
         </div>
 

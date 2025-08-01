@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -67,7 +68,8 @@
             border-left: 3px solid #a16207;
         }
 
-        .info-left, .info-right {
+        .info-left,
+        .info-right {
             width: 48%;
         }
 
@@ -269,10 +271,11 @@
         }
     </style>
 </head>
+
 <body>
     <!-- Header -->
     <div class="header">
-        <div class="logo">📝</div>
+        <div class="logo"></div>
         <h1>PAUD FLAMBOYAN</h1>
         <h2>LAPORAN NILAI ALTERNATIF</h2>
         <p>Status Penilaian Siswa untuk Setiap Kriteria</p>
@@ -310,57 +313,20 @@
         </div>
     </div>
 
-    <!-- Progress Statistik -->
-    <div class="statistik">
-        <h3>📊 Progress Penilaian</h3>
-        <div class="stats-grid">
-            <div class="stat-card">
-                <span class="stat-number">{{ $statistik['total_siswa'] }}</span>
-                <div class="stat-label">Total Siswa</div>
-            </div>
-            <div class="stat-card">
-                <span class="stat-number">{{ $statistik['penilaian_lengkap'] }}</span>
-                <div class="stat-label">Lengkap</div>
-            </div>
-            <div class="stat-card">
-                <span class="stat-number">{{ $statistik['penilaian_sebagian'] }}</span>
-                <div class="stat-label">Sebagian</div>
-            </div>
-            <div class="stat-card">
-                <span class="stat-number">{{ $statistik['belum_dinilai'] }}</span>
-                <div class="stat-label">Belum</div>
-            </div>
-            <div class="stat-card">
-                <span class="stat-number">{{ number_format($statistik['persentase_lengkap'], 1) }}%</span>
-                <div class="stat-label">Progress</div>
-            </div>
-        </div>
-
-        <!-- Progress Bar Visual -->
-        <div style="margin-top: 15px;">
-            <div style="display: flex; justify-content: space-between; font-size: 10px; margin-bottom: 5px;">
-                <span>Progress Penilaian</span>
-                <span>{{ number_format($statistik['persentase_lengkap'], 1) }}% Lengkap</span>
-            </div>
-            <div class="progress-bar">
-                <div class="progress-fill" style="width: {{ $statistik['persentase_lengkap'] }}%"></div>
-            </div>
-        </div>
-    </div>
-
     <!-- Tabel Nilai Per Kriteria -->
     <div class="section">
-        <h3>📋 Matriks Nilai Siswa per Kriteria</h3>
+        <h3>Matriks Nilai Siswa per Kriteria</h3>
         <table>
             <thead>
                 <tr>
                     <th rowspan="2" style="width: 5%; vertical-align: middle;">No</th>
                     <th rowspan="2" style="width: 20%; vertical-align: middle;">Siswa</th>
-                    <th colspan="{{ $kriteria->count() }}" style="background: #dbeafe; color: #1e40af;">Kriteria Penilaian</th>
+                    <th colspan="{{ $kriteria->count() }}" style="background: #dbeafe; color: #1e40af;">Kriteria
+                        Penilaian</th>
                     <th rowspan="2" style="width: 12%; vertical-align: middle;">Status</th>
                 </tr>
                 <tr>
-                    @foreach($kriteria as $k)
+                    @foreach ($kriteria as $k)
                         <th style="width: {{ 63 / $kriteria->count() }}%; background: #dbeafe; color: #1e40af;">
                             {{ $k->kode }}<br>
                             <small style="font-size: 7px;">{{ number_format($k->bobot, 2) }}</small>
@@ -369,39 +335,39 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach($alternatif as $index => $siswa)
-                <tr>
-                    <td>{{ $index + 1 }}</td>
-                    <td class="alternatif-col">
-                        <strong>{{ $siswa->kode }}</strong><br>
-                        <small style="font-size: 8px;">{{ $siswa->nama }}</small>
-                    </td>
-                    @foreach($kriteria as $k)
-                        @php
-                            $nilai = $siswa->penilaian->where('kriteria_id', $k->kriteria_id)->first();
-                        @endphp
-                        <td class="nilai-cell">
-                            @if($nilai)
-                                <span class="nilai-lengkap">{{ $nilai->nilai }}</span>
+                @foreach ($alternatif as $index => $siswa)
+                    <tr>
+                        <td>{{ $index + 1 }}</td>
+                        <td class="alternatif-col">
+                            <strong>{{ $siswa->kode }}</strong><br>
+                            <small style="font-size: 8px;">{{ $siswa->nama }}</small>
+                        </td>
+                        @foreach ($kriteria as $k)
+                            @php
+                                $nilai = $siswa->penilaian->where('kriteria_id', $k->kriteria_id)->first();
+                            @endphp
+                            <td class="nilai-cell">
+                                @if ($nilai)
+                                    <span class="nilai-lengkap">{{ $nilai->nilai }}</span>
+                                @else
+                                    <span class="nilai-kosong">-</span>
+                                @endif
+                            </td>
+                        @endforeach
+                        <td>
+                            @php
+                                $totalPenilaian = $siswa->penilaian->count();
+                                $totalKriteria = $kriteria->count();
+                            @endphp
+                            @if ($totalPenilaian == $totalKriteria)
+                                <span class="nilai-lengkap">{{ $totalPenilaian }}/{{ $totalKriteria }}</span>
+                            @elseif($totalPenilaian > 0)
+                                <span class="nilai-sebagian">{{ $totalPenilaian }}/{{ $totalKriteria }}</span>
                             @else
-                                <span class="nilai-kosong">-</span>
+                                <span class="nilai-kosong">0/{{ $totalKriteria }}</span>
                             @endif
                         </td>
-                    @endforeach
-                    <td>
-                        @php
-                            $totalPenilaian = $siswa->penilaian->count();
-                            $totalKriteria = $kriteria->count();
-                        @endphp
-                        @if($totalPenilaian == $totalKriteria)
-                            <span class="nilai-lengkap">✓ {{ $totalPenilaian }}/{{ $totalKriteria }}</span>
-                        @elseif($totalPenilaian > 0)
-                            <span class="nilai-sebagian">⚠ {{ $totalPenilaian }}/{{ $totalKriteria }}</span>
-                        @else
-                            <span class="nilai-kosong">✗ 0/{{ $totalKriteria }}</span>
-                        @endif
-                    </td>
-                </tr>
+                    </tr>
                 @endforeach
             </tbody>
         </table>
@@ -410,131 +376,141 @@
     <!-- Halaman Kedua: Summary per Kriteria -->
     <div class="page-break"></div>
     <div class="section">
-        <h3>📈 Ringkasan Penilaian per Kriteria</h3>
-        
-        @foreach($kriteria as $k)
-        <div style="margin-bottom: 20px; background: #f9fafb; padding: 12px; border-radius: 6px; border-left: 3px solid #a16207;">
-            <h4 style="color: #a16207; font-size: 12px; margin-bottom: 8px;">
-                {{ $k->kode }} - {{ $k->nama }} (Bobot: {{ number_format($k->bobot, 3) }})
-            </h4>
-            
-            <table style="margin-bottom: 0;">
-                <thead>
-                    <tr>
-                        <th style="width: 15%">Nilai</th>
-                        <th style="width: 15%">Jumlah</th>
-                        <th style="width: 15%">Persentase</th>
-                        <th style="width: 55%">Daftar Siswa</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @for($nilai = 4; $nilai >= 1; $nilai--)
-                        @php
-                            $siswaDengantNilai = $alternatif->filter(function($siswa) use ($k, $nilai) {
-                                $penilaian = $siswa->penilaian->where('kriteria_id', $k->kriteria_id)->first();
-                                return $penilaian && $penilaian->nilai == $nilai;
-                            });
-                            $jumlah = $siswa DeangaNilai->count();
-                            $persentase = $alternatif->count() > 0 ? ($jumlah / $alternatif->count()) * 100 : 0;
-                        @endphp
+        <h3>Ringkasan Penilaian per Kriteria</h3>
+
+        @foreach ($kriteria as $k)
+            <div
+                style="margin-bottom: 20px; background: #f9fafb; padding: 12px; border-radius: 6px; border-left: 3px solid #a16207;">
+                <h4 style="color: #a16207; font-size: 12px; margin-bottom: 8px;">
+                    {{ $k->kode }} - {{ $k->nama }} (Bobot: {{ number_format($k->bobot, 3) }})
+                </h4>
+
+                <table style="margin-bottom: 0;">
+                    <thead>
                         <tr>
-                            <td class="nilai-lengkap"><strong>{{ $nilai }}</strong></td>
-                            <td>{{ $jumlah }} siswa</td>
-                            <td>{{ number_format($persentase, 1) }}%</td>
-                            <td class="text-left" style="font-size: 8px;">
-                                {{ $siswaDeangaNilai->pluck('nama')->implode(', ') ?: '-' }}
-                            </td>
+                            <th style="width: 15%">Nilai</th>
+                            <th style="width: 15%">Jumlah</th>
+                            <th style="width: 15%">Persentase</th>
+                            <th style="width: 55%">Daftar Siswa</th>
                         </tr>
-                    @endfor
-                    
-                    @php
-                        $belumDinilai = $alternatif->filter(function($siswa) use ($k) {
-                            return !$siswa->penilaian->where('kriteria_id', $k->kriteria_id)->first();
-                        });
-                        $jumlahBelum = $belumDinilai->count();
-                        $persentaseBelum = $alternatif->count() > 0 ? ($jumlahBelum / $alternatif->count()) * 100 : 0;
-                    @endphp
-                    @if($jumlahBelum > 0)
-                    <tr>
-                        <td class="nilai-kosong"><strong>-</strong></td>
-                        <td>{{ $jumlahBelum }} siswa</td>
-                        <td>{{ number_format($persentaseBelum, 1) }}%</td>
-                        <td class="text-left" style="font-size: 8px;">
-                            {{ $belumDinilai->pluck('nama')->implode(', ') }}
-                        </td>
-                    </tr>
-                    @endif
-                </tbody>
-            </table>
-        </div>
+                    </thead>
+                    <tbody>
+                        @for ($nilai = 4; $nilai >= 1; $nilai--)
+                            @php
+                                $siswaDenganNilai = $alternatif->filter(function ($siswa) use ($k, $nilai) {
+                                    $penilaian = $siswa->penilaian->where('kriteria_id', $k->kriteria_id)->first();
+                                    return $penilaian && $penilaian->nilai == $nilai;
+                                });
+                                $jumlah = $siswaDenganNilai->count();
+                                $persentase = $alternatif->count() > 0 ? ($jumlah / $alternatif->count()) * 100 : 0;
+                            @endphp
+                            <tr>
+                                <td class="nilai-lengkap"><strong>{{ $nilai }}</strong></td>
+                                <td>{{ $jumlah }} siswa</td>
+                                <td>{{ number_format($persentase, 1) }}%</td>
+                                <td class="text-left" style="font-size: 8px;">
+                                    {{ $siswaDenganNilai->pluck('nama')->implode(', ') ?: '-' }}
+                                </td>
+                            </tr>
+                        @endfor
+
+                        @php
+                            $belumDinilai = $alternatif->filter(function ($siswa) use ($k) {
+                                return !$siswa->penilaian->where('kriteria_id', $k->kriteria_id)->first();
+                            });
+                            $jumlahBelum = $belumDinilai->count();
+                            $persentaseBelum =
+                                $alternatif->count() > 0 ? ($jumlahBelum / $alternatif->count()) * 100 : 0;
+                        @endphp
+                        @if ($jumlahBelum > 0)
+                            <tr>
+                                <td class="nilai-kosong"><strong>-</strong></td>
+                                <td>{{ $jumlahBelum }} siswa</td>
+                                <td>{{ number_format($persentaseBelum, 1) }}%</td>
+                                <td class="text-left" style="font-size: 8px;">
+                                    {{ $belumDinilai->pluck('nama')->implode(', ') }}
+                                </td>
+                            </tr>
+                        @endif
+                    </tbody>
+                </table>
+            </div>
         @endforeach
     </div>
 
     <!-- Daftar Siswa Belum Lengkap -->
     <div class="page-break"></div>
     <div class="section">
-        <h3>⚠️ Daftar Siswa yang Belum Dinilai Lengkap</h3>
-        
+        <h3>Daftar Siswa yang Belum Dinilai Lengkap</h3>
+
         @php
-            $siswaBelumLengkap = $alternatif->filter(function($siswa) use ($kriteria) {
+            $siswaBelumLengkap = $alternatif->filter(function ($siswa) use ($kriteria) {
                 return $siswa->penilaian->count() < $kriteria->count();
             });
         @endphp
 
-        @if($siswaBelumLengkap->count() > 0)
-        <table>
-            <thead>
-                <tr>
-                    <th style="width: 5%">No</th>
-                    <th style="width: 15%">Kode</th>
-                    <th style="width: 25%">Nama Siswa</th>
-                    <th style="width: 15%">Progress</th>
-                    <th style="width: 40%">Kriteria yang Belum Dinilai</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach($siswaBelumLengkap as $index => $siswa)
-                <tr>
-                    <td>{{ $index + 1 }}</td>
-                    <td><strong>{{ $siswa->kode }}</strong></td>
-                    <td class="text-left">{{ $siswa->nama }}</td>
-                    <td>
-                        @php
-                            $progress = $siswa->penilaian->count();
-                            $total = $kriteria->count();
-                        @endphp
-                        <span class="{{ $progress == 0 ? 'nilai-kosong' : 'nilai-sebagian' }}">
-                            {{ $progress }}/{{ $total }}
-                        </span>
-                    </td>
-                    <td class="text-left" style="font-size: 8px;">
-                        @php
-                            $kriteriaDinilai = $siswa->penilaian->pluck('kriteria_id')->toArray();
-                            $kriteriaBelum = $kriteria->whereNotIn('kriteria_id', $kriteriaDinilai)->pluck('kode')->toArray();
-                        @endphp
-                        {{ implode(', ', $kriteriaBelum) }}
-                    </td>
-                </tr>
-                @endforeach
-            </tbody>
-        </table>
+        @if ($siswaBelumLengkap->count() > 0)
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 5%">No</th>
+                        <th style="width: 15%">Kode</th>
+                        <th style="width: 25%">Nama Siswa</th>
+                        <th style="width: 15%">Progress</th>
+                        <th style="width: 40%">Kriteria yang Belum Dinilai</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($siswaBelumLengkap as $index => $siswa)
+                        <tr>
+                            <td>{{ $index + 1 }}</td>
+                            <td><strong>{{ $siswa->kode }}</strong></td>
+                            <td class="text-left">{{ $siswa->nama }}</td>
+                            <td>
+                                @php
+                                    $progress = $siswa->penilaian->count();
+                                    $total = $kriteria->count();
+                                @endphp
+                                <span class="{{ $progress == 0 ? 'nilai-kosong' : 'nilai-sebagian' }}">
+                                    {{ $progress }}/{{ $total }}
+                                </span>
+                            </td>
+                            <td class="text-left" style="font-size: 8px;">
+                                @php
+                                    $kriteriaDinilai = $siswa->penilaian->pluck('kriteria_id')->toArray();
+                                    $kriteriaBelum = $kriteria
+                                        ->whereNotIn('kriteria_id', $kriteriaDinilai)
+                                        ->pluck('kode')
+                                        ->toArray();
+                                @endphp
+                                {{ implode(', ', $kriteriaBelum) }}
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
         @else
-        <div style="text-align: center; padding: 20px; background: #dcfce7; border: 1px solid #16a34a; border-radius: 6px;">
-            <p style="color: #166534; font-size: 12px; font-weight: bold;">
-                ✅ Semua siswa sudah dinilai lengkap untuk semua kriteria!
-            </p>
-        </div>
+            <div
+                style="text-align: center; padding: 20px; background: #dcfce7; border: 1px solid #16a34a; border-radius: 6px;">
+                <p style="color: #166534; font-size: 12px; font-weight: bold;">
+                    Semua siswa sudah dinilai lengkap untuk semua kriteria!
+                </p>
+            </div>
         @endif
     </div>
 
     <!-- Catatan dan Panduan -->
     <div class="catatan">
-        <h4>📝 Keterangan Nilai dan Status:</h4>
+        <h4>Keterangan Nilai dan Status:</h4>
         <ul>
-            <li><strong>Nilai 4:</strong> Berkembang Sangat Baik (BSB) - Anak sudah dapat melakukan kegiatan sesuai indikator tanpa bantuan</li>
-            <li><strong>Nilai 3:</strong> Berkembang Sesuai Harapan (BSH) - Anak sudah dapat melakukan kegiatan sesuai indikator dengan sedikit bantuan</li>
-            <li><strong>Nilai 2:</strong> Mulai Berkembang (MB) - Anak sudah mulai dapat melakukan kegiatan sesuai indikator dengan bantuan</li>
-            <li><strong>Nilai 1:</strong> Belum Berkembang (BB) - Anak belum dapat melakukan kegiatan sesuai indikator</li>
+            <li><strong>Nilai 4:</strong> Berkembang Sangat Baik (BSB) - Anak sudah dapat melakukan kegiatan sesuai
+                indikator tanpa bantuan</li>
+            <li><strong>Nilai 3:</strong> Berkembang Sesuai Harapan (BSH) - Anak sudah dapat melakukan kegiatan sesuai
+                indikator dengan sedikit bantuan</li>
+            <li><strong>Nilai 2:</strong> Mulai Berkembang (MB) - Anak sudah mulai dapat melakukan kegiatan sesuai
+                indikator dengan bantuan</li>
+            <li><strong>Nilai 1:</strong> Belum Berkembang (BB) - Anak belum dapat melakukan kegiatan sesuai indikator
+            </li>
             <li><strong>Status Lengkap:</strong> Siswa sudah dinilai untuk semua kriteria</li>
             <li><strong>Status Sebagian:</strong> Siswa baru dinilai untuk beberapa kriteria saja</li>
             <li><strong>Status Belum:</strong> Siswa belum dinilai sama sekali</li>
@@ -550,17 +526,12 @@
                 <div class="signature-line"></div>
                 <p>(_______________________)</p>
             </div>
-            <div class="signature">
-                <p>{{ date('d F Y') }}</p>
-                <p><strong>Yang Membuat Laporan</strong></p>
-                <div class="signature-line"></div>
-                <p><strong>{{ auth()->user()->nama }}</strong></p>
-            </div>
         </div>
-        
+
         <div style="text-align: center; margin-top: 20px; font-size: 9px; color: #666;">
             <p>Laporan ini dibuat secara otomatis oleh Sistem Pendukung Keputusan PAUD Flamboyan</p>
         </div>
     </div>
 </body>
+
 </html>

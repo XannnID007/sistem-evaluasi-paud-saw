@@ -228,7 +228,7 @@
 <body>
     <!-- Header -->
     <div class="header">
-        <div class="logo">📊</div>
+        <div class="logo"></div>
         <h1>PAUD FLAMBOYAN</h1>
         <h2>LAPORAN DETAIL PERHITUNGAN SAW</h2>
         <p>Simple Additive Weighting - Matriks Keputusan dan Normalisasi</p>
@@ -268,10 +268,10 @@
 
     <!-- Metodologi SAW -->
     <div class="section">
-        <h3>📚 Metodologi Simple Additive Weighting (SAW)</h3>
+        <h3>Metodologi Simple Additive Weighting (SAW)</h3>
 
         <div class="rumus-section">
-            <h4>🔢 Rumus Dasar SAW:</h4>
+            <h4>Rumus Dasar SAW:</h4>
             <div class="rumus">
                 V(Ai) = Σ (Wj × Rij)
             </div>
@@ -282,7 +282,7 @@
         </div>
 
         <div class="langkah">
-            <h4>📋 Langkah-langkah Perhitungan:</h4>
+            <h4>Langkah-langkah Perhitungan:</h4>
             <ol style="font-size: 10px; color: #374151; padding-left: 15px;">
                 <li>Membuat matriks keputusan berdasarkan nilai setiap alternatif untuk setiap kriteria</li>
                 <li>Melakukan normalisasi matriks dengan rumus: Rij = Xij / Max(Xij) untuk kriteria benefit</li>
@@ -294,7 +294,7 @@
 
     <!-- Bobot Kriteria -->
     <div class="section">
-        <h3>⚖️ Bobot Kriteria</h3>
+        <h3>Bobot Kriteria</h3>
         <table>
             <thead>
                 <tr>
@@ -325,10 +325,10 @@
     <!-- Matriks Keputusan -->
     <div class="page-break"></div>
     <div class="section">
-        <h3>📋 Matriks Keputusan (X)</h3>
+        <h3>Matriks Keputusan (X)</h3>
 
         <div class="rumus-section">
-            <h4>📝 Penjelasan:</h4>
+            <h4>Penjelasan:</h4>
             <p style="font-size: 10px; color: #374151;">
                 Matriks keputusan berisi nilai asli setiap alternatif (siswa) untuk setiap kriteria berdasarkan hasil
                 penilaian.
@@ -369,10 +369,10 @@
     <!-- Matriks Normalisasi -->
     <div class="page-break"></div>
     <div class="section">
-        <h3>🔄 Matriks Normalisasi (R)</h3>
+        <h3>Matriks Normalisasi (R)</h3>
 
         <div class="rumus-section">
-            <h4>🧮 Rumus Normalisasi:</h4>
+            <h4>Rumus Normalisasi:</h4>
             <div class="rumus">
                 Rij = Xij / Max(Xij)
             </div>
@@ -424,7 +424,7 @@
     <!-- Contoh Perhitungan -->
     <div class="page-break"></div>
     <div class="section">
-        <h3>🧮 Contoh Perhitungan Detail</h3>
+        <h3>Contoh Perhitungan Detail</h3>
 
         @if (count($matriks_keputusan) > 0)
             @php $contoh = $matriks_keputusan[0] ?? null; @endphp
@@ -474,12 +474,6 @@
                 <p><strong>Kepala PAUD Flamboyan</strong></p>
                 <div class="signature-line"></div>
                 <p>(_______________________)</p>
-            </div>
-            <div class="signature">
-                <p>{{ date('d F Y') }}</p>
-                <p><strong>Yang Membuat Laporan</strong></p>
-                <div class="signature-line"></div>
-                <p><strong>{{ auth()->user()->nama }}</strong></p>
             </div>
         </div>
 

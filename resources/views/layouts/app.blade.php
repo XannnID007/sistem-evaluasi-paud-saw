@@ -303,14 +303,6 @@
                     </a>
                 @endif
             </nav>
-
-            <!-- Footer Info -->
-            <div class="px-4 py-4 border-t border-brown-200">
-                <div class="text-center">
-                    <div class="text-xs text-brown-600 mb-1">🌺 PAUD Flamboyan</div>
-                    <div class="text-xs text-brown-500">"Mendidik dengan Cinta"</div>
-                </div>
-            </div>
         </div>
     </div>
 

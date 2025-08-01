@@ -248,7 +248,7 @@
 <body>
     <!-- Header -->
     <div class="header">
-        <div class="logo">👶</div>
+        <div class="logo"></div>
         <h1>PAUD FLAMBOYAN</h1>
         <h2>LAPORAN DATA SISWA</h2>
         <p>Data Lengkap Siswa dan Status Penilaian</p>
@@ -286,36 +286,9 @@
         </div>
     </div>
 
-    <!-- Statistik -->
-    <div class="statistik">
-        <h3>📊 Statistik Data Siswa</h3>
-        <div class="stats-grid">
-            <div class="stat-card">
-                <span class="stat-number">{{ $statistik['total_siswa'] }}</span>
-                <div class="stat-label">Total Siswa</div>
-            </div>
-            <div class="stat-card">
-                <span class="stat-number">{{ $statistik['laki_laki'] }}</span>
-                <div class="stat-label">Laki-laki</div>
-            </div>
-            <div class="stat-card">
-                <span class="stat-number">{{ $statistik['perempuan'] }}</span>
-                <div class="stat-label">Perempuan</div>
-            </div>
-            <div class="stat-card">
-                <span class="stat-number">{{ number_format($statistik['rata_rata_umur'], 1) }}</span>
-                <div class="stat-label">Rata-rata Umur</div>
-            </div>
-            <div class="stat-card">
-                <span class="stat-number">{{ $statistik['sudah_dinilai'] }}</span>
-                <div class="stat-label">Sudah Dinilai</div>
-            </div>
-        </div>
-    </div>
-
     <!-- Tabel Data Siswa -->
     <div class="tabel-section">
-        <h3>👶 Daftar Lengkap Data Siswa</h3>
+        <h3>Daftar Lengkap Data Siswa</h3>
         <table>
             <thead>
                 <tr>
@@ -336,7 +309,7 @@
                         <td><strong>{{ $siswa->kode }}</strong></td>
                         <td class="text-left">{{ $siswa->nama }}</td>
                         <td class="{{ $siswa->jenis_kelamin == 'L' ? 'laki-laki' : 'perempuan' }}">
-                            {{ $siswa->jenis_kelamin == 'L' ? '👦 L' : '👧 P' }}
+                            {{ $siswa->jenis_kelamin == 'L' ? 'L' : 'P' }}
                         </td>
                         <td>{{ $siswa->tanggal_lahir->format('d/m/Y') }}</td>
                         <td>{{ $siswa->umur }} th</td>
@@ -363,7 +336,7 @@
     <!-- Halaman Kedua: Detail Alamat -->
     <div class="page-break"></div>
     <div class="tabel-section">
-        <h3>🏠 Data Alamat dan Kontak Siswa</h3>
+        <h3>Data Alamat dan Kontak Siswa</h3>
         <table>
             <thead>
                 <tr>
@@ -391,7 +364,7 @@
     <!-- Halaman Ketiga: Status Penilaian Detail -->
     <div class="page-break"></div>
     <div class="tabel-section">
-        <h3>📋 Status Penilaian Per Kriteria</h3>
+        <h3>Status Penilaian Per Kriteria</h3>
         <table>
             <thead>
                 <tr>
@@ -429,7 +402,7 @@
 
     <!-- Ringkasan Kriteria -->
     <div class="tabel-section">
-        <h3>📝 Keterangan Kriteria Penilaian</h3>
+        <h3>Keterangan Kriteria Penilaian</h3>
         <table>
             <thead>
                 <tr>
