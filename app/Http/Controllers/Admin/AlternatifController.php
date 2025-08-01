@@ -48,7 +48,7 @@ class AlternatifController extends Controller
             $perPage = 10;
         }
 
-        $alternatif = $query->paginate($perPage)->withQueryString();
+        $alternatif = $query->paginate($perPage);
 
         return view('admin.alternatif.index', compact('alternatif'));
     }

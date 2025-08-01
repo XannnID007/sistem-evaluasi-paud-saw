@@ -3,15 +3,16 @@
 // routes/web.php - Updated routes dengan parameter key baru
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\Admin\DashboardController as AdminDashboard;
-use App\Http\Controllers\Admin\KriteriaController;
-use App\Http\Controllers\Admin\AlternatifController;
-use App\Http\Controllers\Admin\PenilaianController;
 use App\Http\Controllers\Admin\SawController;
 use App\Http\Controllers\Admin\UserController;
-use App\Http\Controllers\Guru\DashboardController as GuruDashboard;
 use App\Http\Controllers\Guru\HasilController;
+use App\Http\Controllers\Admin\ReportController;
 use App\Http\Controllers\Guru\ProfileController;
+use App\Http\Controllers\Admin\KriteriaController;
+use App\Http\Controllers\Admin\PenilaianController;
+use App\Http\Controllers\Admin\AlternatifController;
+use App\Http\Controllers\Guru\DashboardController as GuruDashboard;
+use App\Http\Controllers\Admin\DashboardController as AdminDashboard;
 
 /*
 |--------------------------------------------------------------------------
@@ -65,6 +66,13 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::get('saw', [SawController::class, 'index'])->name('saw.index');
     Route::post('saw/proses', [SawController::class, 'proses'])->name('saw.proses');
     Route::get('saw/hasil', [SawController::class, 'hasil'])->name('saw.hasil');
+
+    Route::prefix('reports')->name('reports.')->group(function () {
+        Route::get('/hasil-saw/pdf', [ReportController::class, 'cetakHasilSaw'])->name('hasil-saw.pdf');
+        Route::get('/data-siswa/pdf', [ReportController::class, 'cetakDataSiswa'])->name('data-siswa.pdf');
+        Route::get('/nilai-alternatif/pdf', [ReportController::class, 'cetakNilaiAlternatif'])->name('nilai-alternatif.pdf');
+        Route::get('/matriks-saw/pdf', [ReportController::class, 'cetakMatriksSaw'])->name('matriks-saw.pdf');
+    });
 
     // User Management - Updated dengan parameter key baru
     Route::get('users', [UserController::class, 'index'])->name('users.index');

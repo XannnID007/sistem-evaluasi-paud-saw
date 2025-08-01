@@ -13,11 +13,37 @@
                 <h2 class="text-2xl font-bold text-gray-900 mb-2">Data Alternatif</h2>
                 <p class="text-gray-600">Kelola data alternatif yang akan dievaluasi</p>
             </div>
-            <a href="{{ route('admin.alternatif.create') }}"
-                class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
-                <i class="fas fa-plus mr-2"></i>
-                Tambah Siswa
-            </a>
+            <div class="flex space-x-3">
+                <div class="relative" x-data="{ open: false }">
+                    <button @click="open = !open"
+                        class="inline-flex items-center px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors">
+                        <i class="fas fa-download mr-2"></i>
+                        Export
+                        <i class="fas fa-chevron-down ml-1 text-xs"></i>
+                    </button>
+
+                    <div x-show="open" @click.away="open = false" x-transition:enter="transition ease-out duration-200"
+                        x-transition:enter-start="transform opacity-0 scale-95"
+                        x-transition:enter-end="transform opacity-100 scale-100"
+                        x-transition:leave="transition ease-in duration-75"
+                        x-transition:leave-start="transform opacity-100 scale-100"
+                        x-transition:leave-end="transform opacity-0 scale-95"
+                        class="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-lg border border-gray-200 py-2 z-50">
+
+                        <a href="{{ route('admin.reports.data-siswa.pdf', request()->all()) }}"
+                            class="flex items-center px-4 py-3 text-sm text-gray-700 hover:bg-red-50 transition-colors">
+                            <i class="fas fa-file-pdf text-red-600 mr-3"></i>
+                            PDF Report
+                        </a>
+                    </div>
+                </div>
+
+                <a href="{{ route('admin.alternatif.create') }}"
+                    class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+                    <i class="fas fa-plus mr-2"></i>
+                    Tambah Siswa
+                </a>
+            </div>
         </div>
 
         @if ($alternatif->count() > 0)
