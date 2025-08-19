@@ -22,13 +22,14 @@
 
                         <!-- Student Selection -->
                         <div class="mb-6">
-                            <label for="alternatif_id" class="block text-sm font-medium text-gray-700 mb-2">Pilih Siswa</label>
+                            <label for="alternatif_id" class="block text-sm font-medium text-gray-700 mb-2">Pilih
+                                Siswa</label>
                             <select id="alternatif_id" name="alternatif_id"
                                 class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 @error('alternatif_id') border-red-300 @enderror"
                                 required>
                                 <option value="">Pilih Siswa</option>
                                 @foreach ($alternatif as $siswa)
-                                    {{-- ✅ UPDATE: pakai alternatif_id --}}
+                                    {{-- UPDATE: pakai alternatif_id --}}
                                     <option value="{{ $siswa->alternatif_id }}"
                                         {{ old('alternatif_id', request('siswa')) == $siswa->alternatif_id ? 'selected' : '' }}>
                                         {{ $siswa->kode }} - {{ $siswa->nama }}
@@ -46,26 +47,30 @@
                                 <div class="bg-gray-50 rounded-lg p-4 border border-gray-200">
                                     <div class="mb-4">
                                         <h4 class="font-medium text-gray-900 mb-1">
-                                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 mr-2">
-                                                {{ $k->kode }}
+                                            <span
+                                                class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 mr-2">
+                                                {{-- REVISI: kode → kode_kriteria --}}
+                                                {{ $k->kode_kriteria }}
                                             </span>
                                             {{ $k->nama }}
                                         </h4>
-                                        <p class="text-sm text-gray-600">Bobot: {{ number_format($k->bobot, 3) }}</p>
+                                        <p class="text-sm text-gray-600">Bobot: {{ number_format($k->bobot, 2) }}</p>
                                     </div>
 
                                     <div class="space-y-2">
                                         @foreach ($k->subkriteria->sortBy('skor') as $sub)
-                                            <label class="flex items-center p-2 border border-gray-200 rounded-lg hover:bg-white transition-colors cursor-pointer">
-                                                {{-- ✅ UPDATE: pakai kriteria_id --}}
+                                            <label
+                                                class="flex items-center p-2 border border-gray-200 rounded-lg hover:bg-white transition-colors cursor-pointer">
                                                 <input type="radio" name="nilai[{{ $k->kriteria_id }}]"
                                                     value="{{ $sub->skor }}"
                                                     {{ old("nilai.{$k->kriteria_id}") == $sub->skor ? 'checked' : '' }}
                                                     class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500">
                                                 <div class="ml-3 flex-1">
                                                     <div class="flex items-center justify-between">
-                                                        <span class="text-sm font-medium text-gray-900">{{ $sub->nilai }}</span>
-                                                        <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gray-200 text-gray-800">
+                                                        <span
+                                                            class="text-sm font-medium text-gray-900">{{ $sub->nilai }}</span>
+                                                        <span
+                                                            class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gray-200 text-gray-800">
                                                             {{ $sub->skor }}
                                                         </span>
                                                     </div>
@@ -73,7 +78,6 @@
                                             </label>
                                         @endforeach
                                     </div>
-                                    {{-- ✅ UPDATE: pakai kriteria_id --}}
                                     @error("nilai.{$k->kriteria_id}")
                                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                     @enderror
@@ -130,11 +134,12 @@
                             @foreach ($kriteria as $k)
                                 <div class="flex justify-between items-center p-2 bg-gray-50 rounded">
                                     <div>
-                                        <span class="font-medium text-gray-900">{{ $k->kode }}</span>
+                                        <span class="font-medium text-gray-900">{{ $k->kode_kriteria }}</span>
                                         <p class="text-xs text-gray-600">{{ $k->nama }}</p>
                                     </div>
-                                    <span class="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-blue-100 text-blue-800">
-                                        {{ number_format($k->bobot, 3) }}
+                                    <span
+                                        class="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-blue-100 text-blue-800">
+                                        {{ number_format($k->bobot, 2) }}
                                     </span>
                                 </div>
                             @endforeach

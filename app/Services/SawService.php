@@ -124,7 +124,8 @@ class SawService
                     $penilaian = Penilaian::where('alternatif_id', $alt->alternatif_id)
                          ->where('kriteria_id', $krit->kriteria_id)
                          ->first();
-                    $row[$krit->kode] = $penilaian ? $penilaian->nilai : 0;
+                    // ✅ REVISI: Menggunakan kode_kriteria
+                    $row[$krit->kode_kriteria] = $penilaian ? $penilaian->nilai : 0;
                }
                $matriks[] = $row;
           }
@@ -156,7 +157,8 @@ class SawService
           foreach ($alternatif as $alt) {
                $row = ['alternatif' => $alt];
                foreach ($kriteria as $krit) {
-                    $row[$krit->kode] = number_format($matriksNormalisasi[$alt->alternatif_id][$krit->kriteria_id], 4);
+                    // ✅ REVISI: Menggunakan kode_kriteria
+                    $row[$krit->kode_kriteria] = number_format($matriksNormalisasi[$alt->alternatif_id][$krit->kriteria_id], 4);
                }
                $hasil[] = $row;
           }

@@ -12,7 +12,8 @@ class Kriteria extends Model
     protected $table = 'kriteria';
     protected $primaryKey = 'kriteria_id';
 
-    protected $fillable = ['kode', 'nama', 'bobot', 'keterangan'];
+    // REVISI: kode → kode_kriteria
+    protected $fillable = ['kode_kriteria', 'nama', 'bobot', 'keterangan'];
 
     public function subkriteria()
     {

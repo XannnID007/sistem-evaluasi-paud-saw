@@ -10,7 +10,7 @@ class HasilSaw extends Model
     use HasFactory;
 
     protected $table = 'hasil_saw';
-    protected $primaryKey = 'hasil_saw_id';
+    protected $primaryKey = 'hasil_saw_id'; //REVISI: Tetap menggunakan hasil_saw_id
 
     protected $fillable = [
         'alternatif_id',

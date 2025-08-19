@@ -12,8 +12,9 @@ class Alternatif extends Model
     protected $table = 'alternatif';
     protected $primaryKey = 'alternatif_id';
 
+    // REVISI: kode → kode_alternatif
     protected $fillable = [
-        'kode',
+        'kode_alternatif',
         'nama',
         'jenis_kelamin',
         'tanggal_lahir',
@@ -44,5 +45,11 @@ class Alternatif extends Model
     public function getUmurAttribute()
     {
         return $this->tanggal_lahir->age;
+    }
+
+    //REVISI: Accessor untuk backward compatibility
+    public function getKodeAttribute()
+    {
+        return $this->kode_alternatif;
     }
 }

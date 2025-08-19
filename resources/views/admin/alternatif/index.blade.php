@@ -178,7 +178,7 @@
                                             </div>
                                             <div>
                                                 <div class="font-medium text-gray-900">{{ $siswa->nama }}</div>
-                                                <div class="text-sm text-gray-500">{{ $siswa->kode }}</div>
+                                                <div class="text-sm text-gray-500">{{ $siswa->kode_alternatif }}</div>
                                             </div>
                                         </div>
                                     </td>

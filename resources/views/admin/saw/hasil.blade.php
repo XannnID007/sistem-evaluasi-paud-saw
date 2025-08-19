@@ -92,7 +92,7 @@
                             <p class="text-sm font-medium text-gray-600">Peringkat 1</p>
                             <p class="text-lg font-semibold text-gray-900">{{ $hasil->first()->alternatif->nama }}</p>
                             <p class="text-xs text-gray-500">
-                                Skor: {{ number_format($hasil->first()->skor_akhir, 4) }}
+                                Skor: {{ number_format($hasil->first()->skor_akhir, 3) }}
                             </p>
                         </div>
                     </div>
@@ -240,7 +240,8 @@
                                             </div>
                                             <div>
                                                 <div class="font-medium text-gray-900">{{ $item->alternatif->nama }}</div>
-                                                <div class="text-sm text-gray-500">{{ $item->alternatif->kode }}</div>
+                                                <div class="text-sm text-gray-500">
+                                                    {{ $item->alternatif->kode_alternatif }}</div>
                                             </div>
                                         </div>
                                     </td>
@@ -255,7 +256,7 @@
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         <span
                                             class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-indigo-100 text-indigo-800">
-                                            {{ number_format($item->skor_akhir, 4) }}
+                                            {{ number_format($item->skor_akhir, 3) }}
                                         </span>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap">

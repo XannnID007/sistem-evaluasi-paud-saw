@@ -22,13 +22,13 @@
 
                         <div class="space-y-6">
                             <div>
-                                <label for="kode" class="block text-sm font-medium text-gray-700 mb-2">Kode
+                                <label for="kode_kriteria" class="block text-sm font-medium text-gray-700 mb-2">Kode
                                     Kriteria</label>
-                                <input type="text" id="kode" name="kode" value="{{ old('kode') }}"
-                                    placeholder="Contoh: C1, C2, C3"
-                                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 @error('kode') border-red-300 @enderror"
+                                <input type="text" id="kode_kriteria" name="kode_kriteria"
+                                    value="{{ old('kode_kriteria') }}" placeholder="Contoh: C1, C2, C3"
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 @error('kode_kriteria') border-red-300 @enderror"
                                     required>
-                                @error('kode')
+                                @error('kode_kriteria')
                                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                 @enderror
                                 <p class="mt-1 text-sm text-gray-500">Kode unik untuk mengidentifikasi kriteria</p>
@@ -50,7 +50,7 @@
                                 <label for="bobot" class="block text-sm font-medium text-gray-700 mb-2">Bobot
                                     Kriteria</label>
                                 <input type="number" id="bobot" name="bobot" value="{{ old('bobot') }}"
-                                    step="0.001" min="0" max="1" placeholder="0.167"
+                                    step="0.001" min="0" max="1" placeholder="0.16"
                                     class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 @error('bobot') border-red-300 @enderror"
                                     required>
                                 @error('bobot')
@@ -96,7 +96,7 @@
                             <ul class="text-sm text-blue-800 space-y-1">
                                 <li>• Gunakan kode yang mudah diingat</li>
                                 <li>• Nama kriteria harus jelas dan spesifik</li>
-                                <li>• Total bobot semua kriteria harus = 1.000</li>
+                                <li>• Total bobot semua kriteria harus = 1.00</li>
                                 <li>• Bobot menunjukkan tingkat kepentingan</li>
                             </ul>
                         </div>
@@ -106,13 +106,13 @@
                             <div class="space-y-2">
                                 <div class="flex justify-between items-center p-2 bg-gray-50 rounded">
                                     <span class="font-medium">C1</span>
-                                    <span class="text-sm text-gray-600">0.166</span>
+                                    <span class="text-sm text-gray-600">0.16</span>
                                 </div>
                                 <p class="text-xs text-gray-600 px-2">Nilai-nilai Agama dan Moral</p>
 
                                 <div class="flex justify-between items-center p-2 bg-gray-50 rounded">
                                     <span class="font-medium">C2</span>
-                                    <span class="text-sm text-gray-600">0.167</span>
+                                    <span class="text-sm text-gray-600">0.17</span>
                                 </div>
                                 <p class="text-xs text-gray-600 px-2">Fisik Motorik</p>
                             </div>

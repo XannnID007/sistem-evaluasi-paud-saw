@@ -22,13 +22,13 @@
 
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                             <div>
-                                <label for="kode" class="block text-sm font-medium text-gray-700 mb-2">Kode
-                                    Siswa</label>
-                                <input type="text" id="kode" name="kode" value="{{ old('kode') }}"
-                                    placeholder="Contoh: A1, A2, A3"
-                                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 @error('kode') border-red-300 @enderror"
+                                <label for="kode_alternatif" class="block text-sm font-medium text-gray-700 mb-2">Kode
+                                    Alternatif</label>
+                                <input type="text" id="kode_alternatif" name="kode_alternatif"
+                                    value="{{ old('kode_alternatif') }}" placeholder="Contoh: A1, A2, A3"
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 @error('kode_alternatif') border-red-300 @enderror"
                                     required>
-                                @error('kode')
+                                @error('kode_alternatif')
                                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                 @enderror
                                 <p class="mt-1 text-sm text-gray-500">Kode unik untuk mengidentifikasi siswa</p>

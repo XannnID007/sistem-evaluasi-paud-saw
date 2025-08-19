@@ -256,25 +256,25 @@
                     <a href="{{ route('admin.kriteria.index') }}"
                         class="nav-link flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-all {{ request()->routeIs('admin.kriteria.*') ? 'nav-link-active' : 'text-brown-700 hover:text-brown-800' }}">
                         <i class="fas fa-list-check w-5 h-5 mr-3"></i>
-                        Data Kriteria
+                        Kelola Kriteria
                     </a>
 
                     <a href="{{ route('admin.alternatif.index') }}"
                         class="nav-link flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-all {{ request()->routeIs('admin.alternatif.*') ? 'nav-link-active' : 'text-brown-700 hover:text-brown-800' }}">
                         <i class="fas fa-users w-5 h-5 mr-3"></i>
-                        Data Alternatif
+                        Kelola Alternatif
                     </a>
 
                     <a href="{{ route('admin.penilaian.index') }}"
                         class="nav-link flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-all {{ request()->routeIs('admin.penilaian.*') ? 'nav-link-active' : 'text-brown-700 hover:text-brown-800' }}">
                         <i class="fas fa-clipboard-check w-5 h-5 mr-3"></i>
-                        Data Nilai Alternatif
+                        Kelola Nilai Alternatif
                     </a>
 
                     <a href="{{ route('admin.saw.index') }}"
                         class="nav-link flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-all {{ request()->routeIs('admin.saw.*') ? 'nav-link-active' : 'text-brown-700 hover:text-brown-800' }}">
                         <i class="fas fa-calculator w-5 h-5 mr-3"></i>
-                        Data Perhitungan SAW
+                        Kelola Perhitungan SAW
                     </a>
 
                     <a href="{{ route('admin.users.index') }}"
@@ -293,7 +293,7 @@
                     <a href="{{ route('guru.hasil.index') }}"
                         class="nav-link flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-all {{ request()->routeIs('guru.hasil.*') ? 'nav-link-active' : 'text-brown-700 hover:text-brown-800' }}">
                         <i class="fas fa-chart-bar w-5 h-5 mr-3"></i>
-                        Hasil Penilaian
+                        Kelola Hasil Penilaian
                     </a>
 
                     <a href="{{ route('guru.profile.index') }}"

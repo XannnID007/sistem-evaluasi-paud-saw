@@ -80,9 +80,10 @@
                                     @foreach ($kriteria as $k)
                                         <th
                                             class="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                            {{ $k->kode }}
+                                            {{-- ✅ REVISI: kode → kode_kriteria --}}
+                                            {{ $k->kode_kriteria }}
                                             <div class="text-xs text-gray-400 font-normal">
-                                                ({{ number_format($k->bobot, 3) }})
+                                                ({{ number_format($k->bobot, 2) }})
                                             </div>
                                         </th>
                                     @endforeach
@@ -100,8 +101,9 @@
                                                     </span>
                                                 </div>
                                                 <div>
-                                                    <div class="font-medium text-gray-900">{{ $row['alternatif']->kode }}
-                                                    </div>
+                                                    {{-- ✅ REVISI: kode → kode_alternatif --}}
+                                                    <div class="font-medium text-gray-900">
+                                                        {{ $row['alternatif']->kode_alternatif }}</div>
                                                     <div class="text-sm text-gray-500">{{ $row['alternatif']->nama }}</div>
                                                 </div>
                                             </div>
@@ -110,7 +112,8 @@
                                             <td class="px-4 py-3 whitespace-nowrap text-center">
                                                 <span
                                                     class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-                                                    {{ $row[$k->kode] }}
+                                                    {{-- ✅ REVISI: kode → kode_kriteria --}}
+                                                    {{ $row[$k->kode_kriteria] }}
                                                 </span>
                                             </td>
                                         @endforeach
@@ -161,7 +164,7 @@
                                     @foreach ($kriteria as $k)
                                         <th
                                             class="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                            {{ $k->kode }}</th>
+                                            {{ $k->kode_kriteria }}</th>
                                     @endforeach
                                 </tr>
                             </thead>
@@ -177,7 +180,8 @@
                                                     </span>
                                                 </div>
                                                 <div>
-                                                    <div class="font-medium text-gray-900">{{ $row['alternatif']->kode }}
+                                                    <div class="font-medium text-gray-900">
+                                                        {{ $row['alternatif']->kode_alternatif }}
                                                     </div>
                                                     <div class="text-sm text-gray-500">{{ $row['alternatif']->nama }}</div>
                                                 </div>
@@ -187,7 +191,7 @@
                                             <td class="px-4 py-3 whitespace-nowrap text-center">
                                                 <span
                                                     class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
-                                                    {{ $row[$k->kode] }}
+                                                    {{ $row[$k->kode_kriteria] }}
                                                 </span>
                                             </td>
                                         @endforeach
@@ -213,10 +217,10 @@
                 @foreach ($kriteria as $k)
                     <div class="border border-gray-200 rounded-lg p-4">
                         <div class="flex justify-between items-center mb-2">
-                            <h4 class="font-medium text-gray-900">{{ $k->kode }}</h4>
+                            <h4 class="font-medium text-gray-900">{{ $k->kode_kriteria }}</h4>
                             <span
                                 class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-                                {{ number_format($k->bobot, 3) }}
+                                {{ number_format($k->bobot, 2) }}
                             </span>
                         </div>
                         <p class="text-sm text-gray-600">{{ $k->nama }}</p>
@@ -227,15 +231,15 @@
             @php $totalBobot = $kriteria->sum('bobot'); @endphp
             <div class="border-t border-gray-200 pt-4">
                 <div
-                    class="flex items-center justify-between p-4 {{ abs($totalBobot - 1) < 0.001 ? 'bg-green-50 border border-green-200' : 'bg-yellow-50 border border-yellow-200' }} rounded-lg">
+                    class="flex items-center justify-between p-4 {{ abs($totalBobot - 1) < 0.01 ? 'bg-green-50 border border-green-200' : 'bg-yellow-50 border border-yellow-200' }} rounded-lg">
                     <div class="flex items-center">
                         <i
-                            class="fas {{ abs($totalBobot - 1) < 0.001 ? 'fa-check-circle text-green-600' : 'fa-exclamation-triangle text-yellow-600' }} mr-2"></i>
+                            class="fas {{ abs($totalBobot - 1) < 0.01 ? 'fa-check-circle text-green-600' : 'fa-exclamation-triangle text-yellow-600' }} mr-2"></i>
                         <span class="font-medium text-gray-900">
-                            Total Bobot: {{ number_format($totalBobot, 3) }}
+                            Total Bobot: {{ number_format($totalBobot, 2) }}
                         </span>
                     </div>
-                    @if (abs($totalBobot - 1) >= 0.001)
+                    @if (abs($totalBobot - 1) >= 0.01)
                         <a href="{{ route('admin.kriteria.index') }}"
                             class="inline-flex items-center px-3 py-1 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700 transition-colors text-sm">
                             <i class="fas fa-edit mr-1"></i>

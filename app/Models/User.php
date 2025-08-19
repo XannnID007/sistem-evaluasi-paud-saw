@@ -11,7 +11,7 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
-    protected $primaryKey = 'user_id'; // ✅ SUDAH BENAR
+    protected $primaryKey = 'user_id'; // REVISI: Tetap menggunakan user_id
 
     protected $fillable = [
         'nama',
@@ -42,5 +42,11 @@ class User extends Authenticatable
     public function alternatif()
     {
         return $this->hasMany(Alternatif::class, 'user_id', 'user_id');
+    }
+
+    // REVISI: Accessor untuk backward compatibility
+    public function getNameAttribute()
+    {
+        return $this->nama;
     }
 }

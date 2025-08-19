@@ -26,11 +26,11 @@
                         <div class="flex items-start justify-between mb-4">
                             <div class="flex items-center">
                                 <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mr-4">
-                                    <span class="text-blue-600 font-bold text-lg">{{ $item->kode }}</span>
+                                    <span class="text-blue-600 font-bold text-lg">{{ $item->kode_kriteria }}</span>
                                 </div>
                                 <div>
                                     <h3 class="text-lg font-semibold text-gray-900">{{ $item->nama }}</h3>
-                                    <p class="text-sm text-gray-600">Bobot: {{ number_format($item->bobot, 3) }}</p>
+                                    <p class="text-sm text-gray-600">Bobot: {{ number_format($item->bobot, 2) }}</p>
                                 </div>
                             </div>
                             <div class="flex space-x-2">
@@ -81,9 +81,9 @@
                     @foreach ($kriteria as $item)
                         <div class="text-center">
                             <div class="w-16 h-16 bg-blue-100 rounded-lg flex items-center justify-center mx-auto mb-2">
-                                <span class="text-blue-600 font-bold">{{ $item->kode }}</span>
+                                <span class="text-blue-600 font-bold">{{ $item->kode_kriteria }}</span>
                             </div>
-                            <p class="text-sm font-medium text-gray-900">{{ number_format($item->bobot, 3) }}</p>
+                            <p class="text-sm font-medium text-gray-900">{{ number_format($item->bobot, 2) }}</p>
                             <p class="text-xs text-gray-600">{{ Str::limit($item->nama, 15) }}</p>
                         </div>
                     @endforeach
@@ -96,7 +96,7 @@
                         <div class="flex items-center">
                             <span
                                 class="text-xl font-bold {{ abs($totalBobot - 1) < 0.001 ? 'text-green-600' : 'text-red-600' }}">
-                                {{ number_format($totalBobot, 3) }}
+                                {{ number_format($totalBobot, 2) }}
                             </span>
                             @if (abs($totalBobot - 1) < 0.001)
                                 <i class="fas fa-check-circle text-green-500 ml-2"></i>
@@ -108,7 +108,7 @@
                     @if (abs($totalBobot - 1) >= 0.001)
                         <p class="text-sm text-red-600 mt-2">
                             <i class="fas fa-info-circle mr-1"></i>
-                            Total bobot harus sama dengan 1.000 untuk perhitungan yang akurat
+                            Total bobot harus sama dengan 1.00 untuk perhitungan yang akurat
                         </p>
                     @endif
                 </div>

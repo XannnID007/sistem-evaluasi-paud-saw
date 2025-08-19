@@ -89,6 +89,7 @@ Route::middleware(['auth', 'guru'])->prefix('guru')->name('guru.')->group(functi
 
     // Hasil Penilaian
     Route::get('hasil', [HasilController::class, 'index'])->name('hasil.index');
+    Route::get('hasil/export-pdf', [HasilController::class, 'exportHasilPdf'])->name('hasil.export-pdf');
 
     // Profile Management
     Route::get('profile', [ProfileController::class, 'index'])->name('profile.index');

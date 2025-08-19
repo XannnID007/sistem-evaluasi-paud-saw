@@ -23,13 +23,13 @@
 
                         <div class="space-y-6">
                             <div>
-                                <label for="kode" class="block text-sm font-medium text-gray-700 mb-2">Kode
+                                <label for="kode_kriteria" class="block text-sm font-medium text-gray-700 mb-2">Kode
                                     Kriteria</label>
-                                <input type="text" id="kode" name="kode"
-                                    value="{{ old('kode', $kriteria->kode) }}"
-                                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 @error('kode') border-red-300 @enderror"
+                                <input type="text" id="kode_kriteria" name="kode_kriteria"
+                                    value="{{ old('kode_kriteria', $kriteria->kode_kriteria) }}"
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 @error('kode_kriteria') border-red-300 @enderror"
                                     required>
-                                @error('kode')
+                                @error('kode_kriteria')
                                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                 @enderror
                             </div>
@@ -50,7 +50,7 @@
                                 <label for="bobot" class="block text-sm font-medium text-gray-700 mb-2">Bobot
                                     Kriteria</label>
                                 <input type="number" id="bobot" name="bobot"
-                                    value="{{ old('bobot', $kriteria->bobot) }}" step="0.001" min="0"
+                                    value="{{ old('bobot', $kriteria->bobot) }}" step="0.01" min="0"
                                     max="1"
                                     class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 @error('bobot') border-red-300 @enderror"
                                     required>
@@ -93,10 +93,10 @@
                     <h3 class="text-lg font-semibold text-gray-900 mb-4">Info Kriteria</h3>
                     <div class="text-center mb-4">
                         <div class="w-16 h-16 bg-blue-100 rounded-lg flex items-center justify-center mx-auto mb-3">
-                            <span class="text-blue-600 font-bold text-xl">{{ $kriteria->kode }}</span>
+                            <span class="text-blue-600 font-bold text-xl">{{ $kriteria->kode_kriteria }}</span>
                         </div>
                         <h4 class="font-semibold text-gray-900">{{ $kriteria->nama }}</h4>
-                        <p class="text-sm text-gray-600 mt-1">Bobot: {{ number_format($kriteria->bobot, 3) }}</p>
+                        <p class="text-sm text-gray-600 mt-1">Bobot: {{ number_format($kriteria->bobot, 2) }}</p>
                     </div>
 
                     <div class="space-y-2">
