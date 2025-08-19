@@ -89,10 +89,14 @@ Route::middleware(['auth', 'guru'])->prefix('guru')->name('guru.')->group(functi
 
     // Hasil Penilaian
     Route::get('hasil', [HasilController::class, 'index'])->name('hasil.index');
-    Route::get('hasil/export-pdf', [HasilController::class, 'exportHasilPdf'])->name('hasil.export-pdf');
+
 
     // Profile Management
     Route::get('profile', [ProfileController::class, 'index'])->name('profile.index');
     Route::put('profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::put('profile/password', [ProfileController::class, 'updatePassword'])->name('profile.password');
+
+    Route::prefix('reports')->name('reports.')->group(function () {
+        Route::get('/hasil-evaluasi/pdf', [App\Http\Controllers\Guru\ReportController::class, 'cetakHasilEvaluasi'])->name('hasil-evaluasi.pdf');
+    });
 });

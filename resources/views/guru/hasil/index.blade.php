@@ -4,8 +4,6 @@
 @section('breadcrumb', 'Hasil Penilaian')
 
 @section('content')
-    @include('components.pagination-styles')
-
     <div class="max-w-7xl mx-auto">
         <!-- Header -->
         <div class="flex justify-between items-center mb-8">
@@ -14,6 +12,7 @@
                 <p class="text-gray-600">Lihat hasil evaluasi perkembangan anak berdasarkan metode SAW</p>
             </div>
             <div class="flex space-x-3">
+                <!-- Export Dropdown -->
                 <div class="relative" x-data="{ open: false }">
                     <button @click="open = !open"
                         class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
@@ -35,44 +34,27 @@
                             <div class="text-xs text-gray-500">Pilih format laporan</div>
                         </div>
 
-                        @if ($hasil->count() > 0)
-                            <a href="{{ route('guru.hasil.export-pdf', request()->all()) }}"
-                                class="flex items-center px-4 py-3 text-sm text-gray-700 hover:bg-red-50 transition-colors">
-                                <div class="w-8 h-8 bg-red-100 rounded-lg flex items-center justify-center mr-3">
-                                    <i class="fas fa-file-pdf text-red-600"></i>
-                                </div>
-                                <div>
-                                    <div class="font-medium">PDF Report</div>
-                                    <div class="text-xs text-gray-500">Laporan lengkap hasil evaluasi</div>
-                                </div>
-                            </a>
-
-                            <button onclick="window.print()"
-                                class="w-full flex items-center px-4 py-3 text-sm text-gray-700 hover:bg-green-50 transition-colors">
-                                <div class="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center mr-3">
-                                    <i class="fas fa-print text-green-600"></i>
-                                </div>
-                                <div class="text-left">
-                                    <div class="font-medium">Print Halaman</div>
-                                    <div class="text-xs text-gray-500">Cetak halaman saat ini</div>
-                                </div>
-                            </button>
-
-                            <button onclick="exportToExcel()"
-                                class="w-full flex items-center px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 transition-colors">
-                                <div class="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center mr-3">
-                                    <i class="fas fa-file-excel text-blue-600"></i>
-                                </div>
-                                <div class="text-left">
-                                    <div class="font-medium">Export Excel</div>
-                                    <div class="text-xs text-gray-500">Data dalam format Excel</div>
-                                </div>
-                            </button>
-                        @else
-                            <div class="px-4 py-3 text-sm text-gray-500 text-center">
-                                Tidak ada data untuk di-export
+                        <a href="{{ route('guru.reports.hasil-evaluasi.pdf', request()->all()) }}"
+                            class="flex items-center px-4 py-3 text-sm text-gray-700 hover:bg-red-50 transition-colors">
+                            <div class="w-8 h-8 bg-red-100 rounded-lg flex items-center justify-center mr-3">
+                                <i class="fas fa-file-pdf text-red-600"></i>
                             </div>
-                        @endif
+                            <div>
+                                <div class="font-medium">Laporan PDF</div>
+                                <div class="text-xs text-gray-500">Hasil evaluasi lengkap</div>
+                            </div>
+                        </a>
+
+                        <button onclick="window.print()"
+                            class="w-full flex items-center px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 transition-colors">
+                            <div class="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center mr-3">
+                                <i class="fas fa-print text-blue-600"></i>
+                            </div>
+                            <div class="text-left">
+                                <div class="font-medium">Print Halaman</div>
+                                <div class="text-xs text-gray-500">Cetak halaman saat ini</div>
+                            </div>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -82,26 +64,24 @@
             <!-- Summary Cards -->
             <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
                 @php
-                    // Hitung total untuk seluruh data, bukan hanya halaman saat ini
-                    $allResults = \App\Models\HasilSaw::all();
                     $categories = [
                         'Sangat Baik' => [
-                            'count' => $allResults->where('kategori', 'Sangat Baik')->count(),
+                            'count' => $hasil->where('kategori', 'Sangat Baik')->count(),
                             'color' => 'green',
                             'icon' => 'star',
                         ],
                         'Baik' => [
-                            'count' => $allResults->where('kategori', 'Baik')->count(),
+                            'count' => $hasil->where('kategori', 'Baik')->count(),
                             'color' => 'blue',
                             'icon' => 'thumbs-up',
                         ],
                         'Cukup' => [
-                            'count' => $allResults->where('kategori', 'Cukup')->count(),
+                            'count' => $hasil->where('kategori', 'Cukup')->count(),
                             'color' => 'yellow',
                             'icon' => 'clock',
                         ],
                         'Kurang' => [
-                            'count' => $allResults->where('kategori', 'Kurang')->count(),
+                            'count' => $hasil->where('kategori', 'Kurang')->count(),
                             'color' => 'red',
                             'icon' => 'exclamation-triangle',
                         ],
@@ -120,6 +100,9 @@
                             <div class="ml-4">
                                 <p class="text-sm font-medium text-gray-600">{{ $category }}</p>
                                 <p class="text-2xl font-semibold text-gray-900">{{ $data['count'] }}</p>
+                                <p class="text-xs text-gray-500">
+                                    {{ $hasil->count() > 0 ? number_format(($data['count'] / $hasil->count()) * 100, 1) : 0 }}%
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -160,24 +143,32 @@
 
             <!-- Results Table -->
             <div class="bg-white rounded-xl border border-gray-200 overflow-hidden">
-                <div class="px-6 py-4 border-b border-gray-200 flex justify-between items-center">
+                <div class="px-6 py-4 border-b border-gray-200 flex items-center justify-between">
                     <h3 class="text-lg font-semibold text-gray-900">Daftar Hasil Evaluasi</h3>
-                    <x-per-page-selector />
+                    <div class="flex items-center space-x-2">
+                        <span class="text-sm text-gray-600">Total:</span>
+                        <span class="font-medium text-blue-600">{{ $hasil->count() }} siswa</span>
+                    </div>
                 </div>
 
                 <div class="overflow-x-auto">
-                    <table class="min-w-full divide-y divide-gray-200" id="hasilTable">
+                    <table class="min-w-full divide-y divide-gray-200">
                         <thead class="bg-gray-50">
                             <tr>
-                                <x-sortable-header column="ranking" title="Ranking" />
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Ranking</th>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                     Siswa</th>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                     Jenis Kelamin</th>
-                                <x-sortable-header column="skor_akhir" title="Skor Akhir" />
-                                <x-sortable-header column="kategori" title="Kategori" />
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Status</th>
+                                    Umur</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Skor Akhir</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Kategori</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Rekomendasi</th>
                             </tr>
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-200">
@@ -200,6 +191,11 @@
                                             <span
                                                 class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-orange-100 text-orange-800">
                                                 <i class="fas fa-award mr-1"></i>
+                                                {{ $item->ranking }}
+                                            </span>
+                                        @elseif($item->ranking <= 10)
+                                            <span
+                                                class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800">
                                                 {{ $item->ranking }}
                                             </span>
                                         @else
@@ -233,6 +229,12 @@
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         <span
+                                            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
+                                            {{ $item->alternatif->umur }} tahun
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span
                                             class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-indigo-100 text-indigo-800">
                                             {{ number_format($item->skor_akhir, 4) }}
                                         </span>
@@ -252,27 +254,27 @@
                                             {{ $item->kategori }}
                                         </span>
                                     </td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                                    <td class="px-6 py-4 text-sm text-gray-600">
                                         @if ($item->kategori == 'Sangat Baik')
-                                            <span class="text-green-600">
+                                            <div class="flex items-center text-green-600">
                                                 <i class="fas fa-star mr-1"></i>
-                                                Berkembang optimal, pertahankan
-                                            </span>
+                                                <span>Berkembang optimal, pertahankan stimulasi</span>
+                                            </div>
                                         @elseif($item->kategori == 'Baik')
-                                            <span class="text-blue-600">
+                                            <div class="flex items-center text-blue-600">
                                                 <i class="fas fa-thumbs-up mr-1"></i>
-                                                Perkembangan sesuai harapan
-                                            </span>
+                                                <span>Perkembangan sesuai harapan</span>
+                                            </div>
                                         @elseif($item->kategori == 'Cukup')
-                                            <span class="text-yellow-600">
+                                            <div class="flex items-center text-yellow-600">
                                                 <i class="fas fa-clock mr-1"></i>
-                                                Perlu stimulasi tambahan
-                                            </span>
+                                                <span>Perlu stimulasi tambahan pada beberapa aspek</span>
+                                            </div>
                                         @else
-                                            <span class="text-red-600">
+                                            <div class="flex items-center text-red-600">
                                                 <i class="fas fa-exclamation-triangle mr-1"></i>
-                                                Butuh perhatian khusus
-                                            </span>
+                                                <span>Butuh perhatian khusus dan stimulasi intensif</span>
+                                            </div>
                                         @endif
                                     </td>
                                 </tr>
@@ -280,13 +282,63 @@
                         </tbody>
                     </table>
                 </div>
+            </div>
 
-                <!-- Pagination -->
-                @if ($hasil->hasPages())
-                    <div class="border-t border-gray-200">
-                        {{ $hasil->links('components.pagination') }}
+            <!-- Analysis Section -->
+            <div class="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <!-- Top Performers -->
+                <div class="bg-white rounded-xl border border-gray-200 p-6">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4">
+                        <i class="fas fa-trophy text-yellow-500 mr-2"></i>
+                        Top 5 Siswa
+                    </h3>
+                    <div class="space-y-3">
+                        @foreach ($hasil->take(5) as $index => $item)
+                            <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                                <div class="flex items-center">
+                                    <span
+                                        class="w-6 h-6 bg-blue-100 text-blue-800 rounded-full flex items-center justify-center text-xs font-medium mr-3">
+                                        {{ $index + 1 }}
+                                    </span>
+                                    <div>
+                                        <div class="font-medium text-gray-900">{{ $item->alternatif->nama }}</div>
+                                        <div class="text-xs text-gray-500">{{ $item->alternatif->kode }}</div>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <div class="font-medium text-gray-900">{{ number_format($item->skor_akhir, 3) }}</div>
+                                    <div class="text-xs text-gray-500">{{ $item->kategori }}</div>
+                                </div>
+                            </div>
+                        @endforeach
                     </div>
-                @endif
+                </div>
+
+                <!-- Distribution Analysis -->
+                <div class="bg-white rounded-xl border border-gray-200 p-6">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4">
+                        <i class="fas fa-chart-pie text-blue-500 mr-2"></i>
+                        Distribusi Kategori
+                    </h3>
+                    <div class="space-y-4">
+                        @foreach ($categories as $category => $data)
+                            @php
+                                $percentage = $hasil->count() > 0 ? ($data['count'] / $hasil->count()) * 100 : 0;
+                            @endphp
+                            <div>
+                                <div class="flex justify-between text-sm mb-1">
+                                    <span class="font-medium text-gray-700">{{ $category }}</span>
+                                    <span class="text-gray-500">{{ $data['count'] }} siswa
+                                        ({{ number_format($percentage, 1) }}%)</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-2">
+                                    <div class="bg-{{ $data['color'] }}-500 h-2 rounded-full transition-all duration-300"
+                                        style="width: {{ $percentage }}%"></div>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
             </div>
         @else
             <!-- Empty State -->
@@ -302,49 +354,32 @@
         @endif
     </div>
 
-    <!-- Tambahan JavaScript untuk Export Excel -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-    <script>
-        function exportToExcel() {
-            // Get table data
-            const table = document.getElementById('hasilTable');
-            if (!table) {
-                alert('Tidak ada data untuk di-export');
-                return;
+    <style>
+        @media print {
+
+            .bg-gray-50,
+            .border-gray-200 {
+                background: white !important;
+                border-color: #000 !important;
             }
 
-            const workbook = XLSX.utils.table_to_book(table, {
-                sheet: "Hasil Evaluasi",
-                display: false
-            });
+            button,
+            .hover\:bg-gray-50:hover,
+            .relative {
+                display: none !important;
+            }
 
-            // Set filename
-            const filename = 'Hasil_Evaluasi_Siswa_' + new Date().toISOString().slice(0, 10) + '.xlsx';
+            .text-2xl {
+                font-size: 1.25rem !important;
+            }
 
-            // Download
-            XLSX.writeFile(workbook, filename);
+            body {
+                background: white !important;
+            }
+
+            .rounded-xl {
+                border: 1px solid #000 !important;
+            }
         }
-
-        // Print styles
-        const printStyles = `
-            <style>
-                @media print {
-                    .flex.space-x-3, button, .relative { display: none !important; }
-                    .bg-gray-50 { background: white !important; }
-                    .border-gray-200 { border-color: #dee2e6 !important; }
-                    body { background: white !important; }
-                    .rounded-xl { border: 1px solid #dee2e6 !important; }
-                    table { page-break-inside: auto; }
-                    tr { page-break-inside: avoid; page-break-after: auto; }
-                    thead { display: table-header-group; }
-                    .text-2xl { font-size: 1.25rem !important; }
-                    .mb-8 { margin-bottom: 1rem !important; }
-                    .px-6 { padding-left: 8px !important; padding-right: 8px !important; }
-                    .py-4 { padding-top: 6px !important; padding-bottom: 6px !important; }
-                }
-            </style>
-        `;
-
-        document.head.insertAdjacentHTML('beforeend', printStyles);
-    </script>
+    </style>
 @endsection

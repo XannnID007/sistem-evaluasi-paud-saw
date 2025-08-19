@@ -1,3 +1,4 @@
+{{-- resources/views/guru/reports/hasil-evaluasi.blade.php --}}
 <!DOCTYPE html>
 <html lang="id">
 
@@ -179,6 +180,12 @@
             font-weight: bold;
         }
 
+        .ranking-top10 {
+            background: #dbeafe !important;
+            color: #1e40af;
+            font-weight: bold;
+        }
+
         .kategori-sangat-baik {
             background: #dcfce7;
             color: #166534;
@@ -203,26 +210,60 @@
             font-weight: bold;
         }
 
-        .footer {
-            margin-top: 40px;
-            border-top: 1px solid #e5e7eb;
-            padding-top: 20px;
+        .alternatif-name {
+            text-align: left !important;
+            font-weight: bold;
         }
 
-        .signature-section {
+        .top-performers {
+            background: #fffbeb;
+            border: 1px solid #f59e0b;
+            border-left: 4px solid #f59e0b;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+        }
+
+        .top-performers h4 {
+            color: #92400e;
+            font-size: 12px;
+            margin-bottom: 10px;
+        }
+
+        .performer-item {
             display: flex;
             justify-content: space-between;
-            margin-top: 30px;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid #f3f4f6;
         }
 
-        .signature {
-            text-align: center;
-            width: 200px;
+        .performer-item:last-child {
+            border-bottom: none;
         }
 
-        .signature-line {
-            border-bottom: 1px solid #333;
-            margin: 60px 0 10px 0;
+        .performer-rank {
+            width: 20px;
+            height: 20px;
+            background: #3b82f6;
+            color: white;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .performer-name {
+            font-weight: bold;
+            font-size: 11px;
+        }
+
+        .performer-score {
+            font-weight: bold;
+            color: #059669;
         }
 
         .catatan {
@@ -251,6 +292,28 @@
             color: #0369a1;
         }
 
+        .footer {
+            margin-top: 40px;
+            border-top: 1px solid #e5e7eb;
+            padding-top: 20px;
+        }
+
+        .signature-section {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+
+        .signature {
+            text-align: center;
+            width: 200px;
+        }
+
+        .signature-line {
+            border-bottom: 1px solid #333;
+            margin: 60px 0 10px 0;
+        }
+
         .page-break {
             page-break-before: always;
         }
@@ -269,8 +332,8 @@
     <div class="header">
         <div class="logo">🎓</div>
         <h1>PAUD FLAMBOYAN</h1>
-        <h2>LAPORAN HASIL EVALUASI PERKEMBANGAN ANAK</h2>
-        <p>Menggunakan Metode Simple Additive Weighting (SAW)</p>
+        <h2>LAPORAN HASIL EVALUASI SISWA</h2>
+        <p>Laporan Perkembangan Anak Usia Dini - Periode {{ date('Y') }}</p>
     </div>
 
     <!-- Info Laporan -->
@@ -307,23 +370,35 @@
 
     <!-- Statistik -->
     <div class="statistik">
-        <h3>Statistik Hasil Evaluasi</h3>
+        <h3>Distribusi Kategori Perkembangan</h3>
         <div class="stats-grid">
             <div class="stat-card">
                 <span class="stat-number">{{ $statistik['sangat_baik'] }}</span>
                 <div class="stat-label">Sangat Baik</div>
+                <div class="stat-label">
+                    ({{ $statistik['total_siswa'] > 0 ? number_format(($statistik['sangat_baik'] / $statistik['total_siswa']) * 100, 1) : 0 }}%)
+                </div>
             </div>
             <div class="stat-card">
                 <span class="stat-number">{{ $statistik['baik'] }}</span>
                 <div class="stat-label">Baik</div>
+                <div class="stat-label">
+                    ({{ $statistik['total_siswa'] > 0 ? number_format(($statistik['baik'] / $statistik['total_siswa']) * 100, 1) : 0 }}%)
+                </div>
             </div>
             <div class="stat-card">
                 <span class="stat-number">{{ $statistik['cukup'] }}</span>
                 <div class="stat-label">Cukup</div>
+                <div class="stat-label">
+                    ({{ $statistik['total_siswa'] > 0 ? number_format(($statistik['cukup'] / $statistik['total_siswa']) * 100, 1) : 0 }}%)
+                </div>
             </div>
             <div class="stat-card">
                 <span class="stat-number">{{ $statistik['kurang'] }}</span>
                 <div class="stat-label">Kurang</div>
+                <div class="stat-label">
+                    ({{ $statistik['total_siswa'] > 0 ? number_format(($statistik['kurang'] / $statistik['total_siswa']) * 100, 1) : 0 }}%)
+                </div>
             </div>
         </div>
     </div>
@@ -337,15 +412,17 @@
                     <th style="width: 8%">Rank</th>
                     <th style="width: 12%">Kode</th>
                     <th style="width: 25%">Nama Siswa</th>
-                    <th style="width: 15%">Jenis Kelamin</th>
-                    <th style="width: 12%">Skor Akhir</th>
+                    <th style="width: 12%">L/P</th>
+                    <th style="width: 8%">Umur</th>
+                    <th style="width: 12%">Skor</th>
                     <th style="width: 15%">Kategori</th>
-                    <th style="width: 13%">Rekomendasi</th>
+                    <th style="width: 8%">%</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach ($hasil as $item)
-                    <tr class="{{ $item->ranking <= 3 ? 'ranking-' . $item->ranking : '' }}">
+                    <tr
+                        class="{{ $item->ranking <= 3 ? 'ranking-' . $item->ranking : ($item->ranking <= 10 ? 'ranking-top10' : '') }}">
                         <td>
                             @if ($item->ranking == 1)
                                 🏆 {{ $item->ranking }}
@@ -358,24 +435,14 @@
                             @endif
                         </td>
                         <td><strong>{{ $item->alternatif->kode }}</strong></td>
-                        <td style="text-align: left;">{{ $item->alternatif->nama }}</td>
-                        <td>
-                            {{ $item->alternatif->jenis_kelamin == 'L' ? 'Laki-laki' : 'Perempuan' }}
-                        </td>
+                        <td class="alternatif-name">{{ $item->alternatif->nama }}</td>
+                        <td>{{ $item->alternatif->jenis_kelamin }}</td>
+                        <td>{{ $item->alternatif->umur }}th</td>
                         <td><strong>{{ number_format($item->skor_akhir, 4) }}</strong></td>
                         <td class="kategori-{{ strtolower(str_replace(' ', '-', $item->kategori)) }}">
                             {{ $item->kategori }}
                         </td>
-                        <td style="text-align: left; font-size: 10px;">
-                            @if ($item->kategori == 'Sangat Baik')
-                                Pertahankan perkembangan
-                            @elseif($item->kategori == 'Baik')
-                                Lanjutkan stimulasi
-                            @elseif($item->kategori == 'Cukup')
-                                Perlukan stimulasi tambahan
-                            @else
-                                Perhatian khusus diperlukan
-                            @endif
+                        <td>{{ number_format(($item->skor_akhir / ($statistik['skor_tertinggi'] ?: 1)) * 100, 1) }}%
                         </td>
                     </tr>
                 @endforeach
@@ -383,66 +450,129 @@
         </table>
     </div>
 
-    <!-- Catatan -->
+    <!-- Top Performers Analysis -->
+    <div class="top-performers">
+        <h4>🌟 Top 10 Siswa Berprestasi</h4>
+        @foreach ($hasil->take(10) as $index => $item)
+            <div class="performer-item">
+                <div>
+                    <span class="performer-rank">{{ $index + 1 }}</span>
+                    <span class="performer-name">{{ $item->alternatif->nama }}</span>
+                    <span style="font-size: 10px; color: #666;">({{ $item->alternatif->kode }})</span>
+                </div>
+                <div>
+                    <span class="performer-score">{{ number_format($item->skor_akhir, 4) }}</span>
+                    <span style="font-size: 10px; color: #666; margin-left: 5px;">{{ $item->kategori }}</span>
+                </div>
+            </div>
+        @endforeach
+    </div>
+
+    <!-- Catatan dan Rekomendasi -->
     <div class="catatan">
-        <h4>📋 Catatan Evaluasi untuk Guru:</h4>
+        <h4>📋 Catatan Evaluasi dan Rekomendasi:</h4>
         <ul>
-            <li><strong>Sangat Baik (Skor ≥ 0.8):</strong> Anak menunjukkan perkembangan yang sangat baik. Pertahankan
-                stimulasi dan berikan tantangan yang sesuai.</li>
-            <li><strong>Baik (Skor 0.6-0.79):</strong> Perkembangan anak sesuai harapan. Lanjutkan dengan variasi
-                kegiatan pembelajaran.</li>
-            <li><strong>Cukup (Skor 0.4-0.59):</strong> Anak memerlukan stimulasi tambahan pada beberapa aspek
-                perkembangan.</li>
-            <li><strong>Kurang (Skor < 0.4):</strong> Anak memerlukan perhatian khusus dan program stimulasi yang
-                        intensif.</li>
+            <li><strong>Sangat Baik ({{ $statistik['sangat_baik'] }} siswa):</strong> Perkembangan sangat optimal.
+                Pertahankan stimulasi yang sudah diberikan dan berikan tantangan lebih untuk mengembangkan potensi.</li>
+            <li><strong>Baik ({{ $statistik['baik'] }} siswa):</strong> Perkembangan sesuai harapan. Lanjutkan dengan
+                variasi kegiatan dan metode pembelajaran yang beragam.</li>
+            <li><strong>Cukup ({{ $statistik['cukup'] }} siswa):</strong> Perkembangan cukup baik namun perlu stimulasi
+                tambahan pada beberapa aspek yang masih kurang.</li>
+            <li><strong>Kurang ({{ $statistik['kurang'] }} siswa):</strong> Memerlukan perhatian khusus dan stimulasi
+                intensif. Disarankan konsultasi dengan ahli perkembangan anak.</li>
         </ul>
     </div>
 
-    <!-- Informasi Kriteria -->
+    <!-- Halaman Kedua: Detail Rekomendasi per Kategori -->
     <div class="page-break"></div>
     <div class="tabel-section">
-        <h3>Kriteria Penilaian yang Digunakan</h3>
-        <table>
-            <thead>
-                <tr>
-                    <th style="width: 15%">Kode</th>
-                    <th style="width: 40%">Nama Kriteria</th>
-                    <th style="width: 15%">Bobot</th>
-                    <th style="width: 30%">Keterangan</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($kriteria as $k)
-                    <tr>
-                        <td><strong>{{ $k->kode }}</strong></td>
-                        <td style="text-align: left;">{{ $k->nama }}</td>
-                        <td><strong>{{ number_format($k->bobot, 3) }}</strong></td>
-                        <td style="text-align: left; font-size: 10px;">
-                            {{ $k->keterangan ?? 'Aspek perkembangan anak usia dini' }}</td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
-    </div>
+        <h3>Detail Rekomendasi Berdasarkan Kategori</h3>
 
-    <!-- Rekomendasi untuk Guru -->
-    <div class="catatan">
-        <h4>🎯 Rekomendasi Tindak Lanjut untuk Guru:</h4>
-        <ul>
-            <li><strong>Untuk anak kategori "Sangat Baik":</strong> Berikan tantangan yang lebih kompleks dan jadikan
-                sebagai tutor sebaya.</li>
-            <li><strong>Untuk anak kategori "Baik":</strong> Lanjutkan program pembelajaran dengan sedikit variasi
-                aktivitas.</li>
-            <li><strong>Untuk anak kategori "Cukup":</strong> Berikan stimulasi tambahan dan perhatian lebih pada aspek
-                yang kurang.</li>
-            <li><strong>Untuk anak kategori "Kurang":</strong> Lakukan konsultasi dengan orangtua dan buat program
-                khusus.</li>
-            <li><strong>Pemantauan:</strong> Lakukan evaluasi berkala setiap 3 bulan untuk melihat perkembangan.</li>
-        </ul>
+        @if ($statistik['sangat_baik'] > 0)
+            <div
+                style="margin-bottom: 20px; background: #dcfce7; padding: 12px; border-radius: 6px; border-left: 4px solid #16a34a;">
+                <h4 style="color: #166534; margin-bottom: 8px;">🌟 Siswa Kategori Sangat Baik
+                    ({{ $statistik['sangat_baik'] }} siswa)</h4>
+                <div style="font-size: 10px;">
+                    @foreach ($hasil->where('kategori', 'Sangat Baik') as $item)
+                        <span style="margin-right: 10px;">{{ $item->alternatif->nama }}</span>
+                    @endforeach
+                </div>
+                <p style="margin-top: 8px; font-size: 11px; color: #166534;">
+                    <strong>Rekomendasi:</strong> Berikan program pengayaan dan tantangan lebih tinggi. Pertimbangkan
+                    sebagai tutor sebaya.
+                    Kembangkan bakat khusus yang dimiliki masing-masing anak.
+                </p>
+            </div>
+        @endif
+
+        @if ($statistik['baik'] > 0)
+            <div
+                style="margin-bottom: 20px; background: #dbeafe; padding: 12px; border-radius: 6px; border-left: 4px solid #3b82f6;">
+                <h4 style="color: #1e40af; margin-bottom: 8px;">👍 Siswa Kategori Baik ({{ $statistik['baik'] }} siswa)
+                </h4>
+                <div style="font-size: 10px;">
+                    @foreach ($hasil->where('kategori', 'Baik') as $item)
+                        <span style="margin-right: 10px;">{{ $item->alternatif->nama }}</span>
+                    @endforeach
+                </div>
+                <p style="margin-top: 8px; font-size: 11px; color: #1e40af;">
+                    <strong>Rekomendasi:</strong> Pertahankan kegiatan pembelajaran yang ada. Berikan variasi metode dan
+                    aktivitas yang lebih menarik untuk mencapai kategori sangat baik.
+                </p>
+            </div>
+        @endif
+
+        @if ($statistik['cukup'] > 0)
+            <div
+                style="margin-bottom: 20px; background: #fef3c7; padding: 12px; border-radius: 6px; border-left: 4px solid #f59e0b;">
+                <h4 style="color: #a16207; margin-bottom: 8px;">⚠️ Siswa Kategori Cukup ({{ $statistik['cukup'] }}
+                    siswa)</h4>
+                <div style="font-size: 10px;">
+                    @foreach ($hasil->where('kategori', 'Cukup') as $item)
+                        <span style="margin-right: 10px;">{{ $item->alternatif->nama }}</span>
+                    @endforeach
+                </div>
+                <p style="margin-top: 8px; font-size: 11px; color: #a16207;">
+                    <strong>Rekomendasi:</strong> Identifikasi aspek yang masih kurang. Berikan stimulasi tambahan dan
+                    pendampingan lebih intensif. Libatkan orang tua dalam program pembelajaran di rumah.
+                </p>
+            </div>
+        @endif
+
+        @if ($statistik['kurang'] > 0)
+            <div
+                style="margin-bottom: 20px; background: #fee2e2; padding: 12px; border-radius: 6px; border-left: 4px solid #ef4444;">
+                <h4 style="color: #dc2626; margin-bottom: 8px;">🚨 Siswa Kategori Kurang ({{ $statistik['kurang'] }}
+                    siswa)</h4>
+                <div style="font-size: 10px;">
+                    @foreach ($hasil->where('kategori', 'Kurang') as $item)
+                        <span style="margin-right: 10px;">{{ $item->alternatif->nama }}</span>
+                    @endforeach
+                </div>
+                <p style="margin-top: 8px; font-size: 11px; color: #dc2626;">
+                    <strong>Rekomendasi:</strong> Perlu perhatian khusus dan program individual. Konsultasi dengan
+                    psikolog anak atau ahli perkembangan. Koordinasi intensif dengan orang tua.
+                </p>
+            </div>
+        @endif
     </div>
 
     <!-- Footer dengan Tanda Tangan -->
     <div class="footer">
+        <div
+            style="background: #f0f9ff; border: 1px solid #0ea5e9; border-left: 4px solid #0ea5e9; padding: 12px; margin: 15px 0; border-radius: 6px;">
+            <h4 style="color: #0369a1; font-size: 11px; margin-bottom: 8px;">📝 Metodologi Penilaian:</h4>
+            <p style="font-size: 10px; color: #0369a1; margin-bottom: 5px;">
+                Evaluasi menggunakan metode Simple Additive Weighting (SAW) dengan {{ $kriteria->count() }} aspek
+                perkembangan anak usia dini.
+            </p>
+            <p style="font-size: 10px; color: #0369a1;">
+                Skala penilaian: 1 (Belum Berkembang), 2 (Mulai Berkembang), 3 (Berkembang Sesuai Harapan), 4
+                (Berkembang Sangat Baik).
+            </p>
+        </div>
+
         <div class="signature-section">
             <div class="signature">
                 <p>Mengetahui,</p>
@@ -452,7 +582,7 @@
             </div>
             <div class="signature">
                 <p>{{ date('d F Y') }}</p>
-                <p><strong>Guru Kelas</strong></p>
+                <p><strong>Guru Pembuat Laporan</strong></p>
                 <div class="signature-line"></div>
                 <p><strong>{{ auth()->user()->nama }}</strong></p>
             </div>
@@ -460,7 +590,7 @@
 
         <div style="text-align: center; margin-top: 30px; font-size: 10px; color: #666;">
             <p>Laporan ini dibuat secara otomatis oleh Sistem Pendukung Keputusan PAUD Flamboyan</p>
-            <p>Dicetak pada: {{ date('d F Y, H:i') }} WIB</p>
+            <p>Dicetak pada: {{ date('d F Y, H:i:s') }} WIB</p>
         </div>
     </div>
 </body>

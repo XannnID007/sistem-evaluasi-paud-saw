@@ -13,261 +13,247 @@
         }
 
         body {
-            font-family: 'Arial', sans-serif;
-            font-size: 11px;
-            line-height: 1.3;
-            color: #333;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            line-height: 1.6;
+            color: #000;
             background: #fff;
+            padding: 20px;
         }
 
+        /* Header */
         .header {
             text-align: center;
-            border-bottom: 3px solid #a16207;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #000;
             padding-bottom: 20px;
-            margin-bottom: 25px;
-        }
-
-        .logo {
-            width: 50px;
-            height: 50px;
-            background: linear-gradient(135deg, #a16207, #92400e);
-            border-radius: 10px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 12px;
-            color: white;
-            font-size: 20px;
         }
 
         .header h1 {
-            font-size: 18px;
+            font-size: 24px;
             font-weight: bold;
-            color: #a16207;
-            margin-bottom: 4px;
+            margin-bottom: 5px;
         }
 
         .header h2 {
-            font-size: 14px;
-            color: #92400e;
-            margin-bottom: 4px;
+            font-size: 20px;
+            margin-bottom: 5px;
         }
 
         .header p {
-            font-size: 10px;
-            color: #666;
+            font-size: 16px;
+            color: #555;
         }
 
+        /* Info section */
         .info-section {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 20px;
-            background: #f8f9fa;
-            padding: 12px;
-            border-radius: 6px;
-            border-left: 3px solid #a16207;
+            background: #f5f5dc;
+            border: 1px solid #000;
+            padding: 15px;
+            margin-bottom: 25px;
+        }
+
+        .info-grid {
+            display: table;
+            width: 100%;
         }
 
         .info-left,
         .info-right {
-            width: 48%;
+            display: table-cell;
+            width: 50%;
+            vertical-align: top;
         }
 
         .info-item {
-            margin-bottom: 6px;
-            font-size: 10px;
+            margin-bottom: 8px;
+            font-size: 14px;
         }
 
         .info-label {
             font-weight: bold;
-            color: #a16207;
             display: inline-block;
-            width: 100px;
+            width: 150px;
         }
 
-        .statistik {
-            margin-bottom: 20px;
+        /* Section */
+        .section {
+            margin-bottom: 30px;
         }
 
-        .statistik h3 {
-            color: #a16207;
-            font-size: 13px;
-            margin-bottom: 12px;
-            border-bottom: 2px solid #a16207;
-            padding-bottom: 4px;
-        }
-
-        .stats-grid {
-            display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap;
-        }
-
-        .stat-card {
-            width: 19%;
-            background: #fff;
-            border: 1px solid #e5e7eb;
-            border-left: 3px solid #a16207;
-            padding: 12px;
-            text-align: center;
-            border-radius: 6px;
-            margin-bottom: 8px;
-        }
-
-        .stat-number {
+        .section-title {
+            background: #000;
+            color: #fff;
             font-size: 16px;
             font-weight: bold;
-            color: #a16207;
-            display: block;
+            padding: 10px 15px;
+            margin-bottom: 15px;
         }
 
-        .stat-label {
-            font-size: 9px;
-            color: #666;
-            margin-top: 4px;
-        }
-
-        .section {
-            margin-bottom: 25px;
-        }
-
-        .section h3 {
-            color: #a16207;
-            font-size: 13px;
-            margin-bottom: 12px;
-            border-bottom: 2px solid #a16207;
-            padding-bottom: 4px;
-        }
-
+        /* Table */
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-bottom: 15px;
-            background: white;
-            font-size: 9px;
+            margin-bottom: 20px;
         }
 
         table th {
-            background: linear-gradient(135deg, #eaddd7, #d2bab0);
-            color: #78350f;
+            background: #000;
+            color: #fff;
             font-weight: bold;
             text-align: center;
-            padding: 8px 3px;
-            border: 1px solid #a16207;
-            text-transform: uppercase;
+            padding: 12px 6px;
+            border: 1px solid #000;
+            font-size: 12px;
         }
 
         table td {
-            padding: 6px 3px;
-            border: 1px solid #d1d5db;
+            padding: 8px 6px;
+            border: 1px solid #000;
             text-align: center;
+            font-size: 12px;
         }
 
+        table tbody tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+
+        /* Text alignment */
         .text-left {
             text-align: left !important;
         }
 
-        .alternatif-col {
-            text-align: left !important;
-            font-weight: bold;
-            background: #f9fafb;
-            width: 20%;
+        .text-center {
+            text-align: center !important;
         }
 
+        /* Status nilai styling */
         .nilai-lengkap {
-            background: #dcfce7;
-            color: #166534;
+            background: #28a745;
+            color: #fff;
             font-weight: bold;
+            padding: 3px 6px;
         }
 
         .nilai-sebagian {
-            background: #fef3c7;
-            color: #a16207;
+            background: #ffc107;
+            color: #000;
             font-weight: bold;
+            padding: 3px 6px;
         }
 
         .nilai-kosong {
-            background: #fee2e2;
-            color: #dc2626;
+            background: #dc3545;
+            color: #fff;
+            font-weight: bold;
+            padding: 3px 6px;
+        }
+
+        /* Note box */
+        .note-box {
+            background: #f5f5dc;
+            border: 1px solid #000;
+            padding: 15px;
+            margin: 20px 0;
+        }
+
+        .note-box h4 {
+            font-size: 16px;
+            margin-bottom: 10px;
             font-weight: bold;
         }
 
-        .nilai-cell {
-            min-width: 25px;
+        .note-box ul {
+            margin-left: 20px;
         }
 
-        .progress-bar {
+        .note-box li {
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: 40px;
+            border-top: 1px solid #000;
+            padding-top: 20px;
+        }
+
+        .signature-section {
+            display: table;
             width: 100%;
-            height: 15px;
-            background: #f3f4f6;
-            border-radius: 8px;
-            overflow: hidden;
-            margin: 5px 0;
+            margin-top: 30px;
         }
 
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #10b981, #059669);
-            transition: width 0.3s ease;
+        .signature {
+            display: table-cell;
+            width: 50%;
+            text-align: center;
+            vertical-align: top;
         }
 
+        .signature-line {
+            border-bottom: 1px solid #000;
+            margin: 50px 20px 10px 20px;
+        }
+
+        .footer-note {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 12px;
+            color: #555;
+        }
+
+        /* Page break */
         .page-break {
             page-break-before: always;
         }
 
-        .footer {
-            margin-top: 30px;
-            border-top: 1px solid #e5e7eb;
-            padding-top: 15px;
-        }
-
-        .signature-section {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 20px;
-        }
-
-        .signature {
-            text-align: center;
-            width: 180px;
-        }
-
-        .signature-line {
-            border-bottom: 1px solid #333;
-            margin: 40px 0 8px 0;
-        }
-
-        .catatan {
-            background: #f0f9ff;
-            border: 1px solid #0ea5e9;
-            border-left: 4px solid #0ea5e9;
-            padding: 12px;
-            margin: 15px 0;
-            border-radius: 6px;
-        }
-
-        .catatan h4 {
-            color: #0369a1;
-            font-size: 11px;
-            margin-bottom: 8px;
-        }
-
-        .catatan ul {
-            list-style-type: disc;
-            padding-left: 15px;
-        }
-
-        .catatan li {
-            margin-bottom: 4px;
-            font-size: 9px;
-            color: #0369a1;
-        }
-
+        /* Print optimizations */
         @media print {
             body {
-                -webkit-print-color-adjust: exact;
-                color-adjust: exact;
+                padding: 0;
             }
+        }
+
+        /* Statistics */
+        .stats-grid {
+            display: table;
+            width: 100%;
+            margin-bottom: 25px;
+        }
+
+        .stat-item {
+            display: table-cell;
+            width: 25%;
+            text-align: center;
+            padding: 10px;
+            border: 1px solid #000;
+        }
+
+        .stat-number {
+            font-size: 20px;
+            font-weight: bold;
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            margin-top: 5px;
+        }
+
+        /* Kriteria summary */
+        .criteria-summary {
+            background: #f5f5dc;
+            border: 1px solid #000;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        .criteria-summary h4 {
+            font-size: 14px;
+            margin-bottom: 10px;
+            font-weight: bold;
         }
     </style>
 </head>
@@ -275,7 +261,6 @@
 <body>
     <!-- Header -->
     <div class="header">
-        <div class="logo"></div>
         <h1>PAUD FLAMBOYAN</h1>
         <h2>LAPORAN NILAI ALTERNATIF</h2>
         <p>Status Penilaian Siswa untuk Setiap Kriteria</p>
@@ -283,53 +268,74 @@
 
     <!-- Info Laporan -->
     <div class="info-section">
-        <div class="info-left">
-            <div class="info-item">
-                <span class="info-label">Tanggal Cetak:</span>
-                {{ date('d F Y, H:i') }} WIB
+        <div class="info-grid">
+            <div class="info-left">
+                <div class="info-item">
+                    <span class="info-label">Tanggal Cetak:</span>
+                    {{ date('d F Y, H:i') }} WIB
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Periode:</span>
+                    Tahun Ajaran {{ date('Y') }}/{{ date('Y') + 1 }}
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Total Siswa:</span>
+                    {{ $statistik['total_siswa'] }} siswa
+                </div>
             </div>
-            <div class="info-item">
-                <span class="info-label">Periode:</span>
-                Tahun Ajaran {{ date('Y') }}/{{ date('Y') + 1 }}
-            </div>
-            <div class="info-item">
-                <span class="info-label">Total Siswa:</span>
-                {{ $statistik['total_siswa'] }} siswa
+            <div class="info-right">
+                <div class="info-item">
+                    <span class="info-label">Penilaian Lengkap:</span>
+                    {{ $statistik['penilaian_lengkap'] }} siswa
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Persentase Lengkap:</span>
+                    {{ number_format($statistik['persentase_lengkap'], 1) }}%
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Dicetak oleh:</span>
+                    {{ auth()->user()->nama }}
+                </div>
             </div>
         </div>
-        <div class="info-right">
-            <div class="info-item">
-                <span class="info-label">Penilaian Lengkap:</span>
-                {{ $statistik['penilaian_lengkap'] }} siswa
-            </div>
-            <div class="info-item">
-                <span class="info-label">Persentase Lengkap:</span>
-                {{ number_format($statistik['persentase_lengkap'], 1) }}%
-            </div>
-            <div class="info-item">
-                <span class="info-label">Dicetak oleh:</span>
-                {{ auth()->user()->nama }}
-            </div>
+    </div>
+
+    <!-- Statistik -->
+    <div class="stats-grid">
+        <div class="stat-item">
+            <span class="stat-number">{{ $statistik['total_siswa'] }}</span>
+            <span class="stat-label">Total Siswa</span>
+        </div>
+        <div class="stat-item">
+            <span class="stat-number">{{ $statistik['penilaian_lengkap'] }}</span>
+            <span class="stat-label">Penilaian Lengkap</span>
+        </div>
+        <div class="stat-item">
+            <span class="stat-number">{{ $statistik['penilaian_sebagian'] }}</span>
+            <span class="stat-label">Penilaian Sebagian</span>
+        </div>
+        <div class="stat-item">
+            <span class="stat-number">{{ $statistik['belum_dinilai'] }}</span>
+            <span class="stat-label">Belum Dinilai</span>
         </div>
     </div>
 
     <!-- Tabel Nilai Per Kriteria -->
     <div class="section">
-        <h3>Matriks Nilai Siswa per Kriteria</h3>
+        <h3 class="section-title">MATRIKS NILAI SISWA PER KRITERIA</h3>
         <table>
             <thead>
                 <tr>
                     <th rowspan="2" style="width: 5%; vertical-align: middle;">No</th>
                     <th rowspan="2" style="width: 20%; vertical-align: middle;">Siswa</th>
-                    <th colspan="{{ $kriteria->count() }}" style="background: #dbeafe; color: #1e40af;">Kriteria
-                        Penilaian</th>
+                    <th colspan="{{ $kriteria->count() }}">Kriteria Penilaian</th>
                     <th rowspan="2" style="width: 12%; vertical-align: middle;">Status</th>
                 </tr>
                 <tr>
                     @foreach ($kriteria as $k)
-                        <th style="width: {{ 63 / $kriteria->count() }}%; background: #dbeafe; color: #1e40af;">
-                            {{ $k->kode }}<br>
-                            <small style="font-size: 7px;">{{ number_format($k->bobot, 2) }}</small>
+                        <th style="width: {{ 63 / $kriteria->count() }}%;">
+                            {{ $k->kode_kriteria }}<br>
+                            <small style="font-size: 10px;">({{ number_format($k->bobot, 2) }})</small>
                         </th>
                     @endforeach
                 </tr>
@@ -338,15 +344,15 @@
                 @foreach ($alternatif as $index => $siswa)
                     <tr>
                         <td>{{ $index + 1 }}</td>
-                        <td class="alternatif-col">
-                            <strong>{{ $siswa->kode }}</strong><br>
-                            <small style="font-size: 8px;">{{ $siswa->nama }}</small>
+                        <td class="text-left">
+                            <strong>{{ $siswa->kode_alternatif }}</strong><br>
+                            <small>{{ $siswa->nama }}</small>
                         </td>
                         @foreach ($kriteria as $k)
                             @php
                                 $nilai = $siswa->penilaian->where('kriteria_id', $k->kriteria_id)->first();
                             @endphp
-                            <td class="nilai-cell">
+                            <td>
                                 @if ($nilai)
                                     <span class="nilai-lengkap">{{ $nilai->nilai }}</span>
                                 @else
@@ -376,16 +382,13 @@
     <!-- Halaman Kedua: Summary per Kriteria -->
     <div class="page-break"></div>
     <div class="section">
-        <h3>Ringkasan Penilaian per Kriteria</h3>
+        <h3 class="section-title">RINGKASAN PENILAIAN PER KRITERIA</h3>
 
         @foreach ($kriteria as $k)
-            <div
-                style="margin-bottom: 20px; background: #f9fafb; padding: 12px; border-radius: 6px; border-left: 3px solid #a16207;">
-                <h4 style="color: #a16207; font-size: 12px; margin-bottom: 8px;">
-                    {{ $k->kode }} - {{ $k->nama }} (Bobot: {{ number_format($k->bobot, 3) }})
-                </h4>
+            <div class="criteria-summary">
+                <h4>{{ $k->kode_kriteria }} - {{ $k->nama }} (Bobot: {{ number_format($k->bobot, 2) }})</h4>
 
-                <table style="margin-bottom: 0;">
+                <table>
                     <thead>
                         <tr>
                             <th style="width: 15%">Nilai</th>
@@ -405,10 +408,10 @@
                                 $persentase = $alternatif->count() > 0 ? ($jumlah / $alternatif->count()) * 100 : 0;
                             @endphp
                             <tr>
-                                <td class="nilai-lengkap"><strong>{{ $nilai }}</strong></td>
+                                <td><span class="nilai-lengkap">{{ $nilai }}</span></td>
                                 <td>{{ $jumlah }} siswa</td>
                                 <td>{{ number_format($persentase, 1) }}%</td>
-                                <td class="text-left" style="font-size: 8px;">
+                                <td class="text-left">
                                     {{ $siswaDenganNilai->pluck('nama')->implode(', ') ?: '-' }}
                                 </td>
                             </tr>
@@ -424,10 +427,10 @@
                         @endphp
                         @if ($jumlahBelum > 0)
                             <tr>
-                                <td class="nilai-kosong"><strong>-</strong></td>
+                                <td><span class="nilai-kosong">-</span></td>
                                 <td>{{ $jumlahBelum }} siswa</td>
                                 <td>{{ number_format($persentaseBelum, 1) }}%</td>
-                                <td class="text-left" style="font-size: 8px;">
+                                <td class="text-left">
                                     {{ $belumDinilai->pluck('nama')->implode(', ') }}
                                 </td>
                             </tr>
@@ -441,7 +444,7 @@
     <!-- Daftar Siswa Belum Lengkap -->
     <div class="page-break"></div>
     <div class="section">
-        <h3>Daftar Siswa yang Belum Dinilai Lengkap</h3>
+        <h3 class="section-title">DAFTAR SISWA YANG BELUM DINILAI LENGKAP</h3>
 
         @php
             $siswaBelumLengkap = $alternatif->filter(function ($siswa) use ($kriteria) {
@@ -464,7 +467,7 @@
                     @foreach ($siswaBelumLengkap as $index => $siswa)
                         <tr>
                             <td>{{ $index + 1 }}</td>
-                            <td><strong>{{ $siswa->kode }}</strong></td>
+                            <td><strong>{{ $siswa->kode_alternatif }}</strong></td>
                             <td class="text-left">{{ $siswa->nama }}</td>
                             <td>
                                 @php
@@ -475,7 +478,7 @@
                                     {{ $progress }}/{{ $total }}
                                 </span>
                             </td>
-                            <td class="text-left" style="font-size: 8px;">
+                            <td class="text-left">
                                 @php
                                     $kriteriaDinilai = $siswa->penilaian->pluck('kriteria_id')->toArray();
                                     $kriteriaBelum = $kriteria
@@ -490,29 +493,23 @@
                 </tbody>
             </table>
         @else
-            <div
-                style="text-align: center; padding: 20px; background: #dcfce7; border: 1px solid #16a34a; border-radius: 6px;">
-                <p style="color: #166534; font-size: 12px; font-weight: bold;">
-                    Semua siswa sudah dinilai lengkap untuk semua kriteria!
-                </p>
+            <div class="note-box" style="text-align: center;">
+                <h4>SEMUA SISWA SUDAH DINILAI LENGKAP!</h4>
+                <p>Selamat! Semua siswa sudah memiliki penilaian lengkap untuk semua kriteria.</p>
             </div>
         @endif
     </div>
 
-    <!-- Catatan dan Panduan -->
-    <div class="catatan">
-        <h4>Keterangan Nilai dan Status:</h4>
+    <!-- Catatan -->
+    <div class="note-box">
+        <h4>KETERANGAN NILAI DAN STATUS:</h4>
         <ul>
-            <li><strong>Nilai 4:</strong> Berkembang Sangat Baik (BSB) - Anak sudah dapat melakukan kegiatan sesuai
-                indikator tanpa bantuan</li>
-            <li><strong>Nilai 3:</strong> Berkembang Sesuai Harapan (BSH) - Anak sudah dapat melakukan kegiatan sesuai
-                indikator dengan sedikit bantuan</li>
-            <li><strong>Nilai 2:</strong> Mulai Berkembang (MB) - Anak sudah mulai dapat melakukan kegiatan sesuai
-                indikator dengan bantuan</li>
-            <li><strong>Nilai 1:</strong> Belum Berkembang (BB) - Anak belum dapat melakukan kegiatan sesuai indikator
-            </li>
+            <li><strong>Nilai 4 (BSB):</strong> Berkembang Sangat Baik</li>
+            <li><strong>Nilai 3 (BSH):</strong> Berkembang Sesuai Harapan</li>
+            <li><strong>Nilai 2 (MB):</strong> Mulai Berkembang</li>
+            <li><strong>Nilai 1 (BB):</strong> Belum Berkembang</li>
             <li><strong>Status Lengkap:</strong> Siswa sudah dinilai untuk semua kriteria</li>
-            <li><strong>Status Sebagian:</strong> Siswa baru dinilai untuk beberapa kriteria saja</li>
+            <li><strong>Status Sebagian:</strong> Siswa baru dinilai untuk beberapa kriteria</li>
             <li><strong>Status Belum:</strong> Siswa belum dinilai sama sekali</li>
         </ul>
     </div>
@@ -526,9 +523,15 @@
                 <div class="signature-line"></div>
                 <p>(_______________________)</p>
             </div>
+            <div class="signature">
+                <p>{{ date('d F Y') }}</p>
+                <p><strong>Yang Membuat Laporan</strong></p>
+                <div class="signature-line"></div>
+                <p><strong>{{ auth()->user()->nama }}</strong></p>
+            </div>
         </div>
 
-        <div style="text-align: center; margin-top: 20px; font-size: 9px; color: #666;">
+        <div class="footer-note">
             <p>Laporan ini dibuat secara otomatis oleh Sistem Pendukung Keputusan PAUD Flamboyan</p>
         </div>
     </div>
